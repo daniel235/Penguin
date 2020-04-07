@@ -13,8 +13,6 @@ import itertools
 # import matplotlib.pyplot as plt
 import eventHelper as eH
 from eventHelper import f_events
-# from MLpredictor import MLpred
-from quotes import quotes
 
 
 # ########################################### file control ########################################

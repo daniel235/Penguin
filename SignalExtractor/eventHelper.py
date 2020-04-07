@@ -22,21 +22,19 @@ def event_scrapper(file):
         if k == bk:
             file1=file
             for r, s in enumerate(file1):
-    
-                    if r == k:
-                        if s[4] == i[4] and int(s[5]) != 0:
-                            time.append(s[2])
-                            s_move.append(s[5])
-                            evenlen.append(int(s[3]))
-                    if r > k:
-                        if s[4] == i[4]  and int(s[5]) == 0:
-                            time.append(s[2])
-                            s_move.append(s[5])
-                            evenlen.append(int(s[3]))
-
-                        if r > k and int(s[5]) != 0:
-                            bk=r
-                            break
+                if r == k:
+                    if s[4] == i[4] and int(s[5]) != 0:
+                        time.append(s[2])
+                        s_move.append(s[5])
+                        evenlen.append(int(s[3]))
+                if r > k:
+                    if s[4] == i[4]  and int(s[5]) == 0:
+                        time.append(s[2])
+                        s_move.append(s[5])
+                        evenlen.append(int(s[3]))
+                    if r > k and int(s[5]) != 0:
+                        bk=r
+                        break
 
             for v in kmers:
                 kmer.append(v)
@@ -45,6 +43,8 @@ def event_scrapper(file):
             time=[]
             s_move=[]
             evenlens.append(evenlen[-1:])
+
+            
     f_events=[]
     for c, r, d, t in zip(kmer,s_moves,times,evenlens):
         d=list(map(int,d))
