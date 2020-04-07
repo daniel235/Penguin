@@ -1,9 +1,6 @@
 # Penguin
 Tool to extract and classify PseudoUridine signals from fast5 files
 
-# Project Title
-
-One Paragraph of project description goes here
 
 ## Getting Started
 
@@ -12,10 +9,6 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 To use guppy basecaller you have to be a community member.  
-
-```
-Give examples
-```
 
 ### Installing
 
@@ -32,21 +25,6 @@ End with an example of getting some data out of the system or using it for a lit
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
@@ -68,7 +46,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Daniel Acevedo** - *Initial work* - [PurpleBooth](https://github.com/daniel235)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -78,6 +56,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* Falcon
 * Inspiration
 * etc
