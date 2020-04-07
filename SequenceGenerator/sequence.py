@@ -7,6 +7,7 @@ import basecall
 import qtoa
 import align
 
+'''
 #include download directory
 sys.path.insert(1, "../downloads/")
 
@@ -56,37 +57,32 @@ parser.add_argument('-ref', action='store', dest='ref_input', help='Provide refe
 results = parser.parse_args()
 #directory argument
 directory = results.path_input
-#basecall the fast5 files and return directory
-prompt = input("basecall?(y/n)")
-if prompt == "y":
-    basecall.basecall_files(directory)
+'''
 
-    #convert fastq to fasta
-    newDirectory = directory + "basecall/"
-    qtoa.convertFastq(newDirectory)
 
-#align fastq and get sam file
-ref = results.ref_input
-#minimap
-#bwa-mem
-prompt = input("align?(y/n)")
-if prompt == "y":
-    if ref != None:
-        #align.guppyAligner(directory, ref)
-        #input file(not directory)
+#prepare all files needed for signal extraction
+def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=None):
+    #basecall the fast5 files and return directory
+    prompt = input("basecall?(y/n)")
+    if prompt == "y":
+        basecall.basecall_files(fast5Path)
+
+        #convert fastq to fasta
+        newDirectory = fast5Path + "basecall/"
+        qtoa.convertFastq(newDirectory)
+
+    #align fastq and get sam file
+    
+    #bwa-mem
+    if referenceFile != None:
         for file in os.listdir(newDirectory):
             if file.endswith(".fastq"):
                 #input minmap directory
-                align.minimapAligner(file, ref, minDir=minmapDir)
+                align.minimapAligner(file, referenceFile, minDir=minmapDir)
 
-        #give sam file to flash_coors file
-        sam_dir = "/sam/"
-    
-    else:
-        print("did not provide reference file")
-
-#ask for bed file
-bed_file = results.bed_input
+    #get default bedfile if empty
+    if bedfile == None:
+        pass
 
 
 
