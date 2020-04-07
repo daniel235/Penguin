@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+To use guppy basecaller you have to be a community member.  
 
 ```
 Give examples
@@ -19,19 +19,12 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+First run the install.sh file to get all required files to run the program.
 
 ```
-Give the example
+./install.sh
 ```
 
-And repeat
-
-```
-until finished
-```
 
 End with an example of getting some data out of the system or using it for a little demo
 
