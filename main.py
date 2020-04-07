@@ -1,6 +1,8 @@
 import argparse
 import os, sys, platform
 import SequenceGenerator.sequence as sequence
+import Fast5_indexing.Id_parser as Id_parser
+import test.test_script as tscript
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -23,7 +25,15 @@ refFile = results.ref_input
 samFile = results.sam_input
 
 #get all required files for signal extraction
-sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
+bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
+#test if files are all available
+tscript.file_test(bedPath, refPath, samPath)
+#create ids for files
+Id_parser.parse_fast5_ids(fast5Path=fastPath)
 
+#extract fast5 files with modified coordinates
+
+
+#get signals
 
 

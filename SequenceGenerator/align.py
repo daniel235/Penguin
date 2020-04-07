@@ -18,6 +18,7 @@ def minimapAligner(ifile, ref, minDir=os.getcwd()):
     os.system("cd " + minDir)
     alcmd = "./minimap2 -a " + ref + " " + ifile + " > " + ifile + "Alignment.sam"
     os.system(alcmd)
+    return ifile + "Alignment.sam"
 
 
 '''

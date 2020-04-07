@@ -72,17 +72,23 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
         qtoa.convertFastq(newDirectory)
 
     #align fastq and get sam file
-    
     #bwa-mem
-    if referenceFile != None:
-        for file in os.listdir(newDirectory):
-            if file.endswith(".fastq"):
-                #input minmap directory
-                align.minimapAligner(file, referenceFile, minDir=minmapDir)
+    if samFile == None:
+        if referenceFile != None:
+            for file in os.listdir(newDirectory):
+                if file.endswith(".fastq"):
+                    #input minmap directory
+                    minmapDir = os.getcwd() + "minimap2"
+                    samFile = align.minimapAligner(file, referenceFile, minDir=minmapDir)
+
+        else:
+            print("Input Reference File")
 
     #get default bedfile if empty
     if bedfile == None:
         pass
+
+    return bedfile, fast5Path, referenceFile, samFile
 
 
 
