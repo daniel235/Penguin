@@ -1,7 +1,7 @@
 import argparse
 import os, sys, platform
 import SequenceGenerator.sequence as sequence
-import Fast5_indexing.Id_parser as Id_parser
+import Fast5_indexing as indexing
 import test.test_script as tscript
 
 #check for all files
@@ -29,10 +29,10 @@ bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast
 #test if files are all available
 tscript.file_test(bedPath, refPath, samPath)
 #create ids for files
-Id_parser.parse_fast5_ids(fast5Path=fastPath)
+indexing.Id_parser.parse_fast5_ids(fast5Path=fastPath)
 
-#extract fast5 files with modified coordinates
-
+#extract fast5 files with modified coordinates(sam, bed, fast5)
+indexing.coord_extract.extract_modified_coords()
 
 #get signals
 
