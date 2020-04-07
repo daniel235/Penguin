@@ -77,7 +77,7 @@ def extract_modified_coords(bedPath, samPath):
         dict_len=dict_len+len(value)
 
     #file2=open('pstrand_m5C_chr_Modification_coors_ns.txt','a') ### define output filename
-    with open("pstrand_chr_modification_coors.txt", "a") as f:
+    with open("./Data/pstrand_chr_modification_coors.txt", "a") as f:
         c=0
         ### loop through samfile ####
         for t, i in enumerate(sam_file):

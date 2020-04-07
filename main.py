@@ -3,6 +3,7 @@ import os, sys, platform
 import SequenceGenerator.sequence as sequence
 import Fast5_indexing as indexing
 import test.test_script as tscript
+import SignalExtractor as Extract
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -35,6 +36,9 @@ indexing.Id_parser.parse_fast5_ids(fast5Path=fastPath)
 indexing.coord_extract.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???)
+coordFile = "./Data/pstrand_chr_modification_coors.txt"
+Extract.ModifiedSignal.extract_signal(fast5Path, coordFile)
+
 
 #get file of signals and pass to model
 

@@ -2,7 +2,7 @@ import h5py, os
 
 
 def parse_fast5_ids(fast5Path):
-    with open("Fast5_ids.txt", "w+") as f:
+    with open("./Data/Fast5_ids.txt", "w+") as f:
         for dirpath, dirs, files in os.walk(fast5Path):
             for filename in files:
                 if filename.endswith(".fast5"):
