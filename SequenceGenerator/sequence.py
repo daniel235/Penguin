@@ -68,7 +68,8 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
         basecall.basecall_files(fast5Path)
 
         #convert fastq to fasta
-        newDirectory = fast5Path + "basecall/"
+        #newDirectory = fast5Path + "basecall/"
+        newDirectory = os.getcwd() + "Data/basecall/"
         qtoa.convertFastq(newDirectory)
 
     #align fastq and get sam file

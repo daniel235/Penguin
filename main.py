@@ -32,8 +32,10 @@ tscript.file_test(bedPath, refPath, samPath)
 indexing.Id_parser.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
-indexing.coord_extract.extract_modified_coords()
+indexing.coord_extract.extract_modified_coords(bedPath, samPath)
 
-#get signals
+#get signals from modified  (???)
+
+#get file of signals and pass to model
 
 
