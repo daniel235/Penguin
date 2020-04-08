@@ -3,9 +3,9 @@ import h5py
 import subprocess
 import os, sys, platform
 
-import basecall
-import qtoa
-import align
+import SequenceGenerator.basecall as bc 
+import SequenceGenerator.qtoa as qa
+import SequenceGenerator.align as al
 
 '''
 #include download directory
@@ -65,12 +65,12 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
     #basecall the fast5 files and return directory
     prompt = input("basecall?(y/n)")
     if prompt == "y":
-        basecall.basecall_files(fast5Path)
+        bc.basecall_files(fast5Path)
 
         #convert fastq to fasta
         #newDirectory = fast5Path + "basecall/"
         newDirectory = os.getcwd() + "Data/basecall/"
-        qtoa.convertFastq(newDirectory)
+        qa.convertFastq(newDirectory)
 
     #align fastq and get sam file
     #bwa-mem
@@ -80,7 +80,7 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
                 if file.endswith(".fastq"):
                     #input minmap directory
                     minmapDir = os.getcwd() + "minimap2"
-                    samFile = align.minimapAligner(file, referenceFile, minDir=minmapDir)
+                    samFile = al.minimapAligner(file, referenceFile, minDir=minmapDir)
 
         else:
             print("Input Reference File")
