@@ -6,7 +6,7 @@ import Fast5_indexing.Id_parser as Id
 import testFiles.test_script as tscript
 import SignalExtractor.ModifiedSignal as Extract
 import SignalExtractor.UnmodifiedSignal as ExtractControl
-#import Models.NeuralNet as model
+import Models.NeuralNet as model
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -49,5 +49,5 @@ ExtractControl.extract_control(Idfile, coordFile)
 modified = "./Data/post_pseudo_signals_1mer.txt"
 control = "./Data/control_signals.txt"
 
-#model.run_neural_net(control, modified)
+model.run_neural_net(control, modified)
 
