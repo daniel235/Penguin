@@ -29,7 +29,7 @@ samFile = results.sam_input
 #get all required files for signal extraction
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available
-tscript.test_script.file_test(bedPath, refPath, samPath)
+tscript.file_test(bedPath, refPath, samPath)
 #create ids for files
 indexing.Id_parser.parse_fast5_ids(fast5Path=fastPath)
 

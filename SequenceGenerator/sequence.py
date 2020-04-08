@@ -1,5 +1,4 @@
 import argparse
-import h5py
 import subprocess
 import os, sys, platform
 
