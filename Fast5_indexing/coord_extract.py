@@ -50,6 +50,12 @@ def extract_modified_coords(bedPath, samPath):
     file3 = open(samPath)
     for u in file3:
         u1=u.split( )
+        if len(u1) < 3:
+            continue
+        if u1[0] == '@SQ':
+            continue
+
+        print("u1 ", u1)
         sam_file.append(u1[0]+' '+u1[1]+' '+u1[2]+' '+u1[3]+' '+u1[4]+' '+u1[5]+' '+u1[6] )
 
     total=len(sam_file)

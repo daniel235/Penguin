@@ -1,7 +1,7 @@
 [
     {
         "aggregation": "segment",
-        "analysis_id": "cbf7af67-ca9c-4056-81d1-78b8cc4aed74",
+        "analysis_id": "d4a60674-f319-4e75-9c30-b1f94601f7e1",
         "basecall_1d": {
             "exit_status_dist": {
                 "fail:qscore_filter": 1,
@@ -334,20 +334,20 @@
             "hostname": "IN-BIO-SL351J",
             "installation_type": "nc",
             "local_firmware_file": "1",
-            "msg_id": "9b612374-a70b-4e20-b073-0156fa0ed4b0",
+            "msg_id": "2dea6da8-e86c-4be6-a0f5-5ac0f72181bd",
             "operating_system": "Windows 10.0",
             "protocol_run_id": "7991e75a-07b6-4b86-99cd-389ef124652f",
             "protocols_version": "1.13.0.13",
             "run_id": "85331a9859f4761d810f4a1e7b497e769c1e262c",
             "sample_id": "hela_070518",
-            "time_stamp": "2020-04-08T05:24:30Z",
+            "time_stamp": "2020-04-08T06:28:24Z",
             "usb_config": "firm_1.2.3_ware#rbt_4.5.6_rbt#ctrl#USB3",
             "version": "1.13.1"
         }
     },
     {
         "aggregation": "cumulative",
-        "analysis_id": "cbf7af67-ca9c-4056-81d1-78b8cc4aed74",
+        "analysis_id": "d4a60674-f319-4e75-9c30-b1f94601f7e1",
         "basecall_1d": {
             "exit_status_dist": {
                 "fail:qscore_filter": 1,
@@ -680,13 +680,13 @@
             "hostname": "IN-BIO-SL351J",
             "installation_type": "nc",
             "local_firmware_file": "1",
-            "msg_id": "5498f9c7-a7b9-4869-8b5f-8ff2b6fa8b20",
+            "msg_id": "df5351fb-b257-4d35-b521-ec912272e93f",
             "operating_system": "Windows 10.0",
             "protocol_run_id": "7991e75a-07b6-4b86-99cd-389ef124652f",
             "protocols_version": "1.13.0.13",
             "run_id": "85331a9859f4761d810f4a1e7b497e769c1e262c",
             "sample_id": "hela_070518",
-            "time_stamp": "2020-04-08T05:24:30Z",
+            "time_stamp": "2020-04-08T06:28:24Z",
             "usb_config": "firm_1.2.3_ware#rbt_4.5.6_rbt#ctrl#USB3",
             "version": "1.13.1"
         }

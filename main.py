@@ -1,7 +1,8 @@
 import argparse
 import os, sys, platform
 import SequenceGenerator.sequence as sequence
-import Fast5_indexing as indexing
+import Fast5_indexing.coord_extract as coord
+import Fast5_indexing.Id_parser as Id
 import testFiles.test_script as tscript
 import SignalExtractor as Extract
 import Models as model
@@ -31,10 +32,10 @@ bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast
 #test if files are all available
 tscript.file_test(bedPath, refPath, samPath)
 #create ids for files
-indexing.Id_parser.parse_fast5_ids(fast5Path=fastPath)
+Id.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
-indexing.coord_extract.extract_modified_coords(bedPath, samPath)
+coord.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
