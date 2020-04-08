@@ -10,4 +10,4 @@ pip install scrappie
 pip3 install --user --upgrade tensorflow 
 
 #create empty directory for data
-mkdir Data
+mkdir Data/basecall/
