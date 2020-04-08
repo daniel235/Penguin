@@ -4,7 +4,8 @@ import SequenceGenerator.sequence as sequence
 import Fast5_indexing.coord_extract as coord
 import Fast5_indexing.Id_parser as Id
 import testFiles.test_script as tscript
-import SignalExtractor as Extract
+import SignalExtractor.ModifiedSignal as Extract
+import SignalExtractor.UnmodifiedSignal as ExtractControl
 import Models as model
 
 #check for all files
@@ -39,8 +40,8 @@ coord.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
-Extract.ModifiedSignal.extract_signal(fastPath, coordFile)
-
+Extract.extract_signal(fastPath, coordFile)
+ExtractControl.extract_control(fastPath, coordFile)
 
 #get file of signals and pass to model
 modified = "./Data/post_pseudo_signals_1mer.txt"

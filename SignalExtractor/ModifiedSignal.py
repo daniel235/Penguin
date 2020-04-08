@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 import getopt
@@ -11,8 +10,8 @@ import h5py, numpy as np, os, sys
 import itertools
 
 # import matplotlib.pyplot as plt
-import eventHelper as eH
-from eventHelper import f_events
+import SignalExtractor.eventHelper as eH
+from SignalExtractor.eventHelper import f_events
 
 
 # ########################################### file control ########################################
