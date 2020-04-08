@@ -66,10 +66,10 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
     prompt = input("basecall?(y/n)")
     if prompt == "y":
         bc.basecall_files(fast5Path)
-
+        print("after basecall")
         #convert fastq to fasta
         #newDirectory = fast5Path + "basecall/"
-        newDirectory = os.getcwd() + "Data/basecall/"
+        newDirectory = os.getcwd() + "/Data/basecall/"
         qa.convertFastq(newDirectory)
 
     #align fastq and get sam file
