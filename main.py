@@ -2,7 +2,7 @@ import argparse
 import os, sys, platform
 import SequenceGenerator.sequence as sequence
 import Fast5_indexing as indexing
-import test as tscript
+import testFiles.test_script as tscript
 import SignalExtractor as Extract
 import Models as model
 

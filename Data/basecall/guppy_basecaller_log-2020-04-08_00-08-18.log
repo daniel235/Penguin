@@ -1,0 +1,18 @@
+2020-04-08 00:08:18.867079 [guppy/message] ONT Guppy basecalling software version 3.5.2+5b7a51b, client-server API version 1.1.0
+config file:        /opt/ont/guppy/data/rna_r9.4.1_70bps_hac.cfg
+model file:         /opt/ont/guppy/data/template_rna_r9.4.1_70bps_hac.jsn
+input path:         /home/daceved/hela_fast5/
+save path:          /home/daceved/Penguin/Data/basecall/
+chunk size:         2000
+chunks per runner:  512
+records per file:   4000
+num basecallers:    1
+cpu mode:           ON
+threads per caller: 4
+
+2020-04-08 00:08:18.867435 [guppy/info] crashpad_handler not supported on this platform.
+2020-04-08 00:08:20.841145 [guppy/message] Found 0 fast5 files to process.
+2020-04-08 00:08:20.841213 [guppy/message] Init time: 1973 ms
+2020-04-08 00:08:21.141849 [guppy/message] Caller time: 300 ms, Samples called: 0, samples/s: 0
+2020-04-08 00:08:21.141920 [guppy/message] Finishing up any open output files.
+2020-04-08 00:08:21.975779 [guppy/message] Basecalling completed successfully.
