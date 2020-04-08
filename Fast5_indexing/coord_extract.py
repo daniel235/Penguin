@@ -70,7 +70,9 @@ def extract_modified_coords(bedPath, samPath):
         #split columns
         e1=e.split( )
         print("e1 ", e1)
-        if e1[2] == '+':
+        print("e1 5 ", e1[5])
+        if e1[5] == '+':
+            print("in positive")
             #chromosome location
             mods.append(e1[0]+'_'+e1[1])
             chr=''.join(e1[0])
@@ -95,14 +97,13 @@ def extract_modified_coords(bedPath, samPath):
                 s_chr=''.join(i1[2])
                 s_chr_s=''.join(i1[3]) 
                 coordinates,gstop=cigar_parse(i1[5],int(i1[3]))
-                print("coords gstop ", coordinates, " ", gstop)
                 try:
                     for v in mod_d[s_chr]:
                         if int(v)-2 >= int(i1[3]) and int(v)+2 <= int(i1[3])+gstop:
                             for r in coordinates:
                                 if int(r[0]) <= int(v) and int(r[1]) >= int(v): 
                                     genomic_coor=list(range(int(r[0]),int(r[1])+1))
-                                    print(genomic_coor)
+                                    #print(genomic_coor)
                                     seq_coor=list(range(int(r[2]),int(r[3])+1))
                                     # print(seq_coor)
                                     i_gc=genomic_coor.index(int(v))

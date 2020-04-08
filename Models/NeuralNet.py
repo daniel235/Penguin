@@ -2,7 +2,7 @@
 
 from numpy.random import seed
 
-seed(1)
+#seed(1)
 
 import tensorflow
 from numpy import loadtxt
@@ -18,8 +18,8 @@ from sklearn.metrics import roc_curve, auc
 # To set seed random number
 from numpy.random import seed
 
-tensorflow.random.set_seed(1234)
-
+#tensorflow.random.set_seed(1234)
+seed(1234)
 ####################################################
 
 from sklearn.preprocessing import OneHotEncoder
