@@ -40,8 +40,10 @@ coord.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
-Extract.extract_signal(fastPath, coordFile)
-ExtractControl.extract_control(fastPath, coordFile)
+Idfile = "./Data/Fast5_ids.txt"
+Extract.extract_signal(Idfile, coordFile)
+ExtractControl.extract_control(Idfile, coordFile)
+
 
 #get file of signals and pass to model
 modified = "./Data/post_pseudo_signals_1mer.txt"
