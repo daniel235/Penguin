@@ -15,17 +15,21 @@ from SignalExtractor.eventHelper import f_events
 
 
 # ########################################### file control ########################################
-def extract_signal(fast5path, modCoordFile):
+def extract_signal(IdFile, modCoordFile, fast5path=None):
     #coord file
     inp = modCoordFile
     #fast5path
-    inp2 = fast5path
+    inp2 = IdFile
 
     print(inp)
     print(inp2)
 
     id_dict=dict()
     
+    '''
+    for fileob in os.listdir(inp2):
+        fname = inp2 + fileob
+    '''
     with open(inp2, 'r') as f:
         for i in f:
             print(i)
@@ -36,7 +40,7 @@ def extract_signal(fast5path, modCoordFile):
             id_dict[i1[2]].append(i1[3])
 
     cnt=0
-
+    
     with open('./Data/post_pseudo_signals_1mer.txt','w') as f:
         file2=open(inp,'r')
         for q in file2:
@@ -80,7 +84,6 @@ def extract_signal(fast5path, modCoordFile):
                 seq_no=3
 
                 for e, i in enumerate(final_eves):
-
                     seq_no=seq_no+int(i[1])
                     len_seq=len(''.join(fastq_decoded[1]))
                     a_seq_no=(len_seq-int(q1[2]))+1
