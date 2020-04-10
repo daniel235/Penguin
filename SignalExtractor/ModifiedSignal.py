@@ -56,6 +56,7 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                 print(r)
                 print(q1[3])
                 hdf = h5py.File(r,'r')
+                print(hdf.keys())
                 #### Extract signal
                 try:
                     raw_data=list(hdf['/Raw/Reads/'].values())[0]

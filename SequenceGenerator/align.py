@@ -8,17 +8,18 @@ def guppyAligner(inputFile, ref):
     except:
         pass
 
-
     alignCmd = "guppy_aligner -i " + inputFile + " -s " + inputFile + "sam/ -a " + ref
     os.system(alignCmd)
 
 
 def minimapAligner(ifile, ref, minDir=os.getcwd()):
     #go into minimap directory
+    curDir = os.getcwd()
     os.system("cd " + minDir)
-    alcmd = "./minimap2 -a " + ref + " " + ifile + " > Alignment.sam"
+    alcmd = "./minimap2 -a " + ref + " " + ifile + " > " + curDir + "/Alignment.sam"
     os.system(alcmd)
-    return "Alignment.sam"
+    os.system("cd ..")
+    return curDir + "/Alignment.sam"
 
 
 '''

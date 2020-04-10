@@ -8,10 +8,11 @@ import SignalExtractor.eventHelper as eH
 from SignalExtractor.eventHelper import f_events
 
 
-def extract_control(fast5Path, modCoordFile):
+def extract_control(IdPath, modCoordFile):
     inp = modCoordFile
-    inp2 = fast5Path
+    inp2 = IdPath
 
+    #id
     id_dict=dict()
     file=open(inp2,'r')
     for i in file:
@@ -26,17 +27,19 @@ def extract_control(fast5Path, modCoordFile):
 
     with open("./Data/control_signals.txt", 'w+') as f:
         f_dict=dict()
+        #coord
         file2=open(inp,'r')
         for q in file2:
             q1=q.split( )
             if q1[3] in id_dict:
+                #path / filename
                 f_name=id_dict[q1[3]][0]+' '+id_dict[q1[3]][1]
                 if f_name in f_dict:
                     f_dict[f_name].append(int(q1[2]))
                     
                 else:
                     f_dict[f_name] = [int(q1[2])]
-
+        #key filename / coord fast 5 positions
         for keys, values in f_dict.items():
                 p=keys.split(' ')
                 r=p[0]+'/'+p[1]
@@ -95,10 +98,7 @@ def extract_control(fast5Path, modCoordFile):
                                     for t in range(5):
                                         start.append(s[t][2])
                                         end.append(s[t][4])
-                                #         print(s[t][2])
-                                # print(min(start))
-                                # print((max(end)))
-                                # print(raw_signal[min(start):][:(max(end)-min(start))+1])            
+                                          
                                 min_st=min(start)
                                 max_stl=(max(end)-min(start))+1
                                 sig='_'.join(map(str, raw_signal[min_st:][:max_stl]))
