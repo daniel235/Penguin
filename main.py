@@ -1,5 +1,6 @@
 import argparse
 import os, sys, platform
+from keras.models import Sequential
 import SequenceGenerator.sequence as sequence
 import Fast5_indexing.coord_extract as coord
 import Fast5_indexing.Id_parser as Id
@@ -7,6 +8,7 @@ import testFiles.test_script as tscript
 import SignalExtractor.ModifiedSignal as Extract
 import SignalExtractor.UnmodifiedSignal as ExtractControl
 #import Models.NeuralNet as model
+import Models.PrepareData as PD
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -31,7 +33,7 @@ samFile = results.sam_input
 #get all required files for signal extraction
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available
-tscript.file_test(bedPath, refPath, samPath)
+bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
 
@@ -50,4 +52,17 @@ modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
 
 #model.run_neural_net(control, modified)
+PD.createInstance(control, modified)
+
+#load model
+json_file = open("./Models/NNmodel.json")
+loaded_model = json_file.read()
+json_file.close()
+
+#load weights
+loaded_model.load_weights("./Models/model.h5")
+print("loaded model")
+loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
+score = loaded_model.evaluate(x, y, verbose=1)
+print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]* 100))
 
