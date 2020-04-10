@@ -59,7 +59,6 @@ def extract_modified_coords(bedPath, samPath):
         sam_file.append(u1[0]+' '+u1[1]+' '+u1[2]+' '+u1[3]+' '+u1[4]+' '+u1[5]+' '+u1[6] )
 
     total=len(sam_file)
-    print("total sam file ", sam_file)
     print("Sam file read successfully..starting coordinate extraction...")
 
     mod_d=dict()
@@ -108,11 +107,10 @@ def extract_modified_coords(bedPath, samPath):
                                     # print(seq_coor)
                                     i_gc=genomic_coor.index(int(v))
                                     i_sc=seq_coor[i_gc]
-                                    print("coord write")
                                     f.write(str(s_chr)+' '+str(v)+' '+str(i_sc)+' '+str(i1[0])+'\n')
                                     
                 except KeyError:
                     continue
 
             c=c+1
-            print(c ,total)
+            #print(c ,total)

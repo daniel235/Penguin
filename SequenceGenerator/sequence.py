@@ -86,7 +86,7 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
 
     #get default bedfile if empty
     if bedfile == None:
-        raise Exception
+        befile = ""
 
     return bedfile, fast5Path, referenceFile, samFile
 

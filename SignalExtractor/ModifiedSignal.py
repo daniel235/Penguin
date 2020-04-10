@@ -30,22 +30,26 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
     for fileob in os.listdir(inp2):
         fname = inp2 + fileob
     '''
+    #ids
     with open(inp2, 'r') as f:
         for i in f:
-            print(i)
             i1=i.split( )
+            #path/file/id/run
             print(i1[2])
             id_dict[i1[2]] = [i1[0]]
             id_dict[i1[2]].append(i1[1])
             id_dict[i1[2]].append(i1[3])
 
     cnt=0
-    
+
     with open('./Data/post_pseudo_signals_1mer.txt','w') as f:
+        #coords
         file2=open(inp,'r')
         for q in file2:
             q1=q.split( )
             if q1[3] in id_dict.keys():
+                print("match in id_dict")
+                #path to fast5 file
                 r=id_dict[q1[3]][0]+'/'+id_dict[q1[3]][1]
                 print(r)
                 print(q1[3])
@@ -54,6 +58,7 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                 try:
                     raw_data=list(hdf['/Raw/Reads/'].values())[0]
                     raw_signal=raw_data['Signal'].value
+                    print("sig ", raw_signal)
                     ### Extract events
                     events_data=hdf.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
 
@@ -75,6 +80,7 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                     c_freq = (c_freq.attrs['sample_frequency']).decode('utf-8')
                     raw_fastq=(Fastq_data.value).decode('utf-8')
                     fastq_decoded=raw_fastq.split('\n')
+
                 except AttributeError:
                     continue           
 
@@ -107,5 +113,6 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                                 max_stl=(max(end)-min(start))+1
                                 sig='_'.join(map(str, raw_signal[min_st:][:max_stl]))
                                 print(id_dict[q1[3]][1]+' '+i[0]+' '+q1[1]+'_'+q1[2]+' '+sig)
+                                print("write ")
                                 f.write(id_dict[q1[3]][1]+' '+i[0]+' '+q1[1]+'_'+q1[2]+' '+sig+'\n')
                             
