@@ -1,6 +1,9 @@
 # Penguin
 Tool to extract and classify PseudoUridine signals from fast5 files
 
+## Tool workflow
+The penguin tool needs as input a fast5 path and if you don't provide a sam file you have to provide a reference genome to align to so the tool can create the sam file.  If no bed file is provided a default one is included and will be used.
+The tool will then id all fast5 files and create coordinate file with ids of files that are modified.
 
 ## Getting Started
 
@@ -18,17 +21,15 @@ First run the install.sh file to get all required files to run the program.
 ./install.sh
 ```
 
+## Running the tool
 
-End with an example of getting some data out of the system or using it for a little demo
+```
+-i fast5 path(required)
+-s samfile
+-b bedfile(optional)
+-ref reference Genome 
+```
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
@@ -41,7 +42,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 ## Authors
 
 * **Daniel Acevedo** - *Initial work* - [Daniel235](https://github.com/daniel235)
-* **Doaa Salem** - Models - [
+* **Doaa Salem** - Models - [hsdoaa](https://github.com/hsdoaa)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
