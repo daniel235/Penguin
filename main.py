@@ -46,7 +46,7 @@ ExtractControl.extract_control(Idfile, coordFile)
 
 
 #get file of signals and pass to model
-modified = "./Data/post_pseudo_signals_1mer.txt"
+modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
 
 #model.run_neural_net(control, modified)

@@ -16,9 +16,9 @@ def guppyAligner(inputFile, ref):
 def minimapAligner(ifile, ref, minDir=os.getcwd()):
     #go into minimap directory
     os.system("cd " + minDir)
-    alcmd = "./minimap2 -a " + ref + " " + ifile + " > " + ifile + "Alignment.sam"
+    alcmd = "./minimap2 -a " + ref + " " + ifile + " > Alignment.sam"
     os.system(alcmd)
-    return ifile + "Alignment.sam"
+    return "Alignment.sam"
 
 
 '''

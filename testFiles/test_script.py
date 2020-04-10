@@ -1,10 +1,16 @@
 import h5py
-
+import SequenceGenerator.align as align
 #test to check if required files are created
 def file_test(bed_file, ref_file, sam_file):
     if bed_file == None:
         print("bed file missing")
         raise FileNotFoundError
+
+    #create aligned sam
+    elif ref_file != None and sam_file == None:
+        #fasta input
+        align.minimapAligner()
+        return
 
     elif ref_file == None and sam_file == None:
         print("ref file missing")

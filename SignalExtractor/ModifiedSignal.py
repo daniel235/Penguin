@@ -42,11 +42,13 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
 
     cnt=0
 
-    with open('./Data/post_pseudo_signals_1mer.txt','w') as f:
+    with open("./Data/post_pseudo_signals.txt",'w+') as f:
         #coords
+        print("keys ", id_dict.keys())
         file2=open(inp,'r')
         for q in file2:
             q1=q.split( )
+            
             if q1[3] in id_dict.keys():
                 print("match in id_dict")
                 #path to fast5 file

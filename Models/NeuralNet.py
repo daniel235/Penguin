@@ -9,6 +9,7 @@ from numpy import loadtxt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense 
 from tensorflow.keras.optimizers import SGD
+from keras.models import model_from_json
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 from sklearn.metrics import classification_report #for classifier evaluation
 from sklearn.metrics import roc_auc_score # for printing AUC
@@ -226,6 +227,14 @@ def run_neural_net(control, modified):
     # Fit the model                            #epochs= ﬁxed number of iterations through the dataset called epochs
     #model.fit(X_train, y_train, validation_split=0.2, epochs=150, batch_size=16) #batch_size=the number of instances that are evaluated before a weight update
     history=model.fit(X_train, y_train, validation_split=0.2, epochs=150, batch_size=len(X_train))
+
+    #save model
+    model_json = model.to_json()
+    with open("NNmodel.json", "w+") as json_file:
+        json_file.write(model_json)
+
+    #save weights
+    model.save_weights("model.h5")
 
     # evaluate the keras model on the same dataset, but the dataset can be devided into training and testing, then fit the model on the training and evalaute the model on testing
     _, accuracy_train = model.evaluate(X_train, y_train, verbose=1)
