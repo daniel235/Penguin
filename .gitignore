@@ -1,3 +1,7 @@
 minimap2
 SquiggleKit
 Data
+Models/*.pyc
+Models/__pycache__
+SignalExtractor/__pycache__
+SignalExtractor/*.pyc
