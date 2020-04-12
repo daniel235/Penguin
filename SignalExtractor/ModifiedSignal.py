@@ -18,11 +18,8 @@ from SignalExtractor.eventHelper import f_events
 def extract_signal(IdFile, modCoordFile, fast5path=None):
     #coord file
     inp = modCoordFile
-    #fast5path
+    #id file
     inp2 = IdFile
-
-    print(inp)
-    print(inp2)
 
     id_dict=dict()
     
@@ -44,20 +41,16 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
 
     with open("./Data/post_pseudo_signals.txt",'w+') as f:
         #coords
-        print("keys ", id_dict.keys())
-        file2=open(inp,'r')
-        for q in file2:
-            q1=q.split( )
-            
-            if q1[3] in id_dict.keys():
+        mod_file=open(inp,'r')
+
+        for mod_row in mod_file:
+            mod_coord_col=mod_row.split( )
+            if mod_coord_col[3] in id_dict.keys():
                 print("match in id_dict")
                 #path to fast5 file
-                r=id_dict[q1[3]][0]+'/'+id_dict[q1[3]][1]
-                print(r)
-                print(q1[3])
-                hdf = h5py.File(r,'r')
-                print(hdf.keys())
-                #### Extract signal
+                fast5File=id_dict[mod_coord_col[3]][0]+'/'+id_dict[mod_coord_col[3]][1]
+                hdf = h5py.File(fast5File,'r')
+                #### Extract signal of modified fast5 file
                 try:
                     raw_data=list(hdf['/Raw/Reads/'].values())[0]
                     raw_signal=raw_data['Signal'].value

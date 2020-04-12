@@ -55,7 +55,6 @@ def extract_modified_coords(bedPath, samPath):
         if u1[0] == '@SQ':
             continue
 
-        #print("u1 ", u1)
         sam_file.append(u1[0]+' '+u1[1]+' '+u1[2]+' '+u1[3]+' '+u1[4]+' '+u1[5]+' '+u1[6] )
 
     total=len(sam_file)
@@ -63,19 +62,12 @@ def extract_modified_coords(bedPath, samPath):
 
     mod_d=dict()
 
-    dict_len=0
-    mods=[]
     for e in locs:
         #split columns
         e1=e.split( )
-        print("e1 ", e1)
-        print("e1 5 ", e1[5])
         if e1[5] == '+':
-            print("in positive")
             #chromosome location
-            mods.append(e1[0]+'_'+e1[1])
             chr=''.join(e1[0])
-            print("chr ", chr)
             chr_loc=''.join(e1[1])
             #add location to chromosome modified dictionary
             if chr in mod_d:
@@ -83,34 +75,34 @@ def extract_modified_coords(bedPath, samPath):
             else:
                 mod_d[chr] = [int(chr_loc)]
 
-    for key, value in mod_d.items():
-        dict_len=dict_len+len(value)
 
-    #file2=open('pstrand_m5C_chr_Modification_coors_ns.txt','a') ### define output filename
+     ### define output filename
     with open("./Data/pstrand_chr_modification_coors.txt", "a") as f:
-        c=0
         ### loop through samfile ####
         for t, i in enumerate(sam_file):
             if not i.startswith('@'):
                 i1=i.split()
+                #chrm num
                 s_chr=''.join(i1[2])
+                #position
                 s_chr_s=''.join(i1[3]) 
+                #cigar, position
                 coordinates,gstop=cigar_parse(i1[5],int(i1[3]))
                 try:
-                    for v in mod_d[s_chr]:
-                        if int(v)-2 >= int(i1[3]) and int(v)+2 <= int(i1[3])+gstop:
-                            for r in coordinates:
-                                if int(r[0]) <= int(v) and int(r[1]) >= int(v): 
-                                    genomic_coor=list(range(int(r[0]),int(r[1])+1))
+                    #chrm num
+                    for chr_loc in mod_d[s_chr]:
+                        if int(chr_loc)-2 >= int(i1[3]) and int(chr_loc)+2 <= int(i1[3])+gstop:
+                            for coord in coordinates:
+                                if int(coord[0]) <= int(chr_loc) and int(coord[1]) >= int(chr_loc): 
+                                    #sam file range of coordinates
+                                    genomic_coor=list(range(int(coord[0]),int(coord[1])+1))
                                     #print(genomic_coor)
-                                    seq_coor=list(range(int(r[2]),int(r[3])+1))
+                                    seq_coor=list(range(int(coord[2]),int(coord[3])+1))
                                     # print(seq_coor)
-                                    i_gc=genomic_coor.index(int(v))
+                                    i_gc=genomic_coor.index(int(chr_loc))
                                     i_sc=seq_coor[i_gc]
-                                    f.write(str(s_chr)+' '+str(v)+' '+str(i_sc)+' '+str(i1[0])+'\n')
+                                    f.write(str(s_chr)+' '+str(chr_loc)+' '+str(i_sc)+' '+str(i1[0])+'\n')
                                     
                 except KeyError:
                     continue
 
-            c=c+1
-            #print(c ,total)
