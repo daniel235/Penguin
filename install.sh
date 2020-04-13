@@ -7,7 +7,12 @@ git clone https://github.com/lh3/minimap2
 git clone https://github.com/Psy-Fer/SquiggleKit.git
 pip install numpy h5py sklearn matplotlib
 pip install scrappie
-pip3 install --user --upgrade tensorflow 
+pip3 install tensorflow==1.5
 pip install keras
 #create empty directory for data
 mkdir Data/basecall/
+
+#change permissions for folder
+cd ..
+chmod -R 777 Penguin
+cd Penguin

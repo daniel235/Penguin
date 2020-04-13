@@ -50,6 +50,7 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                     print("match in id_dict")
                     #path to fast5 file
                     fast5File=id_dict[mod_coord_col[3]][0]+'/'+id_dict[mod_coord_col[3]][1]
+                    ob.write(fast5File)
                     hdf = h5py.File(fast5File,'r')
                     #### Extract signal of modified fast5 file
                     try:
