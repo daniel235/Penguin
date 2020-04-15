@@ -9,6 +9,7 @@ import SignalExtractor.ModifiedSignal as Extract
 import SignalExtractor.UnmodifiedSignal as ExtractControl
 #import Models.NeuralNet as model
 import Models.PrepareData as PD
+import Models.RunModels as RM
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -43,26 +44,18 @@ coord.extract_modified_coords(bedPath, samPath)
 #get signals from modified  (???)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
-Extract.extract_signal(Idfile, coordFile)
-ExtractControl.extract_control(Idfile, coordFile)
-
+'''
+#Extract.extract_signal(Idfile, coordFile)
+#ExtractControl.extract_control(Idfile, coordFile)
 
 #get file of signals and pass to model
 modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
+'''
 
 #model.run_neural_net(control, modified)
 PD.createInstance(control, modified)
 
 #load model
-json_file = open("./Models/NNmodel.json")
-loaded_model = json_file.read()
-json_file.close()
-
-#load weights
-loaded_model.load_weights("./Models/model.h5")
-print("loaded model")
-loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
-score = loaded_model.evaluate(x, y, verbose=1)
-print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]* 100))
-
+model = PD.prepareNNModel()
+RM.run_nn(model, [])

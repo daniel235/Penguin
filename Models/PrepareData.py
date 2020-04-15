@@ -2,6 +2,7 @@ from statistics import mean, median
 from keras.models import model_from_json
 
 
+
 def createInstance(kmer, raw_signal, type=None):
     #requirements for NN model
     #kmer/median/mean/max/min

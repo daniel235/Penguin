@@ -11,7 +11,7 @@ def event_scrapper(file):
     times=[]
     evenlens=[]
     s_moves=[]
-
+    #double for loop ? 
     for k, i in enumerate(file):
         kmers=[]
         time=[]	

@@ -101,7 +101,7 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                     for e, i in enumerate(final_eves):
                         seq_no=seq_no+int(i[1])
                         len_seq=len(''.join(fastq_decoded[1]))
-                        a_seq_no=(len_seq-int(q1[2]))+1
+                        a_seq_no=(len_seq-int(mod_row[2]))+1
                     ##### Tail pass
                         if a_seq_no > 2 and a_seq_no < len(final_eves)-2:
                             if seq_no == a_seq_no:
@@ -116,12 +116,13 @@ def extract_signal(IdFile, modCoordFile, fast5path=None):
                                             start.append(s[t][2])
                                             end.append(s[t][4])
                                             print(s[t][2])
+
                                     print(start[2])
                                     print(end[2])          
                                     min_st=min(start)
                                     max_stl=(max(end)-min(start))+1
                                     sig='_'.join(map(str, raw_signal[min_st:][:max_stl]))
-                                    print(id_dict[q1[3]][1]+' '+i[0]+' '+q1[1]+'_'+q1[2]+' '+sig)
+                                    print(id_dict[mod_row[3]][1]+' '+i[0]+' '+mod_row[1]+'_'+mod_row[2]+' '+sig)
                                     print("write ")
-                                    f.write(id_dict[q1[3]][1]+' '+i[0]+' '+q1[1]+'_'+q1[2]+' '+sig+'\n')
+                                    f.write(id_dict[mod_row[3]][1]+' '+i[0]+' '+mod_row[1]+'_'+mod_row[2]+' '+sig+'\n')
                                 
