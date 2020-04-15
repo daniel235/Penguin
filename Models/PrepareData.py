@@ -1,6 +1,6 @@
 from statistics import mean, median
-from keras.models import model_from_json
-
+#from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 
 
 def createInstance(kmer, raw_signal, type=None):
@@ -11,10 +11,11 @@ def createInstance(kmer, raw_signal, type=None):
 
 def prepareNNModel():
     #load model
-    json_file = open("./Models/NNmodel.json")
-    loaded_model = json_file.read()
+    json_file = open("./Models/NNmodel.json", 'r')
+    loaded_model_json = json_file.read()
     json_file.close()
 
+    loaded_model = model_from_json(loaded_model_json)
     #load weights
     loaded_model.load_weights("./Models/model.h5")
     print("loaded model")

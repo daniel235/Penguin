@@ -1,23 +1,36 @@
-import h5py
 import os
+
+import h5py
+
+import Models.PrepareData as PD
+
 #iterate through signal events
 #figure out how to get accuracy of predictions
 #files needed bed file sam file
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
-    id_dict = createIdParser(Idfile)
+    #id_dict = createIdParser(Idfile)
     #read in fast5 files
     for dirpath, subdir, files in os.walk(fastPath):
         for fname in files:
             if fname.endswith(".fast5"):
+                #add full path
+                fname = fastPath + fname
                 hf5 = h5py.File(fname, 'r')
                 #todo just extract signal and pass it to model
                 #extract signal 
                 raw_data=list(hf5['/Raw/Reads/'].values())[0]
                 raw_signal=raw_data['Signal'].value
                 #pass to model
-                guess = model.evaluate(raw_signal)
+                tempKmer = 'TTTTT'
+                input4Model = PD.createInstance(tempKmer, raw_signal)
+                guess = model.predict(input4Model)
+                #todo parse up signal into kmer signals
+                if guess == 0:
+                    print(fname + " control \n")
+                else:
+                    print(fname + " pseudo \n")
 
 
 def createIdParser(IdFile):

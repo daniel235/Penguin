@@ -7,6 +7,7 @@ import Fast5_indexing.Id_parser as Id
 import testFiles.test_script as tscript
 import SignalExtractor.ModifiedSignal as Extract
 import SignalExtractor.UnmodifiedSignal as ExtractControl
+import SignalExtractor.SignalPredictor as Predict
 #import Models.NeuralNet as model
 import Models.PrepareData as PD
 import Models.RunModels as RM
@@ -54,8 +55,11 @@ control = "./Data/control_signals.txt"
 '''
 
 #model.run_neural_net(control, modified)
-PD.createInstance(control, modified)
+#PD.createInstance(control, modified)
 
 #load model
 model = PD.prepareNNModel()
-RM.run_nn(model, [])
+#PD.createInstance()
+fp = fastPath
+Predict.predict(model, fastPath=fp)
+#RM.run_nn(model, [])
