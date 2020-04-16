@@ -275,3 +275,15 @@ def run_neural_net(control, modified):
     fpr, tpr, thresholds = metrics.roc_curve(y_test, y_prob)
     # Print ROC curve
     plt.plot(fpr,tpr)
+
+
+def rewriteModel():
+    #input shape (1, )
+    model = Sequential()
+    model.add(Dense(12, input_dim=b, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(1, activation='sigmoid'))
+
+    # compile the keras model
+    #model.compile(loss='binary_crossentropy', optimizer=SGD(lr=0.05, momentum=0.99), metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='Adam', metrics=['accuracy'])

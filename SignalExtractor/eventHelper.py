@@ -56,12 +56,13 @@ def event_scrapper(file):
             #add last event length
             evenlens.append(evenlen[-1:])
 
-            
+        
     f_events=[]
     for c, r, d, t in zip(kmer,s_moves,times,evenlens):
         d=list(map(int,d))
         if c != "model_state":
             t=', '.join(map(str, t))
+            #kmer / biggest move / smallest time / biggest time / biggest time + event length
             f_events.append([c.decode('utf-8'),max(r),min(d),max(d),max(d)+int(t)])
 
     return f_events
