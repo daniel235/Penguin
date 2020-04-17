@@ -29,7 +29,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
             for i in range(len(kmers)):
                 if len(kmers[i]) != 0:
                     #if kmers[i][2] == 'T':
-                    signals[i] = list(signals[i])
+                    signals[i] = signals[i].tolist()
                     print("sigs ", signals[i])
                     input4Model = PD.createInstance(hot_kmers[i], signals[i])
                     guess = model.predict(input4Model)
