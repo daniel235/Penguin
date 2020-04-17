@@ -88,7 +88,7 @@ def segmentSignal(events, signal):
     signalLen = 0
     for i, row in enumerate(events):
         #move to next signal
-        print("row ", row)
+        #print("row ", row)
         if int(row[5]) != 0:
             lengths.append(signalLen)
             signalLen = 0
