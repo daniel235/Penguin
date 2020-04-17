@@ -27,16 +27,17 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
             #pass to model
             for i in range(len(kmers)):
-                if kmers[i][2] == 'T':
-                    input4Model = PD.createInstance(hot_kmers[i], signals[i])
-                    guess = model.predict(input4Model)
-            
-                    if guess == 0:
-                        print(kmers[i], " control \n")
-                        total_control += 1
-                    else:
-                        print(kmers[i], " pseudo \n")
-                        total_pseudo += 1
+                if len(kmers[i]) != 0:
+                    if kmers[i][2] == 'T':
+                        input4Model = PD.createInstance(hot_kmers[i], signals[i])
+                        guess = model.predict(input4Model)
+                
+                        if guess == 0:
+                            print(kmers[i], " control \n")
+                            total_control += 1
+                        else:
+                            print(kmers[i], " pseudo \n")
+                            total_pseudo += 1
 
 
 def createIdParser(IdFile):
