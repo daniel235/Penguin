@@ -97,7 +97,7 @@ def segmentSignal(events, signal):
             #add event length
             signalLen += int(row[3])
 
-        kmer = row[0]
+        kmer = row[4]
 
     #cut up signal
     current = 0
@@ -107,11 +107,12 @@ def segmentSignal(events, signal):
 
     return kmers, signal_instances
 
+'''
 #visualize
 def show_window():
     #pygame?
     pass
-
+'''
 
 def stats():
     pass
