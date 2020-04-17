@@ -18,7 +18,9 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     for dirpath, subdir, files in os.walk(fastPath):
         for fname in files:
             fname = fastPath + fname
+            print("path ", fname)
             events, signals = parser(fname)
+            print("sigs ", signals)
             kmers, signals = segmentSignal(events, signals)
 
             #create encoder

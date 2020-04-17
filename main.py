@@ -36,12 +36,13 @@ samFile = results.sam_input
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available
 bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
+'''
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
 coord.extract_modified_coords(bedPath, samPath)
-
+'''
 #get signals from modified  (???)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
