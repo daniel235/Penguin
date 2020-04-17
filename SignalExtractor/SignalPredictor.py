@@ -10,30 +10,32 @@ import Models.PrepareData as PD
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
-    #read in fast5 files
-    #parse data
-    events, signals = parser(fastPath)
-    kmers, signals = segmentSignal(events, signals)
-
-    #create encoder
-    hot_kmers = PD.createEncoder(kmers)
-
     #stats keeper
     total_pseudo = 0
     total_control = 0
+    #read in fast5 files
+    #parse data
+    for dirpath, subdir, files in os.walk(fastPath):
+        for fname in files:
+            fname = fastPath + fname
+            events, signals = parser(fname)
+            kmers, signals = segmentSignal(events, signals)
 
-    #pass to model
-    for i in range(len(kmers)):
-        if kmers[i][2] == 'T':
-            input4Model = PD.createInstance(hot_kmers[i], signals[i])
-            guess = model.predict(input4Model)
-    
-            if guess == 0:
-                print(kmers[i], " control \n")
-                total_control += 1
-            else:
-                print(kmers[i], " pseudo \n")
-                total_pseudo += 1
+            #create encoder
+            hot_kmers = PD.createEncoder(kmers)
+
+            #pass to model
+            for i in range(len(kmers)):
+                if kmers[i][2] == 'T':
+                    input4Model = PD.createInstance(hot_kmers[i], signals[i])
+                    guess = model.predict(input4Model)
+            
+                    if guess == 0:
+                        print(kmers[i], " control \n")
+                        total_control += 1
+                    else:
+                        print(kmers[i], " pseudo \n")
+                        total_pseudo += 1
 
 
 def createIdParser(IdFile):
@@ -53,26 +55,27 @@ def findLocation():
     pass
 
 
-def parser(fastPath):
-    for dirpath, subdir, files in os.walk(fastPath):
-        for fname in files:
-            if fname.endswith(".fast5"):
-                #add full path
-                fname = fastPath + fname
-                hf5 = h5py.File(fname, 'r')
-                #todo just extract signal and pass it to model
-                #extract signal  
-                raw_data=list(hf5['/Raw/Reads/'].values())[0]
-                raw_signal=raw_data['Signal'].value
-                #get events
-                events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
-                events = events.value
+def parser(fastfile):
+    if fastfile.endswith(".fast5"):
+        #add full path
+        hf5 = h5py.File(fastfile, 'r')
+        #todo just extract signal and pass it to model
+        #extract signal  
+        raw_data=list(hf5['/Raw/Reads/'].values())[0]
+        raw_signal=raw_data['Signal'].value
+        #get events
+        events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
+        events = events.value
 
     return raw_signal, events
 
 
-def stats():
-    pass
+def stats(pseudo, control):
+    with open("./Data/stats.py", 'w+') as f:
+        l1 = "pseudo count " + pseudo
+        l2 = "not pseudo count " + control
+        f.write(l1)
+        f.write(l2)
 
 
 def segmentSignal(events, signal):
@@ -82,15 +85,15 @@ def segmentSignal(events, signal):
     kmer = ""
     signalLen = 0
     for i, row in enumerate(events):
-        #next signal
-        if row[5] != 0:
+        #move to next signal
+        if int(row[5]) != 0:
             lengths.append(signalLen)
             signalLen = 0
             kmers.append(kmer)
 
         else:
             #add event length
-            signalLen += row[3]
+            signalLen += int(row[3])
 
         kmer = row[0]
 
