@@ -18,11 +18,10 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     for dirpath, subdir, files in os.walk(fastPath):
         for fname in files:
             fname = fastPath + fname
-            print("path ", fname)
             events, signals = parser(fname)
             
             kmers, signals = segmentSignal(events, signals)
-            print("kmers ", kmers)
+            #print("kmers ", kmers)
             #create encoder
             hot_kmers = PD.createEncoder(kmers)
 
@@ -88,6 +87,7 @@ def segmentSignal(events, signal):
     signalLen = 0
     for i, row in enumerate(events):
         #move to next signal
+        print("row ", row)
         if int(row[5]) != 0:
             lengths.append(signalLen)
             signalLen = 0
