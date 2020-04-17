@@ -20,9 +20,9 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
             fname = fastPath + fname
             print("path ", fname)
             events, signals = parser(fname)
-            print("sigs ", signals)
+            
             kmers, signals = segmentSignal(events, signals)
-
+            print("kmers ", kmers)
             #create encoder
             hot_kmers = PD.createEncoder(kmers)
 
@@ -69,7 +69,7 @@ def parser(fastfile):
         events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
         events = events.value
 
-    return raw_signal, events
+    return events, raw_signal
 
 
 def stats(pseudo, control):
