@@ -29,13 +29,11 @@ def createEncoder(X):
     #A G C T
     le = LabelEncoder()          
     le.fit(X)
-    print(le.classes_)
     X = le.transform(X)
     X = X.reshape(-1, 1)
 
     #onehot encode
     _, n_features = np.shape(X)
-    print("&&&&&",n_features)
     enc = OneHotEncoder(handle_unknown='ignore',categories='auto')
     enc.fit(X)
     onehots = enc.transform(X).toarray()
