@@ -33,12 +33,13 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                         guess = model.predict(input4Model)
                 
                         if guess == 0:
-                            print(kmers[i], " control \n")
+                            print(" control \n")
                             total_control += 1
                         else:
-                            print(kmers[i], " pseudo \n")
+                            print(" pseudo \n")
                             total_pseudo += 1
 
+    print("finished running Pseudo: ", total_pseudo, " control: ", total_control)
 
 def createIdParser(IdFile):
     id_dict=dict()
