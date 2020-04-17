@@ -42,7 +42,9 @@ def createEncoder(X):
     return onehots
     
 
-
+def to_onehot(encoder, kmer):
+    onehot = encoder.transform(kmer).toarray()
+    return onehot
     
 
 

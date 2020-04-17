@@ -18,15 +18,22 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #create encoder
     hot_kmers = PD.createEncoder(kmers)
 
+    #stats keeper
+    total_pseudo = 0
+    total_control = 0
+
     #pass to model
-    for kmer, signal in hot_kmers, signals:
-        input4Model = PD.createInstance(kmer, signal)
-        guess = model.predict(input4Model)
+    for i in range(len(kmers)):
+        if kmers[i][2] == 'T':
+            input4Model = PD.createInstance(hot_kmers[i], signals[i])
+            guess = model.predict(input4Model)
     
-        if guess == 0:
-            print(kmer, " control \n")
-        else:
-            print(kmer, " pseudo \n")
+            if guess == 0:
+                print(kmers[i], " control \n")
+                total_control += 1
+            else:
+                print(kmers[i], " pseudo \n")
+                total_pseudo += 1
 
 
 def createIdParser(IdFile):
@@ -98,4 +105,8 @@ def segmentSignal(events, signal):
 #visualize
 def show_window():
     #pygame?
+    pass
+
+
+def stats():
     pass
