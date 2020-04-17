@@ -134,7 +134,7 @@ def run_neural_net(control, modified):
     #onehot encode
     _, n_features = np.shape(X)
     print("&&&&&",n_features)
-    enc = OneHotEncoder(handle_unknown='ignore',categories=[range(350)]*n_features)# note we replace n_values=350 which is depricated in vrsion 0.2 with categories=[range(350)]*n_features
+    enc = OneHotEncoder(handle_unknown='ignore',categories='Auto')# note we replace n_values=350 which is depricated in vrsion 0.2 with categories=[range(350)]*n_features
     enc.fit(X)
     onehots = enc.transform(X).toarray()
 

@@ -10,23 +10,23 @@ import Models.PrepareData as PD
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
-    #id_dict = createIdParser(Idfile)
     #read in fast5 files
     #parse data
-    kmers, signals = parser(fastPath)
+    events, signals = parser(fastPath)
+    kmers, signals = segmentSignal(events, signals)
+
+    #create encoder
+    hot_kmers = PD.createEncoder(kmers)
+
     #pass to model
-    tempKmer = 'TTTTT'
-    input4Model = PD.createInstance(tempKmer, raw_signal)
-    guess = model.predict(input4Model)
-    #todo parse up signal into kmer signals
-    #extract events
-    events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
-    events = events.value
-    segmentSignal(events)
-    if guess == 0:
-        print(fname + " control \n")
-    else:
-        print(fname + " pseudo \n")
+    for kmer, signal in hot_kmers, signals:
+        input4Model = PD.createInstance(kmer, signal)
+        guess = model.predict(input4Model)
+    
+        if guess == 0:
+            print(kmer, " control \n")
+        else:
+            print(kmer, " pseudo \n")
 
 
 def createIdParser(IdFile):
@@ -61,22 +61,39 @@ def parser(fastPath):
                 events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
                 events = events.value
 
+    return raw_signal, events
+
 
 def stats():
     pass
 
 
 def segmentSignal(events, signal):
+    lengths = []
+    kmers = []
+    signal_instances = []
+    kmer = ""
     signalLen = 0
     for i, row in enumerate(events):
         #next signal
         if row[5] != 0:
+            lengths.append(signalLen)
             signalLen = 0
-            return i
+            kmers.append(kmer)
 
         else:
             #add event length
             signalLen += row[3]
+
+        kmer = row[0]
+
+    #cut up signal
+    current = 0
+    for size in lengths:
+        signal_instances.append([signal[current:current+size+1]])
+        current += size + 1
+
+    return kmers, signal_instances
 
 #visualize
 def show_window():

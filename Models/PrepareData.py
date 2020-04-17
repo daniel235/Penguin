@@ -1,7 +1,9 @@
 from statistics import mean, median
 #from keras.models import model_from_json
 from tensorflow.keras.models import model_from_json
-
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from enum import Enum
+import numpy as np
 
 def createInstance(kmer, raw_signal, type=None):
     #requirements for NN model
@@ -21,3 +23,27 @@ def prepareNNModel():
     print("loaded model")
     loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
     return loaded_model
+
+
+def createEncoder(X):
+    #A G C T
+    le = LabelEncoder()          
+    le.fit(X)
+    print(le.classes_)
+    X = le.transform(X)
+    X = X.reshape(-1, 1)
+
+    #onehot encode
+    _, n_features = np.shape(X)
+    print("&&&&&",n_features)
+    enc = OneHotEncoder(handle_unknown='ignore',categories='auto')
+    enc.fit(X)
+    onehots = enc.transform(X).toarray()
+    return onehots
+    
+
+
+    
+
+
+    
