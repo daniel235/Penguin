@@ -17,31 +17,33 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #parse data
     for dirpath, subdir, files in os.walk(fastPath):
         for fname in files:
-            fname = fastPath + fname
-            events, signals = parser(fname)
-            
-            kmers, signals = segmentSignal(events, signals)
-            #print("kmers ", kmers)
-            #create encoder
-            hot_kmers = PD.createEncoder(kmers)
-
-            #pass to model
-            for i in range(len(kmers)):
-                if len(kmers[i]) != 0:
-                    #if kmers[i][2] == 'T':
-                    signals[i] = signals[i].tolist()
-                    print("sigs ", signals[i])
-                    input4Model = PD.createInstance(hot_kmers[i], signals[i])
-                    guess = model.predict(input4Model)
+            if fname.endswith(".fast5"):
+                fname = fastPath + fname
+                events, signals = parser(fname)
                 
-                    if guess == 0:
-                        print(kmers[i], " control \n")
-                        total_control += 1
-                    else:
-                        print(kmers[i], " pseudo \n")
-                        total_pseudo += 1
+                kmers, signals = segmentSignal(events, signals)
+                #print("kmers ", kmers)
+                #create encoder
+                hot_kmers = PD.createEncoder(kmers)
+
+                #pass to model
+                for i in range(len(kmers)):
+                    if len(kmers[i]) != 0:
+                        #if kmers[i][2] == 'T':
+                        #todo fix inputs
+                        print("sigs ", signals[i])
+                        input4Model = PD.createInstance(hot_kmers[i], signals[i])
+                        guess = model.predict(input4Model)
+                        print(input4Model)
+                        if guess == 0:
+                            print(kmers[i], " control \n")
+                            total_control += 1
+                        else:
+                            print(kmers[i], " pseudo \n")
+                            total_pseudo += 1
 
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control)
+
 
 def createIdParser(IdFile):
     id_dict=dict()
