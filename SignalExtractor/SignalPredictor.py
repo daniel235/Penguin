@@ -20,7 +20,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #set up locations of modifications
     if bedFile != None:
         pass
-        #start process for getting id's and mod coords 
+        #start process for getting id's and mod coords
 
     else:
         print("No validation just prediction")
@@ -38,7 +38,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 kmers, signals = segmentSignal(events, signals)
                 #create encoder
                 hot_kmers = PD.createEncoder(kmers)
-                
+
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
@@ -84,7 +84,7 @@ def parser(fastfile):
         #add full path
         hf5 = h5py.File(fastfile, 'r')
         #todo just extract signal and pass it to model
-        #extract signal  
+        #extract signal
         raw_data=list(hf5['/Raw/Reads/'].values())[0]
         raw_signal=raw_data['Signal'].value
         #get events
@@ -139,6 +139,10 @@ def show_window():
 
 def stats():
     pass
+
+
+
+
 
 
 def validation(location, bed_locations):
