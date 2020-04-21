@@ -42,8 +42,16 @@ bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast
 #test if files are all available
 bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 
-#todo insert nanopolish script
+#todo insert nanopolish script(test script takes care of this)
+#events test
+currentFiles = os.listdir(fastPath)
+currentFile = None
+for f in currentFiles:
+    if f.endswith(".fast5"):
+        currentFile = f
+        break
 
+tscript.event_check(fastPath + currentFile)
 
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
