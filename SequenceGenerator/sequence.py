@@ -81,11 +81,11 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
                 if file == "basecall":
                     newDirectory = os.getcwd() + "/Data/basecall/"
                     bcFlag = True
-                    for file in os.listdir(newDirectory):
-                        if file.endswith(".fastq"):
+                    for filer in os.listdir(newDirectory):
+                        if filer.endswith(".fastq"):
                             #input minmap directory
                             minmapDir = os.getcwd() + "minimap2"
-                            samFile = al.minimapAligner(file, referenceFile, minDir=minmapDir)
+                            samFile = al.minimapAligner(filer, referenceFile, minDir=minmapDir)
 
             #need to basecall
             if bcFlag == False:
@@ -98,6 +98,6 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
 
     #get default bedfile if empty
     if bedfile == None:
-        bedfile = ""
+        bedfile = "./Data/PseudoU_hg38_BED_6.bed"
 
     return bedfile, fast5Path, referenceFile, samFile
