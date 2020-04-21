@@ -55,11 +55,12 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 kmers, signals = segmentSignal(events, signals)
                 #create encoder
                 hot_kmers = PD.createEncoder(kmers)
-
+                tKmers = 0
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
                         if chr(kmers[i][2]) == 'T':
+                            tKmers += 1
                             if len(signals[i][0]) > 1:
                                 signals[i] = list(map(int, signals[i][0]))
                             else:
@@ -82,7 +83,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                                 print(kmers[i], " pseudo \n")
                                 total_pseudo += 1
 
-    print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / len(kmers))
+    print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tKmers)
 
 
 def createIdParser(IdFile):
@@ -121,7 +122,7 @@ def parser(fastfile):
         fast5_ids=hf5.get('Raw/Reads/'+sas+'/')
         fast5_ids=fast5_ids.attrs['read_id']
 
-        read_id_v=fast5_ids.decode('utf-8')
+        read_id=fast5_ids.decode('utf-8')
 
 
     return events, raw_signal, read_id
@@ -129,7 +130,7 @@ def parser(fastfile):
 
 
 def stats(pseudo, control):
-    with open("./Data/stats.py", 'w+') as f:
+    with open("./Data/stats.txt", 'w+') as f:
         l1 = "pseudo count " + pseudo
         l2 = "not pseudo count " + control
         f.write(l1)
