@@ -115,16 +115,17 @@ def parser(fastfile):
         events = events.value
 
         #get id
-        fast5_p_id=h5f.get('Raw/Reads/')
+        fast5_p_id=hf5.get('Raw/Reads/')
         sas=''.join(list(fast5_p_id.keys()))
 
-        fast5_ids=h5f.get('Raw/Reads/'+sas+'/')
+        fast5_ids=hf5.get('Raw/Reads/'+sas+'/')
         fast5_ids=fast5_ids.attrs['read_id']
 
         read_id_v=fast5_ids.decode('utf-8')
 
 
     return events, raw_signal, read_id
+
 
 
 def stats(pseudo, control):
