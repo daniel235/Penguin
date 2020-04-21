@@ -3,12 +3,25 @@ from statistics import mean, median
 from tensorflow.keras.models import model_from_json
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from enum import Enum
+import pickle
 import numpy as np
+
 
 def createInstance(kmer, raw_signal, type=None):
     #requirements for NN model
     #kmer/median/mean/max/min
-    return [kmer, median(raw_signal), mean(raw_signal), max(raw_signal), min(raw_signal)]
+    inst = []
+    for k in kmer:
+        inst.append(k)
+
+    inst.append(median(raw_signal))
+    inst.append(mean(raw_signal))
+    inst.append(max(raw_signal))
+    inst.append(min(raw_signal))
+    inst.append(len(raw_signal))
+    inst = np.array(inst)
+    inst = np.transpose(inst)
+    return inst
 
 
 def prepareNNModel():
@@ -27,6 +40,7 @@ def prepareNNModel():
 
 def createEncoder(X):
     #A G C T
+    '''
     le = LabelEncoder()          
     le.fit(X)
     X = le.transform(X)
@@ -34,9 +48,23 @@ def createEncoder(X):
 
     #onehot encode
     _, n_features = np.shape(X)
-    enc = OneHotEncoder(handle_unknown='ignore',categories='auto')
+    enc = OneHotEncoder(handle_unknown='ignore', categories='auto')
     enc.fit(X)
-    onehots = enc.transform(X).toarray()
+    '''
+    #load encoder
+    le = LabelEncoder()          
+    le.fit(X)
+    X = le.transform(X)
+    X = X.reshape(-1, 1)
+    enc = None
+    with open("./Models/encoder", 'rb') as e:
+        enc = pickle.load(e)
+
+    if enc != None:
+        onehots = enc.transform(X).toarray()
+    else:
+        raise Exception
+
     return onehots
     
 

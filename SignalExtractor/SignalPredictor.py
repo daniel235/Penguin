@@ -13,6 +13,10 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #stats keeper
     total_pseudo = 0
     total_control = 0
+
+    for layer in model.layers:
+        print("layer weights ", layer.get_weights())
+
     #read in fast5 files
     #parse data
     for dirpath, subdir, files in os.walk(fastPath):
@@ -22,20 +26,24 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 events, signals = parser(fname)
                 
                 kmers, signals = segmentSignal(events, signals)
-                #print("kmers ", kmers)
                 #create encoder
                 hot_kmers = PD.createEncoder(kmers)
-
+                
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
                         #if kmers[i][2] == 'T':
                         #todo fix inputs
-                        print("sigs ", signals[i])
-                        input4Model = PD.createInstance(hot_kmers[i], signals[i])
+                        #signals[i] = [int(s) for s in signals[i]]
+                        if len(signals[i][0]) > 1:
+                            signals[i] = list(map(int, signals[i][0]))
+                        else:
+                            signals[i][0] = int(signals[i][0][0])
+
+                        input4Model = PD.createInstance(hot_kmers[i], signals[i]).reshape((1,-1))
                         guess = model.predict(input4Model)
-                        print(input4Model)
-                        if guess == 0:
+                        print("guess ", guess)
+                        if guess != 0:
                             print(kmers[i], " control \n")
                             total_control += 1
                         else:
