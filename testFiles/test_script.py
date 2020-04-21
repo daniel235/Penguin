@@ -59,7 +59,6 @@ def event_check(filename):
         pass
 
 
-
 def show_penguin():
     penguin = """
     =============================================================

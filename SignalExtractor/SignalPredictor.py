@@ -16,14 +16,22 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #stats keeper
     total_pseudo = 0
     total_control = 0
-
+    accuracy = 0
     #set up locations of modifications
     if bedFile != None:
-        pass
         #start process for getting id's and mod coords
+        #load modified locations ids
+        modified_ids = []
+        with open("./Data/pstrand_chr_modification_coors.txt", 'r') as f:
+            for line in f:
+                tab_line = line.split( )
+                modified_ids.append(tab_line[3])
 
     else:
         print("No validation just prediction")
+
+
+    currentLocation = 0
 
     #read in fast5 files
     #parse data
@@ -33,7 +41,16 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
             if fname.endswith(".fast5"):
                 fname = fastPath + fname
                 #get events and signals from fast5 file
-                events, signals = parser(fname)
+                events, signals, ID = parser(fname)
+                #check if fast5 contains pseudouridine
+                if ID in modified_ids:
+                    correct_guess = 1
+                    print("in a modified fast5")
+
+                else:
+                    #control
+                    correct_guess = 0
+
                 #separate kmers with corresponding signals
                 kmers, signals = segmentSignal(events, signals)
                 #create encoder
@@ -53,13 +70,19 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
                             print("guess ", guess)
                             if guess < 0.50:
+                                if correct_guess == 1:
+                                    accuracy += 1
+
                                 print(kmers[i], " control \n")
                                 total_control += 1
                             else:
+                                if correct_guess == 0:
+                                    accuracy += 1
+
                                 print(kmers[i], " pseudo \n")
                                 total_pseudo += 1
 
-    print("finished running Pseudo: ", total_pseudo, " control: ", total_control)
+    print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / len(kmers))
 
 
 def createIdParser(IdFile):
@@ -91,7 +114,17 @@ def parser(fastfile):
         events = hf5.get('/Analyses/Basecall_1D_001/BaseCalled_template/Events/')
         events = events.value
 
-    return events, raw_signal
+        #get id
+        fast5_p_id=h5f.get('Raw/Reads/')
+        sas=''.join(list(fast5_p_id.keys()))
+
+        fast5_ids=h5f.get('Raw/Reads/'+sas+'/')
+        fast5_ids=fast5_ids.attrs['read_id']
+
+        read_id_v=fast5_ids.decode('utf-8')
+
+
+    return events, raw_signal, read_id
 
 
 def stats(pseudo, control):

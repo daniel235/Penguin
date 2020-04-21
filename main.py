@@ -63,6 +63,7 @@ coord.extract_modified_coords(bedPath, samPath)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
 
+
 #Extract.extract_signal(Idfile, coordFile)
 #ExtractControl.extract_control(Idfile, coordFile)
 
@@ -70,13 +71,11 @@ Idfile = "./Data/Fast5_ids.txt"
 modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
 
-
 #model.run_neural_net(control, modified)
 #PD.createInstance(control, modified)
 
 #load model
 model = PD.prepareNNModel()
-#PD.createInstance()
 fp = fastPath
 Predict.predict(model, fastPath=fp, bedFile=bedPath)
 #RM.run_nn(model, [])
