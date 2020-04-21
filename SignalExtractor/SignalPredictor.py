@@ -17,6 +17,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     total_pseudo = 0
     total_control = 0
     accuracy = 0
+    tKmers = 0
     #set up locations of modifications
     if bedFile != None:
         #start process for getting id's and mod coords
@@ -55,7 +56,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 kmers, signals = segmentSignal(events, signals)
                 #create encoder
                 hot_kmers = PD.createEncoder(kmers)
-                tKmers = 0
+
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
@@ -70,14 +71,16 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             #probability
                             guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
                             print("guess ", guess)
+                            #control
                             if guess < 0.50:
-                                if correct_guess == 1:
+                                if correct_guess == 0:
                                     accuracy += 1
 
                                 print(kmers[i], " control \n")
                                 total_control += 1
+                            #pseudo
                             else:
-                                if correct_guess == 0:
+                                if correct_guess == 1:
                                     accuracy += 1
 
                                 print(kmers[i], " pseudo \n")
