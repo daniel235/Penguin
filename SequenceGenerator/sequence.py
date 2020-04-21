@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import os, sys, platform
 
-import SequenceGenerator.basecall as bc 
+import SequenceGenerator.basecall as bc
 import SequenceGenerator.qtoa as qa
 import SequenceGenerator.align as al
 
@@ -17,7 +17,7 @@ minstall = True
 squiggleInstall = True
 minmapDir = os.getcwd() + "minimap2"
 print("mindir ", minmapDir)
-for dirname, subdir, files in os.walk(os.getcwd()):    
+for dirname, subdir, files in os.walk(os.getcwd()):
     if "minimap2" in subdir:
         print("already installed minmap2")
         minstall = False
@@ -75,25 +75,29 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
     #bwa-mem
     if samFile == None:
         if referenceFile != None:
-            for file in os.listdir(newDirectory):
-                if file.endswith(".fastq"):
-                    #input minmap directory
-                    minmapDir = os.getcwd() + "minimap2"
-                    samFile = al.minimapAligner(file, referenceFile, minDir=minmapDir)
+            #check if basecalled files exist
+            bcFlag = False
+            for file in os.listdir("/Data/"):
+                if file == "basecall":
+                    newDirectory = os.getcwd() + "/Data/basecall/"
+                    bcFlag = True
+                    for file in os.listdir(newDirectory):
+                        if file.endswith(".fastq"):
+                            #input minmap directory
+                            minmapDir = os.getcwd() + "minimap2"
+                            samFile = al.minimapAligner(file, referenceFile, minDir=minmapDir)
+
+            #need to basecall
+            if bcFlag == False:
+                bc.basecall_files(fast5Path)
+                newDirectory = os.getcwd() + "/Data/basecall/"
+                qa.convertFastq(newDirectory)
 
         else:
             print("Input Reference File")
 
     #get default bedfile if empty
     if bedfile == None:
-        befile = ""
+        bedfile = ""
 
     return bedfile, fast5Path, referenceFile, samFile
-
-
-
-
-
-
-
-

@@ -14,13 +14,14 @@ def file_test(bed_file, ref_file, sam_file):
         fastfile = os.getcwd() + "/Data/basecall/"
         for ffile in os.listdir(fastfile):
             if ffile.endswith(".fastq") or ffile.endswith(".fasta"):
+                #check if fast files exist in directory 
                 fastfile = os.getcwd() + "/Data/basecall/" + ffile
 
         if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True:
             raise FileNotFoundError
 
         sam_file = align.minimapAligner(fastfile, ref_file, minDir=(os.getcwd() + "/minimap2"))
-        
+
 
     elif ref_file == None and sam_file == None:
         print("ref file missing")

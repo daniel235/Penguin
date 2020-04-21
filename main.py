@@ -21,8 +21,13 @@ parser.add_argument('-i', action='store', dest='path_input', help='Provide Fast5
 parser.add_argument('-b', action='store', dest='bed_input', help='Provide Bed file')
 #reference genome to align
 parser.add_argument('-ref', action='store', dest='ref_input', help='Provide reference genome file')
-#sam file 
+#sam file
 parser.add_argument('-s', action='store', dest='sam_input', help='Provide Sam File')
+#purpose (Signal Extraction/ Signal Prediction)
+parser.add_argument('-e', action='store', dest='use_input', help='Extraction')
+#Prediction
+parser.add_argument('-p', action='store', dest='pred_input', help='Prediction')
+
 
 #get arguments
 results = parser.parse_args()
@@ -36,24 +41,27 @@ samFile = results.sam_input
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available
 bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
-'''
+
+#todo insert nanopolish script
+
+
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
 coord.extract_modified_coords(bedPath, samPath)
-'''
-#get signals from modified  (???)
+
+#get signals from modified  (???) (hardcoded)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
-'''
+
 #Extract.extract_signal(Idfile, coordFile)
 #ExtractControl.extract_control(Idfile, coordFile)
 
 #get file of signals and pass to model
 modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
-'''
+
 
 #model.run_neural_net(control, modified)
 #PD.createInstance(control, modified)
@@ -62,5 +70,5 @@ control = "./Data/control_signals.txt"
 model = PD.prepareNNModel()
 #PD.createInstance()
 fp = fastPath
-Predict.predict(model, fastPath=fp)
+Predict.predict(model, fastPath=fp, bedFile=bedPath)
 #RM.run_nn(model, [])

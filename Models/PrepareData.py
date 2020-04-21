@@ -11,14 +11,16 @@ def createInstance(kmer, raw_signal, type=None):
     #requirements for NN model
     #kmer/median/mean/max/min
     inst = []
-    for k in kmer:
-        inst.append(k)
 
-    inst.append(median(raw_signal))
     inst.append(mean(raw_signal))
+    inst.append(median(raw_signal))
     inst.append(max(raw_signal))
     inst.append(min(raw_signal))
     inst.append(len(raw_signal))
+
+    for k in kmer:
+        inst.append(k)
+        
     inst = np.array(inst)
     inst = np.transpose(inst)
     return inst

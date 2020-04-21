@@ -7,6 +7,9 @@ import Models.PrepareData as PD
 #iterate through signal events
 #figure out how to get accuracy of predictions
 #files needed bed file sam file
+def get_locations():
+    pass
+
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
@@ -14,17 +17,24 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     total_pseudo = 0
     total_control = 0
 
-    for layer in model.layers:
-        print("layer weights ", layer.get_weights())
+    #set up locations of modifications
+    if bedFile != None:
+        pass
+        #start process for getting id's and mod coords 
+
+    else:
+        print("No validation just prediction")
 
     #read in fast5 files
     #parse data
     for dirpath, subdir, files in os.walk(fastPath):
         for fname in files:
+            #read only if fast5 file
             if fname.endswith(".fast5"):
                 fname = fastPath + fname
+                #get events and signals from fast5 file
                 events, signals = parser(fname)
-                
+                #separate kmers with corresponding signals
                 kmers, signals = segmentSignal(events, signals)
                 #create encoder
                 hot_kmers = PD.createEncoder(kmers)
@@ -32,23 +42,22 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
-                        #if kmers[i][2] == 'T':
-                        #todo fix inputs
-                        #signals[i] = [int(s) for s in signals[i]]
-                        if len(signals[i][0]) > 1:
-                            signals[i] = list(map(int, signals[i][0]))
-                        else:
-                            signals[i][0] = int(signals[i][0][0])
+                        if chr(kmers[i][2]) == 'T':
+                            if len(signals[i][0]) > 1:
+                                signals[i] = list(map(int, signals[i][0]))
+                            else:
+                                signals[i][0] = int(signals[i][0][0])
 
-                        input4Model = PD.createInstance(hot_kmers[i], signals[i]).reshape((1,-1))
-                        guess = model.predict(input4Model)
-                        print("guess ", guess)
-                        if guess != 0:
-                            print(kmers[i], " control \n")
-                            total_control += 1
-                        else:
-                            print(kmers[i], " pseudo \n")
-                            total_pseudo += 1
+                            input4Model = PD.createInstance(hot_kmers[i], signals[i]).reshape((1,-1))
+                            #probability
+                            guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+                            print("guess ", guess)
+                            if guess < 0.50:
+                                print(kmers[i], " control \n")
+                                total_control += 1
+                            else:
+                                print(kmers[i], " pseudo \n")
+                                total_pseudo += 1
 
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control)
 
@@ -129,4 +138,9 @@ def show_window():
 '''
 
 def stats():
+    pass
+
+
+def validation(location, bed_locations):
+    #read in bed file
     pass
