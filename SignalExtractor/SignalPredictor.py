@@ -7,9 +7,9 @@ import Models.PrepareData as PD
 #iterate through signal events
 #figure out how to get accuracy of predictions
 #files needed bed file sam file
-def get_locations():
+def get_locations(sam, id):
     pass
-
+    #get sam locations
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):

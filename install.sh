@@ -16,3 +16,9 @@ mkdir Data/basecall/
 cd ..
 chmod -R 777 Penguin
 cd Penguin
+
+
+#installing nanopolish
+git clone --recursive https://github.com/jts/nanopolish.git
+cd nanopolish
+make

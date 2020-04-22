@@ -60,6 +60,8 @@ def extract_modified_coords(bedPath, samPath):
     total=len(sam_file)
     print("Sam file read successfully..starting coordinate extraction...")
 
+#   802 1489
+
     mod_d=dict()
 
     for e in locs:
@@ -85,7 +87,7 @@ def extract_modified_coords(bedPath, samPath):
                 #chrm num
                 s_chr=''.join(i1[2])
                 #position
-                s_chr_s=''.join(i1[3]) 
+                s_chr_s=''.join(i1[3])
                 #cigar, position
                 coordinates,gstop=cigar_parse(i1[5],int(i1[3]))
                 try:
@@ -93,7 +95,7 @@ def extract_modified_coords(bedPath, samPath):
                     for chr_loc in mod_d[s_chr]:
                         if int(chr_loc)-2 >= int(i1[3]) and int(chr_loc)+2 <= int(i1[3])+gstop:
                             for coord in coordinates:
-                                if int(coord[0]) <= int(chr_loc) and int(coord[1]) >= int(chr_loc): 
+                                if int(coord[0]) <= int(chr_loc) and int(coord[1]) >= int(chr_loc):
                                     #sam file range of coordinates
                                     genomic_coor=list(range(int(coord[0]),int(coord[1])+1))
                                     #print(genomic_coor)
@@ -102,7 +104,6 @@ def extract_modified_coords(bedPath, samPath):
                                     i_gc=genomic_coor.index(int(chr_loc))
                                     i_sc=seq_coor[i_gc]
                                     f.write(str(s_chr)+' '+str(chr_loc)+' '+str(i_sc)+' '+str(i1[0])+'\n')
-                                    
+
                 except KeyError:
                     continue
-
