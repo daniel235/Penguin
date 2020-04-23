@@ -32,7 +32,7 @@ def nanopolish_create_fasta(fastDir):
     return "reads.fasta"
 
 
-def nanopolish_events(fastDir, referenceFile):
+def nanopolish_events(fastDir, referenceFile="Data/"):
     #create aligned sam file and convert to bam file
     #check for fasta
     fasta = "Data/" + nanopolish_create_fasta(fastDir)

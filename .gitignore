@@ -6,5 +6,8 @@ htslib
 Data
 Models/*.pyc
 Models/__pycache__
+testFiles/__pycache__
+SequenceGenerator/__pycache__
 SignalExtractor/__pycache__
 SignalExtractor/*.pyc
+*.pyc
