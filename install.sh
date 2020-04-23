@@ -17,8 +17,26 @@ cd ..
 chmod -R 777 Penguin
 cd Penguin
 
-
 #installing nanopolish
 git clone --recursive https://github.com/jts/nanopolish.git
 cd nanopolish
 make
+
+#install prerequisites for samtools
+git clone https://github.com/samtools/htslib
+cd htslib
+autoheader
+autoconf
+./configure
+make
+make install
+
+#install samtools
+cd ..
+git clone https://github.com/samtools/samtools
+cd samtools
+autoconf -Wno-syntax
+./configure --without-curses
+make
+make install
+cd ..

@@ -1,6 +1,8 @@
 minimap2
 SquiggleKit
 nanopolish
+samtools
+htslib
 Data
 Models/*.pyc
 Models/__pycache__
