@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals"
 parser.add_argument('-i', action='store', dest='path_input', help='Provide Fast5 folder path')
 #bed file argument
 parser.add_argument('-b', action='store', dest='bed_input', help='Provide Bed file')
-#reference genome to align
+#reference genome to align (If missing events must provide reference file)
 parser.add_argument('-ref', action='store', dest='ref_input', help='Provide reference genome file')
 #sam file
 parser.add_argument('-s', action='store', dest='sam_input', help='Provide Sam File')
