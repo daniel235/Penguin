@@ -51,7 +51,8 @@ for f in currentFiles:
         currentFile = f
         break
 
-tscript.event_check(fastPath + currentFile)
+
+tscript.event_check(fastPath, currentFile, refPath)
 
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)

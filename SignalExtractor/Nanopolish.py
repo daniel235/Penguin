@@ -47,8 +47,9 @@ def nanopolish_events(fastDir, referenceFile):
     #check if bamfile is complete
     bamcheck = "samtools quickcheck reads-" + referenceFile[:-3] + ".sorted.bam"
     os.system(bamcheck)
-    
 
-https://github.com/samtools/htslib
-
-./configure --without-curses
+    #align nanopore events to reference genome
+    event_cmd = "nanopolish eventalign --reads reads.fasta --bam reads-" + referenceFile[:-3] + ".sorted.bam --genome " + referenceFile + " --scale-events > reads-" + referenceFile[:-3] + ".eventalign.txt"
+    os.system(event_cmd)
+    #return events file
+    return "reads-" + referenceFile[:-3] + ".eventalign.txt"

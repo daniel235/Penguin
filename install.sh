@@ -21,6 +21,7 @@ cd Penguin
 git clone --recursive https://github.com/jts/nanopolish.git
 cd nanopolish
 make
+cd ..
 
 #install prerequisites for samtools
 git clone https://github.com/samtools/htslib
@@ -30,6 +31,7 @@ autoconf
 ./configure
 make
 make install
+cd ..
 
 #install samtools
 cd ..

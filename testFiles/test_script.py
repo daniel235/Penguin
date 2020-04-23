@@ -1,5 +1,6 @@
 import h5py
 import SequenceGenerator.align as align
+import SignalExtractor.Nanopolish as events
 import os
 
 #test to check if required files are created
@@ -47,16 +48,17 @@ def id_file_test():
             return
 
 
-def event_check(filename):
-    hdf = h5py.File(filename, 'r')
+def event_check(fpath, filename, ref):
+    hdf = h5py.File(fpath + filename, 'r')
     fast_keys = hdf.keys()
-    if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys:
+    if "/Analyses/Basecall_1D_0011/BaseCalled_template/Events/" in fast_keys:
         print("events test passed \n")
         show_penguin()
 
     else:
         #create events(nanopolish code goes here)
-        pass
+        event_file = events.nanopolish_events(fpath, ref)
+        print("event file ", event_file)
 
 
 def show_penguin():
