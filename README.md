@@ -26,8 +26,14 @@ First run the install.sh file to get all required files to run the program.
 ```
 -i fast5 path(required)
 -s samfile
--b bedfile(optional)
--ref reference Genome 
+-b bedfile(Default if not included)
+-ref reference Genome (Default if not included)
+```
+
+#Example
+
+```
+python main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed_directory/my_bed_file.bed
 ```
 
 
@@ -53,4 +59,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Falcon
-
