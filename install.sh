@@ -2,9 +2,11 @@
 
 #install minimap2
 git clone https://github.com/lh3/minimap2
+cd minimap2 && make
+cd ..
 
 #install squiggleKit & scrappie
-git clone https://github.com/Psy-Fer/SquiggleKit.git
+#git clone https://github.com/Psy-Fer/SquiggleKit.git
 pip install numpy h5py sklearn matplotlib
 pip install scrappie
 pip3 install tensorflow==2.1.0
