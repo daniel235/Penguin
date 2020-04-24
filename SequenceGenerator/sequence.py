@@ -77,7 +77,7 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
         if referenceFile != None:
             #check if basecalled files exist
             bcFlag = False
-            for file in os.listdir("/Data/"):
+            for file in os.listdir("./Data"):
                 if file == "basecall":
                     newDirectory = os.getcwd() + "/Data/basecall/"
                     bcFlag = True
