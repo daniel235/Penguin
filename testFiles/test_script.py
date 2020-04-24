@@ -26,8 +26,19 @@ def file_test(bed_file, ref_file, sam_file):
 
 
     elif ref_file == None and sam_file == None:
-        print("ref file test failed")
-        raise FileNotFoundError
+        #use default ref files
+        #download ref file
+        refFlag = False
+        print("WARNING: default reference file is 18gb in size, ..downloading")
+        os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
+        os.system("tar -xzf refgenome.tar.gz")
+        for f in os.listdir(os.getcwd()):
+            if f == "refgenome.tar.gz":
+                refFlag = True
+
+        if refFlag == False:
+            print("ref file test failed")
+            raise FileNotFoundError
 
     elif sam_file == None:
         print("sam file test failed")
