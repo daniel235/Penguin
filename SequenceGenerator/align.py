@@ -3,7 +3,7 @@ import os, sys
 def guppyAligner(inputFile, ref):
     #make align directory
     try:
-        dircmd = "mkdir " + inputFile + "sam"
+        dircmd = "mkdir " + inputFile + "sam
         os.system(dircmd)
     except:
         pass
@@ -12,14 +12,11 @@ def guppyAligner(inputFile, ref):
     os.system(alignCmd)
 
 
-def minimapAligner(ifile, ref, minDir=os.getcwd()):
+def minimapAligner(ifile, ref):
     #go into minimap directory
-    curDir = os.getcwd()
-    os.system("cd minimap2")
-    alcmd = "./minimap2 -a " + ref + " " + ifile + " > " + curDir + "/Alignment.sam"
+    alcmd = "./minimap2/minimap2 -a " + ref + " " + ifile + " > " + "Data/Alignment.sam"
     os.system(alcmd)
-    os.system("cd ..")
-    return curDir + "/Alignment.sam"
+    return "Data/Alignment.sam"
 
 
 '''

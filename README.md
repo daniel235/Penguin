@@ -30,7 +30,7 @@ First run the install.sh file to get all required files to run the program.
 -ref reference Genome (Default if not included)
 ```
 
-#Example
+## Example
 
 ```
 python main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed_directory/my_bed_file.bed

@@ -22,7 +22,7 @@ def file_test(bed_file, ref_file, sam_file):
             print("basecall test failed")
             raise FileNotFoundError
 
-        sam_file = align.minimapAligner(fastfile, ref_file, minDir=(os.getcwd() + "/minimap2"))
+        sam_file = align.minimapAligner(fastfile, ref_file)
 
 
     elif ref_file == None and sam_file == None:
@@ -35,10 +35,22 @@ def file_test(bed_file, ref_file, sam_file):
         for f in os.listdir(os.getcwd()):
             if f == "refgenome.tar.gz":
                 refFlag = True
+                ref_file = "./Home_sapiens/Ensembl/GRCh37/sequence/WholeGenomeFasta/genome.fa"
 
         if refFlag == False:
             print("ref file test failed")
             raise FileNotFoundError
+
+        #get basecalled file
+        fastfile = os.getcwd() + "/Data/basecall/"
+        for ffile in os.listdir(fastfile):
+            if ffile.endswith(".fastq") or ffile.endswith(".fasta"):
+                #check if fast files exist in directory
+                fastfile = os.getcwd() + "/Data/basecall/" + ffile
+                break
+
+        #ref file exists so align here
+        sam_file = align.minimapAligner(fastfile, ref_file)
 
     elif sam_file == None:
         print("sam file test failed")
