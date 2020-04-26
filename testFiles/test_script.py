@@ -29,13 +29,23 @@ def file_test(bed_file, ref_file, sam_file):
         #use default ref files
         #download ref file
         refFlag = False
-        print("WARNING: default reference file is 18gb in size, ..downloading")
-        os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
-        os.system("tar -xzf refgenome.tar.gz")
+        downloadedFlag = False
+        #check if default reference file exists
         for f in os.listdir(os.getcwd()):
-            if f == "refgenome.tar.gz":
-                refFlag = True
-                ref_file = "./Home_sapiens/Ensembl/GRCh37/sequence/WholeGenomeFasta/genome.fa"
+            if f == "Homo_sapiens":
+                downloadedFlag = True
+
+        if downloadedFlag != True:
+            print("WARNING: default reference file is 18gb in size, ..downloading")
+            os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
+            os.system("tar -xzf refgenome.tar.gz")
+            for f in os.listdir(os.getcwd()):
+                if f == "refgenome.tar.gz":
+                    refFlag = True
+                    break
+
+
+        ref_file = "./Home_sapiens/Ensembl/GRCh37/sequence/WholeGenomeFasta/genome.fa"
 
         if refFlag == False:
             print("ref file test failed")
