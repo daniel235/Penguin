@@ -8,8 +8,34 @@ import Models.PrepareData as PD
 #figure out how to get accuracy of predictions
 #files needed bed file sam file
 def get_locations(sam, id):
-    pass
+    locs = []
+    #sam format (id:0, chrm num:2, location:3)
     #get sam locations
+    #look for id in sam array
+    for line in sam:
+        #match found
+        if id == sam[0]:
+            #get chromosome
+            chm = sam[1]
+            #get chromosome number
+            loc = sam[2]
+            #get location in chromosome
+            seq = sam[4]
+
+        locs.append([chm, loc, seq])
+
+    return locs
+
+def get_sam_data(sam):
+    sam_data = []
+    #create sam table
+    with open(sam, 'r') as f:
+        for line in f:
+            column = line.split( )
+            #add read id/chromosome number/location/cigar/sequence
+            sam_data.append([column[0], column[2], column[3], column[4], column[9]])
+
+    return sam_data
 
 
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
@@ -31,6 +57,8 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     else:
         print("No validation just prediction")
 
+    #get sam data
+    sam_array = get_sam_data(samFile)
 
     currentLocation = 0
 
@@ -40,9 +68,14 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
         for fname in files:
             #read only if fast5 file
             if fname.endswith(".fast5"):
+                #get locations here
                 fname = fastPath + fname
                 #get events and signals from fast5 file
                 events, signals, ID = parser(fname)
+                #get locations of fast5 file
+                locs = get_locations(sam_array, ID)
+                begin_location, end_location = locs[0][1], locs[0][1] + len(locs[0][2])
+                currentPosition = begin_location
                 #check if fast5 contains pseudouridine
                 if ID in modified_ids:
                     correct_guess = 1
@@ -60,10 +93,13 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
+                        currentPosition += 1
                         if chr(kmers[i][2]) == 'T':
                             tKmers += 1
+                            #if signal length is greater than 1
                             if len(signals[i][0]) > 1:
                                 signals[i] = list(map(int, signals[i][0]))
+                            #if signal length is 1
                             else:
                                 signals[i][0] = int(signals[i][0][0])
 
@@ -76,7 +112,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                                 if correct_guess == 0:
                                     accuracy += 1
 
-                                print(kmers[i], " control \n")
+                                print("position ", currentPosition + 2, " ", kmers[i], " control \n")
                                 total_control += 1
                             #pseudo
                             else:
@@ -177,10 +213,6 @@ def show_window():
 
 def stats():
     pass
-
-
-
-
 
 
 def validation(location, bed_locations):

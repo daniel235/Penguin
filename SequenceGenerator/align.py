@@ -3,7 +3,7 @@ import os, sys
 def guppyAligner(inputFile, ref):
     #make align directory
     try:
-        dircmd = "mkdir " + inputFile + "sam
+        dircmd = "mkdir " + inputFile + "sam"
         os.system(dircmd)
     except:
         pass

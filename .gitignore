@@ -11,3 +11,5 @@ SequenceGenerator/__pycache__
 SignalExtractor/__pycache__
 SignalExtractor/*.pyc
 *.pyc
+refgenome.tar.gz
+Homo_sapiens

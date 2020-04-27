@@ -53,7 +53,7 @@ def file_test(bed_file, ref_file, sam_file):
 
         ref_file = "./Home_sapiens/Ensembl/GRCh37/sequence/WholeGenomeFasta/genome.fa"
 
-        if refFlag == False:
+        if refFlag == False and downloadedFlag != True:
             print("ref file test failed")
             raise FileNotFoundError
 

@@ -35,8 +35,7 @@ make
 make install
 cd ..
 
-#install samtools
-cd ..
+#install samtools (bug requires permissions)
 git clone https://github.com/samtools/samtools
 cd samtools
 autoconf -Wno-syntax

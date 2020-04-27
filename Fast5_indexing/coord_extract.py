@@ -60,7 +60,6 @@ def extract_modified_coords(bedPath, samPath):
     total=len(sam_file)
     print("Sam file read successfully..starting coordinate extraction...")
 
-#   802 1489
 
     mod_d=dict()
 
