@@ -32,8 +32,9 @@ def get_sam_data(sam):
     with open(sam, 'r') as f:
         for line in f:
             column = line.split( )
-            #add read id/chromosome number/location/cigar/sequence
-            sam_data.append([column[0], column[2], column[3], column[4], column[9]])
+            if '@' not in column[0]:
+                #add read id/chromosome number/location/cigar/sequence
+                sam_data.append([column[0], column[2], column[3], column[4], column[9]])
 
     return sam_data
 
