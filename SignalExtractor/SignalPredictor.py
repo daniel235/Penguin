@@ -9,18 +9,19 @@ import Models.PrepareData as PD
 #files needed bed file sam file
 def get_locations(sam, id):
     locs = []
+    print(id)
     #sam format (id:0, chrm num:2, location:3)
     #get sam locations
     #look for id in sam array
     for line in sam:
         #match found
-        if id == sam[0]:
+        if id == line[0]:
             #get chromosome
-            chm = sam[1]
+            chm = line[1]
             #get chromosome number
-            loc = sam[2]
+            loc = line[2]
             #get location in chromosome
-            seq = sam[4]
+            seq = line[4]
             print('added to locs')
             locs.append([chm, loc, seq])
 
