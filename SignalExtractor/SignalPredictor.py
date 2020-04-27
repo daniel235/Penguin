@@ -21,10 +21,11 @@ def get_locations(sam, id):
             loc = sam[2]
             #get location in chromosome
             seq = sam[4]
-
+            print('added to locs')
             locs.append([chm, loc, seq])
 
     return locs
+
 
 def get_sam_data(sam):
     sam_data = []
