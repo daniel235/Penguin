@@ -19,7 +19,7 @@ def get_locations(sam, id):
             #get chromosome
             chm = int(line[1])
             #get chromosome number
-            loc = int(line[2])
+            loc = line[2]
             #get location in chromosome
             seq = line[4]
             print('added to locs')
