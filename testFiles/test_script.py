@@ -33,6 +33,7 @@ def file_test(bed_file, ref_file, sam_file):
         #check if default reference file exists
         for f in os.listdir(os.getcwd()):
             if f == "Homo_sapiens":
+                print("downloaded already")
                 downloadedFlag = True
 
         if downloadedFlag != True:
@@ -40,7 +41,12 @@ def file_test(bed_file, ref_file, sam_file):
             os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
             os.system("tar -xzf refgenome.tar.gz")
             for f in os.listdir(os.getcwd()):
+                print(f)
                 if f == "refgenome.tar.gz":
+                    refFlag = True
+                    break
+
+                if f == "Homo_sapiens":
                     refFlag = True
                     break
 
