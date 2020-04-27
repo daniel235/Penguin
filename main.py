@@ -51,7 +51,7 @@ for f in currentFiles:
         currentFile = f
         break
 
-
+'''
 tscript.event_check(fastPath, currentFile, refPath)
 
 #create ids for files
@@ -64,7 +64,7 @@ coord.extract_modified_coords(bedPath, samPath)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
 
-
+'''
 #Extract.extract_signal(Idfile, coordFile)
 #ExtractControl.extract_control(Idfile, coordFile)
 
@@ -78,5 +78,5 @@ control = "./Data/control_signals.txt"
 #load model
 model = PD.prepareNNModel()
 fp = fastPath
-Predict.predict(model, fastPath=fp, bedFile=bedPath)
+Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
 #RM.run_nn(model, [])
