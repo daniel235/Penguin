@@ -22,7 +22,7 @@ def get_locations(sam, id):
             #get location in chromosome
             seq = sam[4]
 
-        locs.append([chm, loc, seq])
+            locs.append([chm, loc, seq])
 
     return locs
 
