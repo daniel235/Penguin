@@ -17,9 +17,9 @@ def get_locations(sam, id):
         #match found
         if id == line[0]:
             #get chromosome
-            chm = int(line[1])
+            chm = line[1]
             #get chromosome number
-            loc = line[2]
+            loc = int(line[2])
             #get location in chromosome
             seq = line[4]
             print('added to locs')
@@ -80,6 +80,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 locs = get_locations(sam_array, ID)
                 begin_location, end_location = locs[0][1], locs[0][1] + len(locs[0][2])
                 currentPosition = begin_location
+                chromosome = locs[0][0]
                 #check if fast5 contains pseudouridine
                 if ID in modified_ids:
                     correct_guess = 1
@@ -116,7 +117,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                                 if correct_guess == 0:
                                     accuracy += 1
 
-                                print("position ", currentPosition + 2, " ", kmers[i], " control \n")
+                                print("chromosome ", chromosome, " position ", currentPosition + 2, " ", kmers[i], " control \n")
                                 total_control += 1
                             #pseudo
                             else:
