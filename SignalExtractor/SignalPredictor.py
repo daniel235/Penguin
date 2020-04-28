@@ -33,7 +33,6 @@ def get_modified_locs(bed_locs, id):
     #chrm/loc/fastfileLoc/read_id
     for line in bed_locs:
         if id == line[3]:
-            all_locs.append(line)
             #add location to chromosome
             if line[0] in all_locs.keys():
                 all_locs[line[0]].append(int(line[1]))
