@@ -7,13 +7,13 @@ import Models.PrepareData as PD
 #iterate through signal events
 #figure out how to get accuracy of predictions
 #files needed bed file sam file
-def get_locations(sam, id):
+def get_locations(sam_locs, id):
     locs = []
     print(id)
     #sam format (id:0, chrm num:2, location:3)
     #get sam locations
     #look for id in sam array
-    for line in sam:
+    for line in sam_locs:
         #match found
         if id == line[0]:
             #get chromosome
@@ -26,6 +26,22 @@ def get_locations(sam, id):
             locs.append([chm, loc, seq])
 
     return locs
+
+
+def get_modified_locs(bed_locs, id):
+    all_locs = {}
+    #chrm/loc/fastfileLoc/read_id
+    for line in bed_locs:
+        if id == line[3]:
+            all_locs.append(line)
+            #add location to chromosome
+            if line[0] in all_locs.keys():
+                all_locs[line[0]].append(int(line[1]))
+
+            else:
+                all_locs[line[0]] = [int(line[1])]
+
+    return all_locs
 
 
 def get_sam_data(sam):
@@ -42,12 +58,23 @@ def get_sam_data(sam):
     return sam_data
 
 
+def get_bed_data(bed):
+    modified_data = []
+    with open("./Data/pstrand_chr_modification_coors.txt", 'r') as f:
+        for line in f:
+            tab_line = line.split( )
+            modified_data.append(tab_line)
+
+    return modified_data
+
+
 def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     #stats keeper
     total_pseudo = 0
     total_control = 0
     accuracy = 0
     tKmers = 0
+    validationCheck = False
     #set up locations of modifications
     if bedFile != None:
         #start process for getting id's and mod coords
@@ -63,6 +90,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
     #get sam data
     sam_array = get_sam_data(samFile)
+    bed_array = get_bed_data(bedFile)
 
     currentLocation = 0
 
@@ -78,16 +106,19 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 events, signals, ID = parser(fname)
                 #get locations of fast5 file
                 locs = get_locations(sam_array, ID)
+                mod_locs = get_modified_locs(bed_array, ID)
                 begin_location, end_location = locs[0][1], locs[0][1] + len(locs[0][2])
                 currentPosition = begin_location
                 chromosome = locs[0][0]
                 #check if fast5 contains pseudouridine
                 if ID in modified_ids:
                     correct_guess = 1
+                    validationCheck = True
                     print("in a modified fast5")
 
                 else:
                     #control
+                    validationCheck = False
                     correct_guess = 0
 
                 #separate kmers with corresponding signals
@@ -98,6 +129,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                 #pass to model
                 for i in range(len(kmers)):
                     if len(kmers[i]) != 0:
+                        #as you move along kmers add 1 to current position
                         currentPosition += 1
                         if chr(kmers[i][2]) == 'T':
                             tKmers += 1
@@ -112,20 +144,23 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             #probability
                             guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
                             print("guess ", guess)
-                            #control
+                            #predicted control
                             if guess < 0.50:
-                                if correct_guess == 0:
+                                if validation((chromosome, currentPosition + 2)) == 0:
                                     accuracy += 1
 
                                 print("chromosome ", chromosome, " position ", currentPosition + 2, " ", kmers[i], " control \n")
                                 total_control += 1
-                            #pseudo
+                            #predicted pseudo
                             else:
-                                if correct_guess == 1:
+                                #check if location is actually modified
+                                if validation((chromosome, currentPosition + 2)) == 1:
                                     accuracy += 1
 
-                                print(kmers[i], " pseudo \n")
+                                print("chromosome ", chromosome, " position ", currentPosition + 2, " ", kmers[i], " pseudo \n")
                                 total_pseudo += 1
+
+                            print("current accuracy ", accuracy / tKmers)
 
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tKmers)
 
@@ -221,5 +256,11 @@ def stats():
 
 
 def validation(location, bed_locations):
-    #read in bed file
-    pass
+    #read in mod locations
+    if location[0] in bed_locations.keys():
+        #check for locations
+        if location[1] in bed_locations[location[0]]:
+            #is modified
+            return True
+
+    return False
