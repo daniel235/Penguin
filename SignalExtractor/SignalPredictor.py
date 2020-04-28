@@ -146,7 +146,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             print("guess ", guess)
                             #predicted control
                             if guess < 0.50:
-                                if validation((chromosome, currentPosition + 2)) == 0:
+                                if validation((chromosome, currentPosition + 2), mod_locs) == 0:
                                     accuracy += 1
 
                                 print("chromosome ", chromosome, " position ", currentPosition + 2, " ", kmers[i], " control \n")
@@ -154,7 +154,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             #predicted pseudo
                             else:
                                 #check if location is actually modified
-                                if validation((chromosome, currentPosition + 2)) == 1:
+                                if validation((chromosome, currentPosition + 2), mod_locs) == 1:
                                     accuracy += 1
 
                                 print("chromosome ", chromosome, " position ", currentPosition + 2, " ", kmers[i], " pseudo \n")
