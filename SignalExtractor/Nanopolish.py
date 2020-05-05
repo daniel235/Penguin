@@ -13,7 +13,7 @@ def nanopolish_run(fastDir, basecallDir):
     os.system("cd ..")
 
 
-def nanopolish_create_ids(fastDir):
+def nanopolish_create_ids(fastDir, basecallDir):
     #check if files exist if not run nanopolish
     for file in os.listdir(os.getcwd()):
         if file == "reads.fa.index.readdb":
@@ -23,27 +23,27 @@ def nanopolish_create_ids(fastDir):
             return "reads.fasta.index.readdb"
 
 
-    nanopolish_run(fastDir)
+    nanopolish_run(fastDir, basecallDir)
     return "reads.fasta.index.readdb"
 
 
-def nanopolish_create_fasta(fastDir):
+def nanopolish_create_fasta(fastDir, basecallDir):
     #check if files exist if not run nanopolish
     for file in os.listdir(os.getcwd()):
         if file == "reads.fasta":
             return "reads.fasta"
 
-    nanopolish_run(fastDir)
+    nanopolish_run(fastDir, basecallDir)
     return "reads.fasta"
 
 
-def nanopolish_events(fastDir, referenceFile="Data/"):
+def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     nanopolish_run(fastDir, "Data/basecall/")
     #create aligned sam file and convert to bam file
     #check for fasta
-    fasta = "Data/" + nanopolish_create_fasta(fastDir)
+    fasta = "Data/" + nanopolish_create_fasta(fastDir, basecallDir)
     #align to reference
-    ref_cmd = "minimap2 -ax map-ont "+ referenceFile + " " + fasta  " > mySam.sam"
+    ref_cmd = "minimap2 -ax map-ont " + referenceFile + " " + fasta + " > mySam.sam"
     os.system(ref_cmd)
     #remove the .ref
     sam_cmd = "samtools sort -o reads-" + referenceFile[:-3] + ".sorted.bam -T reads.tmp"
