@@ -37,6 +37,7 @@ def file_test(bed_file, ref_file, sam_file):
                 downloadedFlag = True
 
         if downloadedFlag != True:
+            print("RECOMMENDED to download first")
             print("WARNING: default reference file is 18gb in size, ..downloading")
             os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
             os.system("tar -xzf refgenome.tar.gz")

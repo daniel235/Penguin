@@ -23,11 +23,6 @@ parser.add_argument('-b', action='store', dest='bed_input', help='Provide Bed fi
 parser.add_argument('-ref', action='store', dest='ref_input', help='Provide reference genome file')
 #sam file
 parser.add_argument('-s', action='store', dest='sam_input', help='Provide Sam File')
-#purpose (Signal Extraction/ Signal Prediction)
-parser.add_argument('-e', action='store', dest='use_input', help='Extraction')
-#Prediction
-parser.add_argument('-p', action='store', dest='pred_input', help='Prediction')
-
 
 #get arguments
 results = parser.parse_args()
@@ -51,9 +46,9 @@ for f in currentFiles:
         currentFile = f
         break
 
-'''
-tscript.event_check(fastPath, currentFile, refPath)
 
+tscript.event_check(fastPath, currentFile, refPath)
+'''
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
 
