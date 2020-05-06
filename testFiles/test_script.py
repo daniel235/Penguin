@@ -99,7 +99,7 @@ def event_check(fpath, filename, ref):
     else:
         if ref != None:
             #create events(nanopolish code goes here)
-            event_file = events.nanopolish_events(fpath, ref)
+            event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
             print("event file ", event_file)
             return event_file
 
