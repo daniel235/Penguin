@@ -5,7 +5,6 @@ Working in Data Directory /  All files saved in Data directory
 
 def nanopolish_run(fastDir, basecallDir):
     #call nanopolish command
-    #todo change fastq to reads.fastq
     print("basecall dir ", basecallDir)
     for file in os.listdir(basecallDir):
         if file.endswith(".fastq"):
