@@ -41,14 +41,35 @@ def nanopolish_create_fasta(fastDir, basecallDir):
     nanopolish_run(fastDir, basecallDir)
     return "reads.fasta"
 
+def convertToFasta(fastq):
+    fname = ""
+    if fastq.endswith(".fq"):
+        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr "\t" "\n" > " +  fastq[:-3] + ".fq"
+        fname = fastq[:-3] + ".fasta"
+
+    else:
+        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr "\t" "\n" > " +  fastq[:-6] + ".fastq"
+        fname = fastq[:-6] + ".fasta"
+
+    print("fname ", fname)
+    os.system(convCmd)
+    
+
+    return fname
+
 
 def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     nanopolish_run(fastDir, "Data/basecall/")
     #create aligned sam file and convert to bam file
     #check for fasta
     fasta = "Data/" + nanopolish_create_fasta(fastDir, basecallDir)
+    #convert file 
+    for file in os.listdir(os.getcwd()):
+        if file.endswith(".fastq") or file.endswith(".fq"):
+            fasta = convertToFasta(file)
+
     #align to reference
-    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + fasta
+    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + basecallDir + fasta
     os.system(ref_cmd)
     #remove the .ref
     sam_cmd = "samtools sort -o reads-ref.sorted.bam -T reads.tmp"
