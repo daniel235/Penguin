@@ -43,7 +43,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     #check for fasta
     fasta = "Data/" + nanopolish_create_fasta(fastDir, basecallDir)
     #align to reference
-    ref_cmd = "minimap2 -ax map-ont " + referenceFile + " " + fasta + " > mySam.sam"
+    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + fasta + " > mySam.sam"
     os.system(ref_cmd)
     #remove the .ref
     sam_cmd = "samtools sort -o reads-" + referenceFile[:-3] + ".sorted.bam -T reads.tmp"

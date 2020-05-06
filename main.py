@@ -46,8 +46,8 @@ for f in currentFiles:
         currentFile = f
         break
 
-
-tscript.event_check(fastPath, currentFile, refPath)
+print("my ref file ", refPath)
+event_info = tscript.event_check(fastPath, currentFile, refPath)
 '''
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
@@ -69,9 +69,13 @@ control = "./Data/control_signals.txt"
 
 #model.run_neural_net(control, modified)
 #PD.createInstance(control, modified)
-
-#load model
-model = PD.prepareNNModel()
-fp = fastPath
-Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
-#RM.run_nn(model, [])
+#already has event information
+if event_info == None:
+    #load model
+    model = PD.prepareNNModel()
+    fp = fastPath
+    Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
+    #RM.run_nn(model, [])
+#added from nanopolish 
+else:
+    pass

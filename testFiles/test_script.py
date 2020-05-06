@@ -94,12 +94,14 @@ def event_check(fpath, filename, ref):
     if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys:
         print("events test passed \n")
         show_penguin()
+        return None
     #no events
     else:
         if ref != None:
             #create events(nanopolish code goes here)
             event_file = events.nanopolish_events(fpath, ref)
             print("event file ", event_file)
+            return event_file
 
         else:
             print("reference file test failed")
