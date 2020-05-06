@@ -62,10 +62,9 @@ def convertToFasta(fastq):
 def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     nanopolish_run(fastDir, "Data/basecall/")
     #create aligned sam file and convert to bam file
-    #check for fasta
     fasta = "Data/" + nanopolish_create_fasta(fastDir, basecallDir)
     #convert file 
-    for file in os.listdir(os.getcwd()):
+    for file in os.listdir(basecallDir):
         if file.endswith(".fastq") or file.endswith(".fq"):
             fasta = convertToFasta(file)
 
