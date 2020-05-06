@@ -69,7 +69,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
             fasta = convertToFasta(file)
 
     #align to reference
-    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + basecallDir + fasta + " | " + "samtools sort -o reads-ref.sorted.bam -T reads.tmp | samtools index reads-ref.sorted.bam"  
+    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + basecallDir + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp | samtools index " + basecallDir + "reads-ref.sorted.bam"  
     os.system(ref_cmd)
     #remove the .ref
     '''
