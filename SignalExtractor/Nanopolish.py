@@ -83,7 +83,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     os.system(bamcheck)
 
     #align nanopore events to reference genome
-    event_cmd = "nanopolish eventalign --reads reads.fasta --bam reads-ref.sorted.bam --genome " + referenceFile + "--samples --scale-events > reads-ref.eventalign.txt"
+    event_cmd = "nanopolish eventalign --reads " + basecallDir + "reads.fasta --bam " + basecallDir + "reads-ref.sorted.bam --genome " + referenceFile + "--samples --scale-events > Data/reads-ref.eventalign.txt"
     os.system(event_cmd)
     #return events file
-    return "reads-ref.eventalign.txt"
+    return "Data/reads-ref.eventalign.txt"
