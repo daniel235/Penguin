@@ -27,7 +27,6 @@ def file_test(bed_file, ref_file, sam_file):
 
     elif ref_file == None and sam_file == None:
         #use default ref files
-        #download ref file
         refFlag = False
         downloadedFlag = False
         #check if default reference file exists
@@ -52,7 +51,7 @@ def file_test(bed_file, ref_file, sam_file):
                     break
 
 
-        ref_file = "Homo_sapiens/Ensembl/GRCh37/sequence/WholeGenomeFasta/genome.fa"
+        ref_file = "Homo_sapiens/Ensembl/GRCh37/Sequence/WholeGenomeFasta/genome.fa"
 
         if refFlag == False and downloadedFlag != True:
             print("ref file test failed")
