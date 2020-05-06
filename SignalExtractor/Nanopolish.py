@@ -42,13 +42,14 @@ def nanopolish_create_fasta(fastDir, basecallDir):
     return "reads.fasta"
 
 def convertToFasta(fastq):
+    #name for final file
     fname = ""
     if fastq.endswith(".fq"):
-        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr "\t" "\n" > " +  fastq[:-3] + ".fq"
+        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr '\t' '\n' > " +  fastq[:-3] + ".fq"
         fname = fastq[:-3] + ".fasta"
 
     else:
-        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr "\t" "\n" > " +  fastq[:-6] + ".fastq"
+        convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr '\t' '\n' > " +  fastq[:-6] + ".fastq"
         fname = fastq[:-6] + ".fasta"
 
     print("fname ", fname)
