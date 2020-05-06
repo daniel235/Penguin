@@ -9,7 +9,7 @@ def nanopolish_run(fastDir, basecallDir):
     print("basecall dir ", basecallDir)
     for file in os.listdir(basecallDir):
         if file.endswith(".fastq"):
-            myCmd = "mv " + basecallDir + file + " " + basecallDir + " reads.fastq"
+            myCmd = "mv " + basecallDir + file + " " + basecallDir + "reads.fastq"
             os.system(myCmd)
 
     index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fastq"
