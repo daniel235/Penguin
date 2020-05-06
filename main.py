@@ -48,7 +48,7 @@ for f in currentFiles:
 
 print("my ref file ", refPath)
 event_info = tscript.event_check(fastPath, currentFile, refPath)
-'''
+
 #create ids for files
 Id.parse_fast5_ids(fast5Path=fastPath)
 
@@ -59,7 +59,7 @@ coord.extract_modified_coords(bedPath, samPath)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
 
-'''
+
 #Extract.extract_signal(Idfile, coordFile)
 #ExtractControl.extract_control(Idfile, coordFile)
 
