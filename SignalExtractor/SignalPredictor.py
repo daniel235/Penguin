@@ -1,6 +1,6 @@
 import os
 import h5py
-
+import matplotlib.pyplot as plt
 import Models.PrepareData as PD
 
 #iterate through signal events
@@ -73,6 +73,11 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     accuracy = 0
     tKmers = 0
     validationCheck = False
+
+    #stat data structures
+    runs = []
+    accuracies = []
+
     #set up locations of modifications
     if bedFile != None:
         #start process for getting id's and mod coords
@@ -160,7 +165,18 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
                             print("current accuracy ", accuracy / tKmers)
 
+                            #get stats here
+                            if tKmers % 100 == 0:
+                                runs.append(tKmers)
+                                accuracies.append(accuracy / tKmers)
+
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tKmers)
+    #save plot 
+    plt.plot(runs, accuracies)
+    plt.xlabel('runs')
+    plt.ylabel('accuracy')
+    plt.show()
+    plt.savefig('position_prediction.png')
 
 
 def createIdParser(IdFile):
