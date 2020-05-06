@@ -52,16 +52,16 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + fasta
     os.system(ref_cmd)
     #remove the .ref
-    sam_cmd = "samtools sort -o reads-" + referenceFile[:-3] + ".sorted.bam -T reads.tmp"
+    sam_cmd = "samtools sort -o reads-ref.sorted.bam -T reads.tmp"
     os.system(sam_cmd)
-    sam_cmd = "samtools index reads-" + referenceFile[:-3] + ".sorted.bam"
+    sam_cmd = "samtools index reads-ref.sorted.bam"
     os.system(sam_cmd)
     #check if bamfile is complete
-    bamcheck = "samtools quickcheck reads-" + referenceFile[:-3] + ".sorted.bam"
+    bamcheck = "samtools quickcheck reads-ref.sorted.bam"
     os.system(bamcheck)
 
     #align nanopore events to reference genome
-    event_cmd = "nanopolish eventalign --reads reads.fasta --bam reads-" + referenceFile[:-3] + ".sorted.bam --genome " + referenceFile + "--samples --scale-events > reads-" + referenceFile[:-3] + ".eventalign.txt"
+    event_cmd = "nanopolish eventalign --reads reads.fasta --bam reads-ref.sorted.bam --genome " + referenceFile + "--samples --scale-events > reads-ref.eventalign.txt"
     os.system(event_cmd)
     #return events file
-    return "reads-" + referenceFile[:-3] + ".eventalign.txt"
+    return "reads-ref.eventalign.txt"
