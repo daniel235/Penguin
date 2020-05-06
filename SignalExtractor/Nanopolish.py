@@ -6,7 +6,13 @@ Working in Data Directory /  All files saved in Data directory
 def nanopolish_run(fastDir, basecallDir):
     #call nanopolish command
     #todo change fastq to reads.fastq
-    index_cmd = "nanopolish index -d " + fastDir + " -s " + basecallDir + " sequencing_summary.txt reads.fastq"
+    print("basecall dir ", basecallDir)
+    for file in os.listdir(basecallDir):
+        if file.endswith(".fastq"):
+            myCmd = "mv " + basecallDir + file + " " + basecallDir + " reads.fastq"
+            os.system(myCmd)
+
+    index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fastq"
     #move into data folder to save files
     os.system("cd Data")
     os.system(index_cmd)
