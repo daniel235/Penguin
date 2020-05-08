@@ -7,8 +7,10 @@ Data
 Models/*.pyc
 Models/__pycache__
 testFiles/__pycache__
+Fast5_indexing/__pycache__
 SequenceGenerator/__pycache__
 SignalExtractor/__pycache__
+testFiles/__pycache__
 SignalExtractor/*.pyc
 *.pyc
 refgenome.tar.gz

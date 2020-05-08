@@ -221,9 +221,21 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
         if kmers[i][2] == 'T':
             tkmerCount += 1
             print(raw_signal[i])
-            input4Model = PD.createInstance(hot_kmers[i], raw_signal[i]).reshape((1,-1))
-            guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+            raw = []
+            sig = ""
+            #convert string signal into actual float signal
+            for char in raw_signal[i]:
+                if char != ',':
+                    sig += char
+                else:
+                    raw.append(float(sig))
+                    sig = ""
+            
+            raw.append(float(sig))
 
+            input4Model = PD.createInstance(hot_kmers[i], raw).reshape((1,-1))
+            guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+            
             #predicted control
             if guess < 0.50:
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 0:
