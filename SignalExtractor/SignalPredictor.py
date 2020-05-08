@@ -220,6 +220,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     for i in range(len(kmers)):
         if kmers[i][2] == 'T':
             tkmerCount += 1
+            print(raw_signal[i])
             input4Model = PD.createInstance(hot_kmers[i], raw_signal[i]).reshape((1,-1))
             guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
 
