@@ -200,7 +200,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     position = data["position"]
     kmers = data["reference_kmer"]
     mean = data["event_level_mean"]
-    std_deviation = data["stdv"]
+    std_deviation = data["event_stdv"]
     raw_signal = data["samples"]
 
     #statistics
