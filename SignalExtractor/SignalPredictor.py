@@ -221,7 +221,6 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     for i in range(len(kmers)):
         if kmers[i][2] == 'T':
             tkmerCount += 1
-            print(raw_signal[i])
             raw = []
             sig = ""
             #convert string signal into actual float signal
@@ -257,6 +256,8 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
                         runs.append(tkmerCount)
                         accuracies.append(accuracy / tkmerCount)
 
+            print("current accuracy ", accuracy / tkmerCount)
+
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
     #save plot 
     plt.plot(runs, accuracies)
@@ -264,7 +265,6 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     plt.ylabel('accuracy')
     plt.show()
     plt.savefig('position_prediction.png')
-
 
 
 def createIdParser(IdFile):
