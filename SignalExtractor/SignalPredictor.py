@@ -238,19 +238,19 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
 
             #predicted control
             if guess < 0.50:
+                print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 0:
+                    print("correct control prediction")
                     accuracy += 1
-
-                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
                     total_control += 1
                     #predicted pseudo
             else:
                 #check if location is actually modified
+                print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
+                    print("correct Pseudo prediction")
                     accuracy += 1
-                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
                     total_pseudo += 1
-                    print("current accuracy ", accuracy / tkmerCount)
                     #get stats here
                     if tkmerCount % 10000 == 0:
                         runs.append(tkmerCount)
