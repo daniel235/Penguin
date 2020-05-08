@@ -28,6 +28,17 @@ def get_locations(sam_locs, id):
     return locs
 
 
+def get_all_modified_locs(bed_locs):
+    all_locs = {}
+    for line in bed_locs:
+        if line[0] in all_locs.keys():
+            all_locs[line[0]].append(int(line[1]))
+
+        else:
+            all_locs[line[0]] = [int(line[1])]
+
+    return all_locs
+
 def get_modified_locs(bed_locs, id):
     all_locs = {}
     #chrm/loc/fastfileLoc/read_id
@@ -167,7 +178,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                             print("current accuracy ", accuracy / tKmers)
 
                             #get stats here
-                            if tKmers % 100 == 0:
+                            if tKmers % 10000 == 0:
                                 runs.append(tKmers)
                                 accuracies.append(accuracy / tKmers)
 
@@ -182,8 +193,64 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
 def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     #read in event align file
-    data = pd.read_csv(eventAlign, sep=" ")
+    data = pd.read_csv(eventAlign, sep="\t")
     print(data)
+    #chromosome 
+    chromosomes = data["contig"]
+    position = data["position"]
+    kmers = data["reference_kmer"]
+    mean = data["event_level_mean"]
+    std_deviation = data["stdv"]
+    raw_signal = data["samples"]
+
+    #statistics
+    accuracy = 0
+    tkmerCount = 0
+    accuracies = []
+    runs = []
+
+    #get modified locations
+    bed_array = get_bed_data(bedPath)
+    mod_locs = get_all_modified_locs(bed_array)
+
+    #conver kmers
+    hot_kmers = PD.createEncoder(kmers)
+
+    #check if middle kmer is a T or U
+    for i in range(len(kmers)):
+        if kmers[i][2] == 'T':
+            tkmerCount += 1
+            input4Model = PD.createInstance(hot_kmers[i], raw_signal[i]).reshape((1,-1))
+            guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+
+            #predicted control
+            if guess < 0.50:
+                if validation((chromosomes[i], position[i] + 2), mod_locs) == 0:
+                    accuracy += 1
+
+                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
+                    total_control += 1
+                    #predicted pseudo
+            else:
+                #check if location is actually modified
+                if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
+                    accuracy += 1
+                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
+                    total_pseudo += 1
+                    print("current accuracy ", accuracy / tkmerCount)
+                    #get stats here
+                    if tkmerCount % 10000 == 0:
+                        runs.append(tkmerCount)
+                        accuracies.append(accuracy / tkmerCount)
+
+    print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
+    #save plot 
+    plt.plot(runs, accuracies)
+    plt.xlabel('runs')
+    plt.ylabel('accuracy')
+    plt.show()
+    plt.savefig('position_prediction.png')
+
 
 
 def createIdParser(IdFile):
@@ -201,6 +268,7 @@ def createIdParser(IdFile):
 
 def findLocation():
     pass
+
 
 
 def parser(fastfile):
@@ -264,16 +332,6 @@ def segmentSignal(events, signal):
         current += size + 1
 
     return kmers, signal_instances
-
-'''
-#visualize
-def show_window():
-    #pygame?
-    pass
-'''
-
-def stats():
-    pass
 
 
 def validation(location, bed_locations):
