@@ -69,13 +69,16 @@ control = "./Data/control_signals.txt"
 
 #model.run_neural_net(control, modified)
 #PD.createInstance(control, modified)
+
+#load model
+model = PD.prepareNNModel()
+fp = fastPath
+
 #already has event information
 if event_info == None:
-    #load model
-    model = PD.prepareNNModel()
-    fp = fastPath
     Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
     #RM.run_nn(model, [])
-#added from nanopolish 
+
+#added events from nanopolish 
 else:
-    pass
+    Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile)

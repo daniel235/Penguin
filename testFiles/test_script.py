@@ -97,10 +97,13 @@ def event_check(fpath, filename, ref):
     #no events
     else:
         if ref != None:
-            #create events(nanopolish code goes here)
-            event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
-            print("event file ", event_file)
-            return event_file
+            if event_align_check() == None:
+                #create events(nanopolish code goes here)
+                event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
+                print("event file ", event_file)
+                return event_file
+            else:
+                return "Data/reads-ref.eventalign.txt"
 
         else:
             print("reference file test failed")
@@ -131,3 +134,11 @@ def show_penguin():
 
 def sequence_check():
     pass
+
+
+def event_align_check():
+    for file in os.listdir("Data"):
+        if file == "reads-ref.eventalign.txt":
+            return "Data/reads-ref.eventalign.txt"
+
+    return None

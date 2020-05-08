@@ -1,5 +1,6 @@
 import os
 import h5py
+import pandas as pd
 import matplotlib.pyplot as plt
 import Models.PrepareData as PD
 
@@ -177,6 +178,12 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     plt.ylabel('accuracy')
     plt.show()
     plt.savefig('position_prediction.png')
+
+
+def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
+    #read in event align file
+    data = pd.read_csv(eventAlign, sep=" ")
+    print(data)
 
 
 def createIdParser(IdFile):
