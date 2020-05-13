@@ -34,8 +34,8 @@ def createNanoInstance(row, hot=True):
         columns=['event_level_mean','event_stdv','event_length', 'reference_kmer']
 
     X = row[columns]
-
-    return X
+        
+    return X.toarray()
 
 
 def scaleData(data):
