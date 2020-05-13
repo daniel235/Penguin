@@ -28,19 +28,23 @@ def createInstance(kmer, raw_signal, type=None):
     return inst
 
 
-def createNanoInstance(row):
+def createNanoInstance(row, hot=True):
     columns=['event_level_mean','event_stdv','event_length']
     X = row[columns]
-    Onehot = pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+    
+    #if adding one hot data
+    if hot:
+        Onehot = pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+        #add onehots
+        X = pd.concat([X,Onehot],axis=1)
 
-    #add onehots
-    X = pd.concat([X,Onehot],axis=1)
     return X
 
 
 def scaleData(data):
     scaler = MinMaxScaler()
-    data = scaler.fit_transform(data)
+    columns = ['event_level_mean','event_stdv','event_length']
+    data[columns] = scaler.fit_transform(data[columns])
     return data
 
 def prepareNNModel():

@@ -190,7 +190,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     plt.savefig('position_prediction.png')
 
 
-def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
+def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, oneHot=True):
     #read in event align file
     data = pd.read_csv(eventAlign, sep="\t")
     data = PD.scaleData(data)
@@ -238,7 +238,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
             #guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
 
             #new svm model
-            input4Model = PD.createNanoInstance(data[i])
+            input4Model = PD.createNanoInstance(data[i], hot=oneHot)
             guess = model.predict(input4Model)
 
             #predicted control
