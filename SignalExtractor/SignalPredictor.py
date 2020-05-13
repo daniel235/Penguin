@@ -220,7 +220,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     new_hot_kmers = PD.nano_to_onehot(data)
     data["reference_kmer"] = hot_kmers
 
-    print("ref ", data["reference_kmer"])
+    print("hot kmers ", hot_kmers)
 
     #check if middle kmer is a T or U
     for i in range(len(kmers)):
@@ -368,3 +368,12 @@ def validation(location, bed_locations):
             return True
 
     return False
+
+
+def new_possible_locations(coords):
+    #write to file
+    #chromosome/location/kmer/readID
+    with open("new_locations.txt", 'w') as f:
+        for coord in coords:
+            line = coord[0] + " " + coord[1] + " " +  coord[2] + " " + coord[3]
+            f.write(line)
