@@ -220,6 +220,8 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     new_hot_kmers = PD.nano_to_onehot(data)
     data["reference_kmer"] = new_hot_kmers
 
+    print("ref ", data["reference_kmer"])
+
     #check if middle kmer is a T or U
     for i in range(len(kmers)):
         if kmers[i][2] == 'T':
@@ -241,6 +243,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
             #new svm model
             input4Model = PD.createNanoInstance(data.iloc[i], hot=oneHot)
+            input4Model = input4Model.reshape(1, -1)
             print(input4Model)
             guess = model.predict(input4Model)
 
