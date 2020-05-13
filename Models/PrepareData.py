@@ -105,5 +105,4 @@ def nano_to_onehot(dataset):
     Onehot=pd.get_dummies(dataset['reference_kmer'], prefix='reference_kmer')
     return Onehot
 
-
     
