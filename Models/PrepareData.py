@@ -30,13 +30,10 @@ def createInstance(kmer, raw_signal, type=None):
 
 def createNanoInstance(row, hot=True):
     columns=['event_level_mean','event_stdv','event_length']
-    X = row[columns]
-    
-    #if adding one hot data
     if hot:
-        Onehot = pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
-        #add onehots
-        X = pd.concat([X,Onehot],axis=1)
+        columns=['event_level_mean','event_stdv','event_length', 'reference_kmer']
+
+    X = row[columns]
 
     return X
 
@@ -102,7 +99,11 @@ def createEncoder(X):
 def to_onehot(encoder, kmer):
     onehot = encoder.transform(kmer).toarray()
     return onehot
-    
+
+
+def nano_to_onehot(dataset):
+    Onehot=pd.get_dummies(dataset['reference_kmer'], prefix='reference_kmer')
+    return Onehot
 
 
     

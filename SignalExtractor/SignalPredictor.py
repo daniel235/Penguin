@@ -217,7 +217,9 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
     #conver kmers
     hot_kmers = PD.createEncoder(kmers)
-
+    new_hot_kmers = PD.nano_to_onehot(kmers)
+    data["reference_kmer"] = new_hot_kmers
+    
     #check if middle kmer is a T or U
     for i in range(len(kmers)):
         if kmers[i][2] == 'T':
