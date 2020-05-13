@@ -218,7 +218,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     #conver kmers
     hot_kmers = PD.createEncoder(kmers)
     new_hot_kmers = PD.nano_to_onehot(data)
-    data["reference_kmer"] = new_hot_kmers
+    data["reference_kmer"] = hot_kmers
 
     print("ref ", data["reference_kmer"])
 
