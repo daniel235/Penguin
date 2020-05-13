@@ -193,6 +193,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
     #read in event align file
     data = pd.read_csv(eventAlign, sep="\t")
+    data = PD.scaleData(data)
     print(data)
     #chromosome 
     chromosomes = data["contig"]
@@ -233,8 +234,12 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile):
             
             raw.append(float(sig))
 
-            input4Model = PD.createInstance(hot_kmers[i], raw).reshape((1,-1))
-            guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+            #input4Model = PD.createInstance(hot_kmers[i], raw).reshape((1,-1))
+            #guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+
+            #new svm model
+            input4Model = PD.createNanoInstance(data[i])
+            guess = model.predict(input4Model)
 
             #predicted control
             if guess < 0.50:

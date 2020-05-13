@@ -3,6 +3,8 @@ from statistics import mean, median
 from tensorflow.keras.models import model_from_json
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from enum import Enum
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler #For feature normalization
 import pickle
 import numpy as np
 
@@ -26,6 +28,21 @@ def createInstance(kmer, raw_signal, type=None):
     return inst
 
 
+def createNanoInstance(row):
+    columns=['event_level_mean','event_stdv','event_length']
+    X = row[columns]
+    Onehot = pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+
+    #add onehots
+    X = pd.concat([X,Onehot],axis=1)
+    return X
+
+
+def scaleData(data):
+    scaler = MinMaxScaler()
+    data = scaler.fit_transform(data)
+    return data
+
 def prepareNNModel():
     #load model
     json_file = open("./Models/NNmodel.json", 'r')
@@ -38,6 +55,14 @@ def prepareNNModel():
     print("loaded model")
     loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
     return loaded_model
+
+
+def prepareSVMModel(pickleFile):
+    #pickle 
+    with open(pickleFile, 'rb') as f:
+        model = pickle.load(f)
+
+    return model
 
 
 def createEncoder(X):
