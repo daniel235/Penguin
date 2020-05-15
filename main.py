@@ -39,12 +39,19 @@ bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 
 #todo insert nanopolish script(test script takes care of this)
 #events test
+'''
 currentFiles = os.listdir(fastPath)
 currentFile = None
 for f in currentFiles:
     if f.endswith(".fast5"):
         currentFile = f
         break
+'''
+for root, dirs, files in os.walk(fastPath, topdown=False):
+    for name in files:
+        if name.endswith(".fast5"):
+            currentFile = name
+            break
 
 print("my ref file ", refPath)
 event_info = tscript.event_check(fastPath, currentFile, refPath)

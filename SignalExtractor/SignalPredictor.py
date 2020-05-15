@@ -210,6 +210,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     total_control = 0
     accuracies = []
     runs = []
+    psuedo_locations = []
 
     #get modified locations
     bed_array = get_bed_data(bedPath)
@@ -221,7 +222,6 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
     count = 0
     for kmer in hot_kmers:
-        print("kmer ", kmer)
         data.iloc[count]["reference_kmer"] = kmer
         count += 1
 
@@ -263,6 +263,8 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
             else:
                 #check if location is actually modified
                 print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
+                #add predicted locatin to list of possible pseudo locations
+                psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i], ])
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
                     print("correct Pseudo prediction")
                     accuracy += 1
