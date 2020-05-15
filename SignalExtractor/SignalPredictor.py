@@ -215,10 +215,15 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     bed_array = get_bed_data(bedPath)
     mod_locs = get_all_modified_locs(bed_array)
 
-    #conver kmers
+    #convert kmers
     hot_kmers = PD.createEncoder(kmers)
     new_hot_kmers = PD.nano_to_onehot(data)
-    data["reference_kmer"] = hot_kmers[0]
+
+    count = 0
+    for kmer in hot_kmers:
+        print("kmer ", kmer)
+        data.iloc[count]["reference_kmer"] = kmer
+        count += 1
 
     print("hot kmers ", data["reference_kmer"])
 
@@ -268,7 +273,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
                         accuracies.append(accuracy / tkmerCount)
 
             print("current accuracy ", accuracy / tkmerCount)
-
+    #read id location kmer
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
     #save plot 
     plt.plot(runs, accuracies)
