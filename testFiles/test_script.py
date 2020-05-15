@@ -101,8 +101,10 @@ def event_check(fpath, filename, ref):
                 #create events(nanopolish code goes here)
                 event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
                 print("event file ", event_file)
+                show_penguin()
                 return event_file
             else:
+                show_penguin()
                 return "Data/reads-ref.eventalign.txt"
 
         else:

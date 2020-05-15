@@ -266,7 +266,6 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
                 #add predicted locatin to list of possible pseudo locations
                 psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i], ])
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
-                    print("correct Pseudo prediction")
                     accuracy += 1
                     total_pseudo += 1
                     #get stats here

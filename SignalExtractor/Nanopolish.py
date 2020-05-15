@@ -72,12 +72,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + basecallDir + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp | samtools index " + basecallDir + "reads-ref.sorted.bam"  
     print("current command ", ref_cmd)
     os.system(ref_cmd)
-    #remove the .ref
-    '''
-    sam_cmd = "samtools sort -o reads-ref.sorted.bam -T reads.tmp"
-    os.system(sam_cmd)
-    sam_cmd = "samtools index reads-ref.sorted.bam"
-    os.system(sam_cmd)'''
+    
     #check if bamfile is complete
     bamcheck = "samtools quickcheck reads-ref.sorted.bam"
     os.system(bamcheck)
