@@ -28,7 +28,7 @@ def createInstance(kmer, raw_signal, type=None):
     return inst
 
 
-def createNanoInstance(row, onehots, hot=True):
+def createNanoInstance(row, hot=True):
     columns=['event_level_mean','event_stdv','event_length']
     if hot:
         columns=['event_level_mean','event_stdv','event_length', 'reference_kmer']
