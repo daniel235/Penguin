@@ -302,6 +302,9 @@ def findLocation():
     pass
 
 
+def pseudoRatio(pcount, count):
+    print("ratio of pseudo:control ->", pcount/count, ":1")
+
 
 def parser(fastfile):
     if fastfile.endswith(".fast5"):

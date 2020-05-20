@@ -54,7 +54,7 @@ def prepareNNModel():
 
     loaded_model = model_from_json(loaded_model_json)
     #load weights
-    loaded_model.load_weights("./Models/model.h5")
+    loaded_model.load_weights("./Models/modelNN.h5")
     print("loaded model")
     loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
     return loaded_model
