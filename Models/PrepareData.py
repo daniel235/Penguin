@@ -30,13 +30,16 @@ def createInstance(kmer, raw_signal, type=None):
 
 
 def createNanoInstance(row, hot=True):
+    inst = []
     columns=['event_level_mean','event_stdv','event_length']
-    if hot:
-        columns=['event_level_mean','event_stdv','event_length', 'reference_kmer']
-
-    X = row[columns]
     
-    return X.to_numpy()
+    inst = row[columns]
+
+    if hot:
+        for k in row['reference_kmer']:
+            inst.append(k)
+    
+    return inst.to_numpy()
 
 
 def scaleData(data):
