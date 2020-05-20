@@ -2,6 +2,7 @@ import os
 import h5py
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn import svm
 import Models.PrepareData as PD
 
 #iterate through signal events

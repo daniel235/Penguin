@@ -41,6 +41,7 @@ def nanopolish_create_fasta(fastDir, basecallDir):
     nanopolish_run(fastDir, basecallDir)
     return "reads.fasta"
 
+
 def convertToFasta(fastq):
     #name for final file
     fname = ""
