@@ -88,5 +88,5 @@ if event_info == None:
 '''
 #added events from nanopolish 
 
-model = PD.prepareSVMModel("Models/modelssvmHot")
+model = PD.prepareSVMModel("Models/modelssvmHot.joblib")
 Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile)

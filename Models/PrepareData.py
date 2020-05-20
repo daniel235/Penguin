@@ -4,6 +4,7 @@ from tensorflow.keras.models import model_from_json
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from enum import Enum
 import pandas as pd
+from joblib import load
 from sklearn import svm
 from sklearn.preprocessing import MinMaxScaler #For feature normalization
 import pickle
@@ -62,8 +63,12 @@ def prepareNNModel():
 
 def prepareSVMModel(pickleFile):
     #pickle 
+    '''
     with open(pickleFile, 'rb') as f:
         model = pickle.load(f)
+
+    '''
+    model = load(pickleFile)
 
     return model
 
