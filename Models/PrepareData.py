@@ -7,7 +7,6 @@ import pandas as pd
 from joblib import load
 from sklearn import svm
 from sklearn.preprocessing import MinMaxScaler #For feature normalization
-import pickle
 import numpy as np
 
 
