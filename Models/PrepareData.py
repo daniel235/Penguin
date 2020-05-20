@@ -51,13 +51,13 @@ def scaleData(data):
 
 def prepareNNModel():
     #load model
-    json_file = open("./Models/NNmodel.json", 'r')
+    json_file = open("./Models/NNmodelPolish.json", 'r')
     loaded_model_json = json_file.read()
     json_file.close()
 
     loaded_model = model_from_json(loaded_model_json)
     #load weights
-    loaded_model.load_weights("./Models/modelNN.h5")
+    loaded_model.load_weights("./Models/NNmodelPolish.h5")
     print("loaded model")
     loaded_model.compile(loss="binary_crossentropy", optimizer="adam", metrics=['accuracy'])
     return loaded_model
