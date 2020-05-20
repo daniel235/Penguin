@@ -256,16 +256,21 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
             #predicted control
             if guess < 0.50:
                 print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
+                total_control += 1
+                '''
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 0:
                     print("correct control prediction")
                     accuracy += 1
                     total_control += 1
                     #predicted pseudo
+                '''
             else:
                 #check if location is actually modified
                 print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
                 #add predicted locatin to list of possible pseudo locations
-                psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i], ])
+                psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i]])
+                total_pseudo += 1
+                '''
                 if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
                     accuracy += 1
                     total_pseudo += 1
@@ -273,16 +278,11 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
                     if tkmerCount % 10000 == 0:
                         runs.append(tkmerCount)
                         accuracies.append(accuracy / tkmerCount)
-
+                
             print("current accuracy ", accuracy / tkmerCount)
+            '''
     #read id location kmer
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
-    #save plot 
-    plt.plot(runs, accuracies)
-    plt.xlabel('runs')
-    plt.ylabel('accuracy')
-    plt.show()
-    plt.savefig('position_prediction.png')
 
 
 def createIdParser(IdFile):

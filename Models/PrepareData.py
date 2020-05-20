@@ -4,6 +4,7 @@ from tensorflow.keras.models import model_from_json
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from enum import Enum
 import pandas as pd
+from sklearn import svm
 from sklearn.preprocessing import MinMaxScaler #For feature normalization
 import pickle
 import numpy as np
@@ -43,6 +44,7 @@ def scaleData(data):
     columns = ['event_level_mean','event_stdv','event_length']
     data[columns] = scaler.fit_transform(data[columns])
     return data
+
 
 def prepareNNModel():
     #load model

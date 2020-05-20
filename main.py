@@ -80,13 +80,13 @@ control = "./Data/control_signals.txt"
 #load model
 model = PD.prepareNNModel()
 fp = fastPath
-
+'''
 #already has event information
 if event_info == None:
     Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
     #RM.run_nn(model, [])
-
+'''
 #added events from nanopolish 
-else:
-    model = PD.prepareSVMModel("Models/modelssvmHot")
-    Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile)
+
+model = PD.prepareSVMModel("Models/modelssvmHot")
+Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile)
