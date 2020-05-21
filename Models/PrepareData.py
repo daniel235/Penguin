@@ -5,6 +5,7 @@ from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from enum import Enum
 import pandas as pd
 from joblib import load
+import pickle
 from sklearn import svm
 from sklearn.preprocessing import MinMaxScaler #For feature normalization
 import numpy as np
