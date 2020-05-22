@@ -47,6 +47,8 @@ for f in currentFiles:
         currentFile = f
         break
 '''
+print("after file checks")
+
 #singular file
 if fastPath.endswith(".fast5"):
     currentFile = fastPath
@@ -61,15 +63,16 @@ else:
 
     event_info = tscript.event_check(fpath=fastPath, filename=currentFile, ref=refPath)
 
+print("after event info")
 
 print("my ref file ", refPath)
 
 
 #create ids for files
-Id.parse_fast5_ids(fast5Path=fastPath)
+#Id.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
-coord.extract_modified_coords(bedPath, samPath)
+#coord.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???) (hardcoded)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
