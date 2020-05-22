@@ -88,8 +88,14 @@ def id_file_test():
             return
 
 
-def event_check(fpath, filename, ref):
-    hdf = h5py.File(fpath + filename, 'r')
+def event_check(fpath=None, filename=None, ref):
+    #single file 
+    if fpath == None:
+        hdf = h5py.File(filename, 'r')
+    #multiple files
+    else:
+        hdf = h5py.File(fpath + filename, 'r')
+
     fast_keys = hdf.keys()
     if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys:
         print("events test passed \n")
