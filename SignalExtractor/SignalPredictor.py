@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import svm
 import Models.PrepareData as PD
+import graph_plots as gp
 
 #iterate through signal events
 #figure out how to get accuracy of predictions
@@ -283,6 +284,9 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
             '''
     #read id location kmer
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
+    new_possible_locations(psuedo_locations)
+    gp.box_plot(total_pseudo, total_control)
+    gp.ven_diagram(total_pseudo, total_control, tkmerCount)
 
 
 def createIdParser(IdFile):
@@ -383,7 +387,8 @@ def validation(location, bed_locations):
 def new_possible_locations(coords):
     #write to file
     #chromosome/location/kmer/readID
-    with open("new_locations.txt", 'w') as f:
+    with open("new_locations.tsv", 'w') as f:
         for coord in coords:
-            line = coord[0] + " " + coord[1] + " " +  coord[2] + " " + coord[3]
+            line = coord[0] + "\t" + coord[1] + "\t" +  coord[2] + "\t" + coord[3]
             f.write(line)
+            

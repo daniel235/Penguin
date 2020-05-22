@@ -34,12 +34,16 @@ def createNanoInstance(row, hot=True):
     inst = []
     columns=['event_level_mean','event_stdv','event_length']
     
-    inst = row[columns]
+    
+    for cl in columns:
+        inst.append(row[cl])
+
 
     if hot:
         for k in row['reference_kmer']:
             inst.append(k)
     
+    print(inst)
     return inst.to_numpy()
 
 
