@@ -224,9 +224,9 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
     count = 0
     for kmer in hot_kmers:
-        print(kmer)
         data.iloc[count]["reference_kmer"] = kmer
         count += 1
+        print(count)
 
     print("hot kmers ", data["reference_kmer"])
 
@@ -250,7 +250,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
             #guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
 
             #new svm model
-            input4Model = PD.createNanoInstance(data.iloc[i], hot=oneHot)
+            input4Model = PD.createNanoInstance(data.iloc[i], kmers=hot_kmers[i], hot=oneHot)
             input4Model = input4Model.reshape(1, -1)
             print(input4Model)
             guess = model.predict(input4Model)
