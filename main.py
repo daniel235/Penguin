@@ -47,11 +47,16 @@ for f in currentFiles:
         currentFile = f
         break
 '''
-for root, dirs, files in os.walk(fastPath, topdown=False):
-    for name in files:
-        if name.endswith(".fast5"):
-            currentFile = name
-            break
+#singular file
+if fastPath.endswith(".fast5"):
+    currentFile = fastPath
+#path of fast5 files
+else:
+    for root, dirs, files in os.walk(fastPath, topdown=False):
+        for name in files:
+            if name.endswith(".fast5"):
+                currentFile = name
+                break
 
 print("my ref file ", refPath)
 event_info = tscript.event_check(fastPath, currentFile, refPath)
