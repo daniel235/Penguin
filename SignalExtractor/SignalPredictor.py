@@ -224,6 +224,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
     count = 0
     for kmer in hot_kmers:
+        print(kmer)
         data.iloc[count]["reference_kmer"] = kmer
         count += 1
 

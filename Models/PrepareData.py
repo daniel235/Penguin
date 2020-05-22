@@ -44,7 +44,7 @@ def createNanoInstance(row, hot=True):
             inst.append(k)
     
     print(inst)
-    return inst.to_numpy()
+    return inst
 
 
 def scaleData(data):
