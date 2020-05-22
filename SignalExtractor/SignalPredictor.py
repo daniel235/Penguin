@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import svm
 import Models.PrepareData as PD
-import graph_plots as gp
+import SignalExtractor.graph_plots as gp
 
 #iterate through signal events
 #figure out how to get accuracy of predictions
