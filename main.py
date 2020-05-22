@@ -50,7 +50,7 @@ for f in currentFiles:
 #singular file
 if fastPath.endswith(".fast5"):
     currentFile = fastPath
-    event_info = tscript.event_check(currentFile, refPath)
+    event_info = tscript.event_check(filename=currentFile, ref=refPath)
 #path of fast5 files
 else:
     for root, dirs, files in os.walk(fastPath, topdown=False):
@@ -59,7 +59,7 @@ else:
                 currentFile = name
                 break
 
-    event_info = tscript.event_check(fastPath, currentFile, refPath)
+    event_info = tscript.event_check(fpath=fastPath, filename=currentFile, ref=refPath)
 
 
 print("my ref file ", refPath)

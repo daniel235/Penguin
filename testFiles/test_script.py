@@ -88,7 +88,7 @@ def id_file_test():
             return
 
 
-def event_check(fpath=None, filename=None, ref):
+def event_check(fpath=None, filename=None, ref=None):
     #single file 
     if fpath == None:
         hdf = h5py.File(filename, 'r')
