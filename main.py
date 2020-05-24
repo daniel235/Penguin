@@ -23,6 +23,8 @@ parser.add_argument('-b', action='store', dest='bed_input', help='Provide Bed fi
 parser.add_argument('-ref', action='store', dest='ref_input', help='Provide reference genome file')
 #sam file
 parser.add_argument('-s', action='store', dest='sam_input', help='Provide Sam File')
+#testing
+parser.add_argument('-test', action='store', dest='test_input', help='Testing')
 
 #get arguments
 results = parser.parse_args()
@@ -31,6 +33,7 @@ directory = results.path_input
 bedFile = results.bed_input
 refFile = results.ref_input
 samFile = results.sam_input
+testingInput = results.test_input
 
 #get all required files for signal extraction
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
@@ -102,4 +105,4 @@ if event_info == None:
 
 #model = PD.prepareSVMModel("Models/modelsvmHot.joblib")
 model = PD.prepareNNModel()
-Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile)
+Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile, testing=testingInput)

@@ -192,7 +192,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
     plt.savefig('position_prediction.png')
 
 
-def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, oneHot=True):
+def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, oneHot=True, testing=False):
     #read in event align file
     data = pd.read_csv(eventAlign, sep="\t")
     data = PD.scaleData(data)
@@ -223,10 +223,14 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     new_hot_kmers = PD.nano_to_onehot(data)
 
     count = 0
-    for kmer in hot_kmers:
-        data.iloc[count]["reference_kmer"] = kmer
-        count += 1
-        print(count)
+    if testing == False:
+        for kmer in hot_kmers:
+            data.iloc[count]["reference_kmer"] = kmer
+            count += 1
+            print(count)
+    else:
+        data.iloc[0]["reference_kmer"] = hot_kmers[0]
+
 
     print("hot kmers ", data["reference_kmer"])
 
@@ -251,7 +255,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
             #new svm model
             input4Model = PD.createNanoInstance(data.iloc[i], kmers=hot_kmers[i], hot=oneHot)
-            input4Model = input4Model.reshape(1, -1)
+            #input4Model = input4Model.reshape(1, -1)
             print(input4Model)
             guess = model.predict(input4Model)
 
@@ -283,6 +287,10 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
                 
             print("current accuracy ", accuracy / tkmerCount)
             '''
+
+        if testing:
+            break
+        
     #read id location kmer
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
     new_possible_locations(psuedo_locations)
