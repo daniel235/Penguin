@@ -56,7 +56,6 @@ def convertToFasta(fastq):
     print("fname ", fname)
     os.system(convCmd)
     
-
     return fname
 
 
@@ -64,10 +63,12 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
     nanopolish_run(fastDir, "Data/basecall/")
     #create aligned sam file and convert to bam file
     fasta = "Data/" + nanopolish_create_fasta(fastDir, basecallDir)
+    fastqCount = 0
     #convert file 
     for file in os.listdir(basecallDir):
         if file.endswith(".fastq") or file.endswith(".fq"):
             fasta = convertToFasta(file)
+            fastqCount += 1
 
     #align to reference
     ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + basecallDir + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp | samtools index " + basecallDir + "reads-ref.sorted.bam"  

@@ -33,11 +33,9 @@ def createInstance(kmer, raw_signal, type=None):
 def createNanoInstance(row, kmers=None, hot=True):
     inst = []
     columns=['event_level_mean','event_stdv','event_length']
-    
-    
+        
     for cl in columns:
         inst.append(row[cl])
-
 
     if hot:
         for k in kmers:
