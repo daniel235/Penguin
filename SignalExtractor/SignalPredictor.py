@@ -219,8 +219,13 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     mod_locs = get_all_modified_locs(bed_array)
 
     #convert kmers
-    hot_kmers = PD.createEncoder(kmers)
+    #hot_kmers = PD.createEncoder(kmers)
     new_hot_kmers = PD.nano_to_onehot(data)
+
+    print("hot kmers ", data["reference_kmer"])
+    onehot=pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+    hot_kmers = onehot.to_numpy()
+    print("hot ", hot_kmers)
 
     count = 0
     if testing == False:
@@ -232,7 +237,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
         data.iloc[0]["reference_kmer"] = hot_kmers[0]
 
 
-    print("hot kmers ", data["reference_kmer"])
+    
 
     #check if middle kmer is a T or U
     for i in range(len(kmers)):

@@ -41,6 +41,9 @@ def createNanoInstance(row, kmers=None, hot=True):
         for k in kmers:
             inst.append(k)
     
+    Onehot=pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+    X = pd.concat([X,Onehot],axis=1)
+
     return np.asarray(inst)
 
 
