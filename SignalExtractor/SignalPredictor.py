@@ -223,7 +223,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     new_hot_kmers = PD.nano_to_onehot(data)
 
     print("hot kmers ", data["reference_kmer"])
-    onehot=pd.get_dummies(row['reference_kmer'], prefix='reference_kmer')
+    onehot=pd.get_dummies(data['reference_kmer'], prefix='reference_kmer')
     hot_kmers = onehot.to_numpy()
     print("hot ", hot_kmers)
 
@@ -235,7 +235,6 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
             print(count)
     else:
         data.iloc[0]["reference_kmer"] = hot_kmers[0]
-
 
     
 
