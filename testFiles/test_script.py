@@ -94,8 +94,8 @@ def event_check(fpath=None, filename=None, ref=None):
         hdf = h5py.File(filename, 'r')
         #check if event file exists
         if "reads-ref.eventalign.txt" in os.listdir("Data"):
-            return "reads-ref.eventalign.txt"
-            
+            return "Data/reads-ref.eventalign.txt"
+
     #multiple files
     else:
         hdf = h5py.File(fpath + filename, 'r')
