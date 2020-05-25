@@ -41,8 +41,7 @@ def createNanoInstance(row, kmers=None, hot=True):
         for k in kmers:
             inst.append(k)
     
-    print(inst)
-    return inst
+    return np.asarray(inst)
 
 
 def scaleData(data):

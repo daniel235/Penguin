@@ -255,7 +255,7 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
 
             #new svm model
             input4Model = PD.createNanoInstance(data.iloc[i], kmers=hot_kmers[i], hot=oneHot)
-            #input4Model = input4Model.reshape(1, -1)
+            input4Model = input4Model.reshape(1, -1)
             print(input4Model)
             guess = model.predict(input4Model)
 
