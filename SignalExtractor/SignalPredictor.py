@@ -184,7 +184,7 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
                                 accuracies.append(accuracy / tKmers)
 
     print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tKmers)
-    #save plot 
+    #save plot
     plt.plot(runs, accuracies)
     plt.xlabel('runs')
     plt.ylabel('accuracy')
@@ -193,18 +193,9 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
 
 def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, oneHot=True, testing=False):
-    #read in event align file
-    data = pd.read_csv(eventAlign, sep="\t")
-    data = PD.scaleData(data)
-    print(data)
-    #chromosome 
-    chromosomes = data["contig"]
-    position = data["position"]
-    kmers = data["reference_kmer"]
-    mean = data["event_level_mean"]
-    std_deviation = data["event_stdv"]
-    raw_signal = data["samples"]
-
+    #get modified locations
+    bed_array = get_bed_data(bedPath)
+    mod_locs = get_all_modified_locs(bed_array)
     #statistics
     accuracy = 0
     tkmerCount = 0
@@ -214,89 +205,87 @@ def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, on
     runs = []
     psuedo_locations = []
 
-    #get modified locations
-    bed_array = get_bed_data(bedPath)
-    mod_locs = get_all_modified_locs(bed_array)
+    #read in event align file
+    for chunk in pd.read_csv(eventAlign, sep="\t", chunksize=1000000, dtype={"position":int, "reference_kmer":str, "read_index":int, "event_level_mean":float, "event_stdv":float, "model_mean":float, "model_stdv":float}):
+        #data = pd.read_csv(eventAlign, sep="\t", low_memory=False, dtype={"position":int, "reference_kmer":str, "read_index":int, "event_level_mean":float, "event_stdv":float, "model_mean":float, "model_stdv":float})
+        data = PD.scaleData(chunk)
+        #chromosome
+        chromosomes = data["contig"]
+        position = data["position"]
+        kmers = data["reference_kmer"]
+        mean = data["event_level_mean"]
+        std_deviation = data["event_stdv"]
+        #raw_signal = data["samples"]
 
-    #convert kmers
-    #hot_kmers = PD.createEncoder(kmers)
-    new_hot_kmers = PD.nano_to_onehot(data)
+        #get T kmers
+        '''
+        allKmers = kmers
+        kmers = []
+        for k in allKmers:
+            if k[2] == 'T':
+                kmers.append(k)
+        '''
+        allkmers = PD.getAllPossible5Kmers()
 
-    print("hot kmers ", data["reference_kmer"])
-    onehot=pd.get_dummies(data['reference_kmer'], prefix='reference_kmer')
-    hot_kmers = onehot.to_numpy()
-    print("hot ", hot_kmers)
+        #convert kmers
+        enc = PD.createEncoder(allkmers)
+        hot_kmers = PD.to_onehot(enc, kmers)
+        print("hot ", hot_kmers, " hot")
+        #new_hot_kmers = PD.nano_to_onehot(data)
 
-    count = 0
-    if testing == False:
-        for kmer in hot_kmers:
-            data.iloc[count]["reference_kmer"] = kmer
-            count += 1
-            print(count)
-    else:
-        data.iloc[0]["reference_kmer"] = hot_kmers[0]
+        count = 0
+        if testing == False:
+            for kmer in hot_kmers:
+                data.iloc[count]["reference_kmer"] = kmer
+                count += 1
+        else:
+            data.iloc[0]["reference_kmer"] = hot_kmers[0]
 
-    
-
-    #check if middle kmer is a T or U
-    for i in range(len(kmers)):
-        if kmers[i][2] == 'T':
-            tkmerCount += 1
-            raw = []
-            sig = ""
-            #convert string signal into actual float signal
-            for char in raw_signal[i]:
-                if char != ',':
-                    sig += char
-                else:
-                    raw.append(float(sig))
-                    sig = ""
-            
-            raw.append(float(sig))
-
-            #input4Model = PD.createInstance(hot_kmers[i], raw).reshape((1,-1))
-            #guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
-
-            #new svm model
-            input4Model = PD.createNanoInstance(data.iloc[i], kmers=hot_kmers[i], hot=oneHot)
-            input4Model = input4Model.reshape(1, -1)
-            print(input4Model)
-            guess = model.predict(input4Model)
-
-            #predicted control
-            if guess < 0.50:
-                print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
-                total_control += 1
+        #check if middle kmer is a T or U
+        for i in range(len(kmers)):
+            if kmers[i][2] == 'T':
+                tkmerCount += 1
                 '''
-                if validation((chromosomes[i], position[i] + 2), mod_locs) == 0:
-                    print("correct control prediction")
-                    accuracy += 1
+                raw = []
+                sig = ""
+                #convert string signal into actual float signal
+                for char in raw_signal[i]:
+                    if char != ',':
+                        sig += char
+                    else:
+                        raw.append(float(sig))
+                        sig = ""
+
+                raw.append(float(sig))
+                '''
+                #input4Model = PD.createInstance(hot_kmers[i], raw).reshape((1,-1))
+                #guess = model.predict(input4Model, batch_size=1, verbose=1)[0]
+
+                #new svm model
+                input4Model = PD.createNanoInstance(data.iloc[i], kmers=hot_kmers[i], hot=oneHot)
+                print(input4Model.shape)
+                input4Model = input4Model.reshape(1, -1)
+                guess = model.predict(input4Model)
+
+                #predicted control
+                if guess < 0.50:
+                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " control \n")
                     total_control += 1
-                    #predicted pseudo
-                '''
-            else:
-                #check if location is actually modified
-                print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
-                #add predicted locatin to list of possible pseudo locations
-                psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i]])
-                total_pseudo += 1
-                '''
-                if validation((chromosomes[i], position[i] + 2), mod_locs) == 1:
-                    accuracy += 1
-                    total_pseudo += 1
-                    #get stats here
-                    if tkmerCount % 10000 == 0:
-                        runs.append(tkmerCount)
-                        accuracies.append(accuracy / tkmerCount)
-                
-            print("current accuracy ", accuracy / tkmerCount)
-            '''
 
-        if testing:
-            break
-        
-    #read id location kmer
-    print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
+                else:
+                    #check if location is actually modified
+                    print("chromosome ", chromosomes[i], " position ", position[i] + 2, " ", kmers[i], " pseudo \n")
+                    #add predicted locatin to list of possible pseudo locations
+                    psuedo_locations.append([chromosomes[i], position[i] + 2, kmers[i]])
+                    total_pseudo += 1
+
+            if testing:
+                break
+
+        #read id location kmer
+        print("finished running Pseudo: ", total_pseudo, " control: ", total_control, " accuracy ", accuracy / tkmerCount)
+
+
     new_possible_locations(psuedo_locations)
     gp.box_plot(total_pseudo, total_control)
     gp.ven_diagram(total_pseudo, total_control, tkmerCount)
@@ -404,4 +393,3 @@ def new_possible_locations(coords):
         for coord in coords:
             line = coord[0] + "\t" + coord[1] + "\t" +  coord[2] + "\t" + coord[3]
             f.write(line)
-            
