@@ -40,17 +40,6 @@ bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast
 #test if files are all available
 bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 
-#todo insert nanopolish script(test script takes care of this)
-#events test
-'''
-currentFiles = os.listdir(fastPath)
-currentFile = None
-for f in currentFiles:
-    if f.endswith(".fast5"):
-        currentFile = f
-        break
-'''
-print("after file checks")
 
 #singular file
 if fastPath.endswith(".fast5"):
@@ -65,10 +54,6 @@ else:
                 break
 
     event_info = tscript.event_check(fpath=fastPath, filename=currentFile, ref=refPath)
-
-print("after event info")
-
-print("my ref file ", refPath)
 
 
 #create ids for files
@@ -101,8 +86,9 @@ if event_info == None:
     Predict.predict(model, fastPath=fp, bedFile=bedPath, samFile=samPath)
     #RM.run_nn(model, [])
 '''
-#added events from nanopolish 
+#added events from nanopolish
 
 #model = PD.prepareSVMModel("Models/modelsvmHot.joblib")
+#model = PD.prepareSVMModel("Models/svm")
 model = PD.prepareNNModel()
-Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile, testing=testingInput)
+Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile, testing=False)
