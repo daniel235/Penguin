@@ -1,4 +1,6 @@
 #!/bin/bash
+#build tools
+sudo apt-get install build-essential
 
 #install minimap2
 git clone https://github.com/lh3/minimap2
@@ -20,10 +22,11 @@ chmod -R 777 Penguin
 cd Penguin
 
 #installing nanopolish
-git clone --recursive https://github.com/jts/nanopolish.git
-cd nanopolish
-make
-cd ..
+sudo apt-get install nanopolish
+#git clone --recursive https://github.com/jts/nanopolish.git
+#cd nanopolish
+#make
+#cd ..
 
 #install prerequisites for samtools
 git clone https://github.com/samtools/htslib
