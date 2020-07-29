@@ -1,6 +1,9 @@
 #!/bin/bash
 #build tools
 sudo apt-get install build-essential
+sudo apt-get install libz-dev
+sudo apt-get install libbz2-dev
+sudo apt-get install libncurses5-dev
 
 #install minimap2
 git clone https://github.com/lh3/minimap2
