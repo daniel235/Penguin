@@ -35,11 +35,20 @@ refFile = results.ref_input
 samFile = results.sam_input
 testingInput = results.test_input
 
+
+
+############### Prepare all files needed ###################################
+
 #get all required files for signal extraction
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available
 bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 
+############################################################################
+
+
+
+############### Get directory or single file and check for events ##########
 
 #singular file
 if fastPath.endswith(".fast5"):
@@ -55,17 +64,21 @@ else:
 
     event_info = tscript.event_check(fpath=fastPath, filename=currentFile, ref=refPath)
 
+#############################################################################
+
+
+
+############### Parse out necessary data for extraction #####################
 
 #create ids for files
-#Id.parse_fast5_ids(fast5Path=fastPath)
+Id.parse_fast5_ids(fast5Path=fastPath)
 
 #extract fast5 files with modified coordinates(sam, bed, fast5)
-#coord.extract_modified_coords(bedPath, samPath)
+coord.extract_modified_coords(bedPath, samPath)
 
 #get signals from modified  (???) (hardcoded)
 coordFile = "./Data/pstrand_chr_modification_coors.txt"
 Idfile = "./Data/Fast5_ids.txt"
-
 
 #Extract.extract_signal(Idfile, coordFile)
 #ExtractControl.extract_control(Idfile, coordFile)
@@ -73,6 +86,12 @@ Idfile = "./Data/Fast5_ids.txt"
 #get file of signals and pass to model
 modified = "./Data/post_pseudo_signals.txt"
 control = "./Data/control_signals.txt"
+
+##############################################################################
+
+
+
+################# Get correct machine learning network #######################
 
 #model.run_neural_net(control, modified)
 #PD.createInstance(control, modified)
@@ -92,3 +111,5 @@ if event_info == None:
 #model = PD.prepareSVMModel("Models/svm")
 model = PD.prepareNNModel()
 Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile, testing=False)
+
+################################################################################
