@@ -40,19 +40,14 @@ def file_test(bed_file, ref_file, sam_file):
             print("RECOMMENDED to download first")
             print("WARNING: default reference file is 18gb in size, ..downloading")
             #os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
-            os.system("wget -O refgenome.gz ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
+            os.system("wget -O ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
             #os.system("tar -xzf refgenome.tar.gz")
-            os.system("gunzip -v refgenome.gz")
+            os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa")
             for f in os.listdir(os.getcwd()):
                 print(f)
-                if f == "refgenome.gz":
+                if f == "Homo_sapiens" or f == defaultReferenceFile or f == "refgenome":
                     refFlag = True
                     break
-
-                if f == "Homo_sapiens":
-                    refFlag = True
-                    break
-
 
         ref_file = defaultReferenceFile
 
