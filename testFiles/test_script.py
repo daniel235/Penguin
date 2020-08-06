@@ -28,7 +28,8 @@ def file_test(bed_file, ref_file, sam_file):
     elif ref_file == None and sam_file == None:
         #use default ref files
         refFlag = False
-        defaultReferenceFile = "Homo_sapiens.GRCh38.dna.alt.fa"
+        #defaultReferenceFile = "Homo_sapiens.GRCh38.dna.alt.fa"
+        defaultReferenceFile = "refgenome"
         downloadedFlag = False
         #check if default reference file exists
         for f in os.listdir(os.getcwd()):
@@ -39,9 +40,12 @@ def file_test(bed_file, ref_file, sam_file):
         if downloadedFlag != True:
             print("RECOMMENDED to download first")
             print("WARNING: default reference file is 18gb in size, ..downloading")
-            os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
+            #os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
+            os.system("wget -O refgenome.gz ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh37_latest/refseq_identifiers/GRCh37_latest_genomic.fna.gz")
             #os.system("wget -O ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
             os.system("tar -xzf refgenome.tar.gz")
+            os.system("gunzip refgenome.gz")
+
             #os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa.gz")
             for f in os.listdir(os.getcwd()):
                 print(f)
