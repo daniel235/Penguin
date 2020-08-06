@@ -6,7 +6,7 @@ import os
 #test to check if required files are created
 def file_test(bed_file, ref_file, sam_file):
     if bed_file == None:
-        print("bed file test failed")
+        print("bed file test failed****")
         raise FileNotFoundError
 
     #create aligned sam
@@ -19,7 +19,7 @@ def file_test(bed_file, ref_file, sam_file):
                 fastfile = os.getcwd() + "/Data/basecall/" + ffile
 
         if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True:
-            print("basecall test failed")
+            print("basecall test failed****")
             raise FileNotFoundError
 
         sam_file = align.minimapAligner(fastfile, ref_file)
@@ -34,7 +34,7 @@ def file_test(bed_file, ref_file, sam_file):
         #check if default reference file exists
         for f in os.listdir(os.getcwd()):
             if f == defaultReferenceFile:
-                print("downloaded already")
+                print("reference downloaded already****")
                 downloadedFlag = True
 
         if downloadedFlag != True:
@@ -45,7 +45,7 @@ def file_test(bed_file, ref_file, sam_file):
             #os.system("wget -O ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
             os.system("tar -xzf refgenome.tar.gz")
             os.system("gunzip refgenome.gz")
-
+            print("gunzipping reference genome****")
             #os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa.gz")
             for f in os.listdir(os.getcwd()):
                 print(f)
@@ -56,7 +56,7 @@ def file_test(bed_file, ref_file, sam_file):
         ref_file = defaultReferenceFile
 
         if refFlag == False and downloadedFlag != True:
-            print("ref file test failed")
+            print("ref file test failed****")
             raise FileNotFoundError
 
         #get basecalled file
@@ -71,13 +71,13 @@ def file_test(bed_file, ref_file, sam_file):
         sam_file = align.minimapAligner(fastfile, ref_file)
 
     elif sam_file == None:
-        print("sam file test failed")
+        print("sam file test failed****")
         raise FileNotFoundError
 
     if bed_file != None:
-        print("\nbed file test passed")
+        print("\nbed file test passed****")
     if sam_file != None:
-        print("sam file test passed")
+        print("sam file test passed****")
 
     return bed_file, ref_file, sam_file
 
@@ -85,11 +85,11 @@ def file_test(bed_file, ref_file, sam_file):
 def id_file_test():
     for f in os.listdir("./Data/"):
         if f == "Fast5_ids.txt":
-            print("id test passed")
+            print("id test passed****")
             return
 
 
-def event_check(fpath=None, filename=None, ref=None):
+def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     #single file
     if fpath == None:
         hdf = h5py.File(filename, 'r')
@@ -102,14 +102,15 @@ def event_check(fpath=None, filename=None, ref=None):
         hdf = h5py.File(fpath + filename, 'r')
 
     fast_keys = hdf.keys()
-    if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys:
-        print("events test passed \n")
+    if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys and not NanopolishOnly:
+        print("events test passed**** \n")
         show_penguin()
         return None
     #no events
     else:
         if ref != None:
             if event_align_check() == None:
+                print("Creating Event Align file****")
                 #create events(nanopolish code goes here)
                 event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
                 print("event file ", event_file)
@@ -155,4 +156,5 @@ def event_align_check():
         if file == "reads-ref.eventalign.txt":
             return "Data/reads-ref.eventalign.txt"
 
+    print("Event Align Test Failed****")
     return None

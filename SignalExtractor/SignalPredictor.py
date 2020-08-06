@@ -194,8 +194,8 @@ def predict(model, fastPath=None, bedFile=None, samFile=None, Idfile=None):
 
 def nanopolish_predict(model, eventAlign, fastpath, bedPath, samPath, IdFile, oneHot=True, testing=False):
     #get modified locations
-    bed_array = get_bed_data(bedPath)
-    mod_locs = get_all_modified_locs(bed_array)
+    #bed_array = get_bed_data(bedPath)
+    #mod_locs = get_all_modified_locs(bed_array)
     #statistics
     accuracy = 0
     tkmerCount = 0
