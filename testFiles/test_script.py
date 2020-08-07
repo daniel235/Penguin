@@ -4,6 +4,19 @@ import SignalExtractor.Nanopolish as events
 import os
 
 #todo get basecall data
+def basecall_test(fastPath):
+    files = os.listdir("Data/basecall")
+    for f in files:
+        if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq"):
+            return
+
+    print("missing basecall file****")
+    print("creating basecall file****")
+    #create basecall file
+    bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+    os.system(bcCmd)
+    print("created basecall file****")
+
 
 #test to check if required files are created
 def file_test(bed_file, ref_file, sam_file):
@@ -12,7 +25,7 @@ def file_test(bed_file, ref_file, sam_file):
         raise FileNotFoundError
     
     #check for basecall keys
-    
+
 
     #create aligned sam
     elif ref_file != None and sam_file == None:
@@ -69,8 +82,12 @@ def file_test(bed_file, ref_file, sam_file):
         for ffile in os.listdir(fastfile):
             if ffile.endswith(".fastq") or ffile.endswith(".fasta"):
                 #check if fast files exist in directory
-                fastfile = os.getcwd() + "/Data/basecall/" + ffile
+                fastfile += ffile
                 break
+        
+        if fastfile == os.getcwd() + "/Data/basecall/":
+            print("basecall file test failed****")
+            raise FileNotFoundError
 
         #ref file exists so align here
         sam_file = align.minimapAligner(fastfile, ref_file)

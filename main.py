@@ -38,7 +38,8 @@ testingInput = results.test_input
 
 
 ############### Prepare all files needed ###################################
-
+#check if files are basecalled
+tscript.basecall_test(directory)
 #get all required files for signal extraction
 bedPath, fastPath, refPath, samPath = sequence.prep_required_files(bedFile, fast5Path=directory, referenceFile=refFile, samFile=samFile)
 #test if files are all available

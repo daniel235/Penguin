@@ -29,6 +29,9 @@ git clone https://github.com/lh3/minimap2
 cd minimap2 && make
 cd ../..
 
+#set scrappie to path
+export PATH=$PATH:~/Penguin/scrappie/build
+
 #install squiggleKit & scrappie
 #git clone https://github.com/Psy-Fer/SquiggleKit.git
 pip install numpy h5py sklearn matplotlib

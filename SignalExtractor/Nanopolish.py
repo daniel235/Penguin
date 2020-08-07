@@ -8,7 +8,7 @@ def merge_fastq(basecallDir):
     for file in os.listdir(basecallDir):
         if file.endswith(".fastq"):
             merge_cmd += file + " "
-
+        
     merge = "> " + basecallDir + " reads.fastq"
     merge_cmd += merge
     os.system(merge_cmd)
