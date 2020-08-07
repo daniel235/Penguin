@@ -3,11 +3,16 @@ import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
 import os
 
+#todo get basecall data
+
 #test to check if required files are created
 def file_test(bed_file, ref_file, sam_file):
     if bed_file == None:
         print("bed file test failed****")
         raise FileNotFoundError
+    
+    #check for basecall keys
+    
 
     #create aligned sam
     elif ref_file != None and sam_file == None:

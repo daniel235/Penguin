@@ -74,7 +74,7 @@ def convertToFasta(fastq):
     return fname
 
 
-def nanopolish_events(fastDir, basecallDir, referenceFile="Data/"):
+def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None):
     nanopolish_run(fastDir, "Data/basecall/")
     #create aligned sam file and convert to bam file
     fasta = "Data/basecall/" + nanopolish_create_fasta(fastDir, basecallDir)

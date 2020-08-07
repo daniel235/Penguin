@@ -15,3 +15,6 @@ SignalExtractor/*.pyc
 *.pyc
 refgenome.tar.gz
 Homo_sapiens
+refgenome
+scrappie
+
