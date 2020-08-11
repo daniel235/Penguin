@@ -1,4 +1,5 @@
 import h5py
+from ont_fast5_api.conversion_tools import multi_to_single_fast5
 import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
 import os
@@ -14,7 +15,10 @@ def basecall_test(fastPath):
     print("creating basecall file****")
     #create basecall file
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
-    os.system(bcCmd)
+    try:
+        os.system(bcCmd)
+    except:
+        print("got error")
     print("created basecall file****")
 
 
@@ -180,3 +184,9 @@ def event_align_check():
 
     print("Event Align Test Failed****")
     return None
+
+
+def fast5_type_check(directory):
+    #go through fast5 files and check if the files is multi or single fast5 file
+    #we need a single fast5 file
+    

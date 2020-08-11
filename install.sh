@@ -6,6 +6,7 @@ sudo apt-get install libbz2-dev
 sudo apt-get install libncurses5-dev
 sudo apt-get install -y liblzma-dev
 sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install autoconf
 
 #build tools for scrappy
 
@@ -23,6 +24,9 @@ cd scrappie
 mkdir build && cd build && cmake .. && make
 cd ..
 
+#install ontfast5
+pip3 install ont-fast5-api
+
 
 #install minimap2
 git clone https://github.com/lh3/minimap2
@@ -34,10 +38,10 @@ export PATH=$PATH:~/Penguin/scrappie/build
 
 #install squiggleKit & scrappie
 #git clone https://github.com/Psy-Fer/SquiggleKit.git
-pip install numpy h5py sklearn matplotlib
+pip3 install numpy h5py sklearn matplotlib
 #pip install scrappie
 pip3 install tensorflow==2.1.0
-pip install keras
+pip3 install keras
 #create empty directory for data
 mkdir Data/basecall/
 
