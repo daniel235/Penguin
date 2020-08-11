@@ -40,6 +40,7 @@ python main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed
 ## Built With
 
 * [Tensorflow](https://www.tensorflow.org/) - Used to generate ml models
+* [Scrappie](https://github.com/nanoporetech/scrappie) - Used as default basecaller
 
 ## Contributing
 
@@ -59,3 +60,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Falcon
+* Janga Lab (https://jangalab.sitehost.iu.edu/)
