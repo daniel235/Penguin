@@ -1,5 +1,6 @@
 import h5py
 from ont_fast5_api.conversion_tools import multi_to_single_fast5
+from ont_fast5_api import fast5_interface
 import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
 import os
@@ -186,7 +187,17 @@ def event_align_check():
     return None
 
 
-def fast5_type_check(directory):
+def convert_fast5_type(directory):
     #go through fast5 files and check if the files is multi or single fast5 file
     #we need a single fast5 file
-    
+    for root, dirs, files in os.walk(directory):
+        for name in files:
+            if name.endswith(".fast5"):
+                fobj = fast5_interface.get_fast5_file(os.path.join(root, name))
+                if fast5_interface.check_file_type(fobj) == "multi-read":
+                    #convert file to single fast5
+                    multi_to_single_fast5.
+
+                
+
+    fast5_interface.check_file_type()
