@@ -4,6 +4,7 @@ from ont_fast5_api import fast5_interface
 import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
 import os
+import subprocess
 
 #todo get basecall data
 def basecall_test(fastPath):
@@ -17,9 +18,13 @@ def basecall_test(fastPath):
     #create basecall file
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
     try:
-        os.system(bcCmd)
-    except:
+        subprocess.run([bcCmd], check = True)
+    except subprocess.CalledProcessError:
         print("got error")
+        convert_fast5_type(fastPath)
+        bcCmd = "scrappie raw " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+        os.sytem(bcCmd)
+        
     print("created basecall file****")
 
 
@@ -196,8 +201,6 @@ def convert_fast5_type(directory):
                 fobj = fast5_interface.get_fast5_file(os.path.join(root, name))
                 if fast5_interface.check_file_type(fobj) == "multi-read":
                     #convert file to single fast5
-                    multi_to_single_fast5.
-
-                
-
-    fast5_interface.check_file_type()
+                    print("converting fast5 file****")
+                    multi_to_single_fast5.convert_multi_to_single(name, directory, "single")
+ 
