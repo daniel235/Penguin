@@ -19,11 +19,18 @@ def basecall_test(fastPath):
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
     try:
         subprocess.run([bcCmd], check = True)
+
     except subprocess.CalledProcessError:
         print("got error")
         convert_fast5_type(fastPath)
         bcCmd = "scrappie raw " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
-        os.sytem(bcCmd)
+        os.system(bcCmd)
+
+    except FileNotFoundError:
+        print("got error")
+        convert_fast5_type(fastPath)
+        bcCmd = "scrappie raw " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+        os.system(bcCmd)
         
     print("created basecall file****")
 
