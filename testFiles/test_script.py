@@ -47,7 +47,7 @@ def file_test(bed_file, ref_file, sam_file):
         raise FileNotFoundError
     
     #check for basecall keys
-
+    
 
     #create aligned sam
     elif ref_file != None and sam_file == None:
