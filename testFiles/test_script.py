@@ -22,14 +22,19 @@ def basecall_test(fastPath):
 
     except subprocess.CalledProcessError:
         print("got error")
-        convert_fast5_type(fastPath)
-        bcCmd = "scrappie raw " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+        #list fastpath and check if already converted to single fast5's
+        if 'single' not in os.listdir(fastPath):
+            convert_fast5_type(fastPath)
+
+        bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
         os.system(bcCmd)
 
     except FileNotFoundError:
         print("got error")
-        convert_fast5_type(fastPath)
-        bcCmd = "scrappie raw " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+        if 'single' not in os.listdir(fastPath):
+            convert_fast5_type(fastPath)
+
+        bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
         os.system(bcCmd)
         
     print("created basecall file****")
@@ -49,11 +54,12 @@ def file_test(bed_file, ref_file, sam_file):
         #fasta input
         fastfile = os.getcwd() + "/Data/basecall/"
         for ffile in os.listdir(fastfile):
-            if ffile.endswith(".fastq") or ffile.endswith(".fasta"):
+            if ffile.endswith(".fastq") or ffile.endswith(".fasta") or ffile.endswith(".fa"):
                 #check if fast files exist in directory
                 fastfile = os.getcwd() + "/Data/basecall/" + ffile
 
-        if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True:
+        print("fastfile ", fastfile)
+        if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True and fastfile.endswith(".fa") != True:
             print("basecall test failed****")
             raise FileNotFoundError
 
@@ -97,7 +103,7 @@ def file_test(bed_file, ref_file, sam_file):
         #get basecalled file
         fastfile = os.getcwd() + "/Data/basecall/"
         for ffile in os.listdir(fastfile):
-            if ffile.endswith(".fastq") or ffile.endswith(".fasta"):
+            if ffile.endswith(".fastq") or ffile.endswith(".fasta") or ffile.endswith(".fa"):
                 #check if fast files exist in directory
                 fastfile += ffile
                 break
