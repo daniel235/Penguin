@@ -29,6 +29,7 @@ pip3 install ont-fast5-api
 
 
 #install minimap2
+sudo apt install minimap2
 git clone https://github.com/lh3/minimap2
 cd minimap2 && make
 cd ../..
@@ -68,6 +69,7 @@ make install
 cd ..
 
 #install samtools (bug requires permissions)
+sudo apt install samtools
 git clone https://github.com/samtools/samtools
 cd samtools
 autoconf -Wno-syntax
