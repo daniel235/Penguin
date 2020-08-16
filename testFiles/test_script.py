@@ -46,9 +46,7 @@ def file_test(bed_file, ref_file, sam_file):
         print("bed file test failed****")
         raise FileNotFoundError
     
-    #check for basecall keys
     
-
     #create aligned sam
     elif ref_file != None and sam_file == None:
         #fasta input
@@ -58,12 +56,13 @@ def file_test(bed_file, ref_file, sam_file):
                 #check if fast files exist in directory
                 fastfile = os.getcwd() + "/Data/basecall/" + ffile
 
-        print("fastfile ", fastfile)
         if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True and fastfile.endswith(".fa") != True:
             print("basecall test failed****")
             raise FileNotFoundError
 
-        sam_file = align.minimapAligner(fastfile, ref_file)
+        #check if sam file exists on our directory
+        sam_file = get_sam_file(fastfile, ref_file)
+            
 
 
     elif ref_file == None and sam_file == None:
@@ -113,7 +112,7 @@ def file_test(bed_file, ref_file, sam_file):
             raise FileNotFoundError
 
         #ref file exists so align here
-        sam_file = align.minimapAligner(fastfile, ref_file)
+        sam_file = get_sam_file(fastfile, ref_file)
 
     elif sam_file == None:
         print("sam file test failed****")
@@ -132,6 +131,19 @@ def id_file_test():
         if f == "Fast5_ids.txt":
             print("id test passed****")
             return
+
+def get_sam_file(fastfile, ref_file):
+    #check if sam file exists on our directory
+    if "Alignment.sam" in os.listdir("Data"):
+        #prompt to create new sam file
+        choice = input("Do you want to create a new sam file?(y/n)")
+        if choice == 'y':
+            sam_file = align.minimapAligner(fastfile, ref_file)
+        else:
+            return "Data/Alignment.sam"
+
+    else:
+        sam_file = align.minimapAligner(fastfile, ref_file)
 
 
 def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
