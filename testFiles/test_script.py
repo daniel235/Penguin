@@ -16,7 +16,7 @@ def basecall_test(fastPath):
     print("missing basecall file****")
     print("creating basecall file****")
     #create basecall file
-    bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+    bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fasta"
     try:
         subprocess.run([bcCmd], check = True)
 
