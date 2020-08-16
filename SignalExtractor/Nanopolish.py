@@ -95,7 +95,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
     os.system(sam_cmd)
     
     #check if bamfile is complete
-    bamcheck = "samtools quickcheck reads-ref.sorted.bam"
+    bamcheck = "samtools quickcheck " + basecallDir + "reads-ref.sorted.bam"
     os.system(bamcheck)
 
     #align nanopore events to reference genome
