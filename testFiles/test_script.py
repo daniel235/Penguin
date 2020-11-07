@@ -11,7 +11,8 @@ def basecall_test(fastPath):
     files = os.listdir("Data/basecall")
     for f in files:
         if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq"):
-            return
+            if os.stat("Data/basecall/" + f).st_size > 1000:
+                return
 
     print("missing basecall file****")
     print("creating basecall file****")
@@ -23,6 +24,8 @@ def basecall_test(fastPath):
     except subprocess.CalledProcessError:
         print("got error")
         #list fastpath and check if already converted to single fast5's
+
+        #todo check if already in single directory
         if 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
 
@@ -151,7 +154,7 @@ def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     if fpath == None:
         hdf = h5py.File(filename, 'r')
         #check if event file exists
-        if "reads-ref.eventalign.txt" in os.listdir("Data"):
+        if "reads-ref.eventalign.txt" in os.listdir("Data") and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
             return "Data/reads-ref.eventalign.txt"
 
     #multiple files
@@ -166,6 +169,7 @@ def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     #no events
     else:
         if ref != None:
+            #todo fix this bug
             if event_align_check() == None:
                 print("Creating Event Align file****")
                 #create events(nanopolish code goes here)
@@ -210,8 +214,9 @@ def sequence_check():
 
 def event_align_check():
     for file in os.listdir("Data"):
-        if file == "reads-ref.eventalign.txt":
+        if file == "reads-ref.eventalign.txt" and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
             return "Data/reads-ref.eventalign.txt"
+
 
     print("Event Align Test Failed****")
     return None
