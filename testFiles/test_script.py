@@ -23,6 +23,8 @@ def basecall_test(fastPath):
 
     except subprocess.CalledProcessError:
         print("got error")
+        #export scrappie cmd (might not be exported correctly)
+        export PATH=$PATH:scrappie/build
         #list fastpath and check if already converted to single fast5's
 
         #todo check if already in single directory
@@ -79,7 +81,7 @@ def file_test(bed_file, ref_file, sam_file):
             if f == defaultReferenceFile:
                 print("reference downloaded already****")
                 downloadedFlag = True
-
+        #download reference file
         if downloadedFlag != True:
             print("RECOMMENDED to download first")
             print("WARNING: default reference file is 18gb in size, ..downloading")
@@ -95,9 +97,9 @@ def file_test(bed_file, ref_file, sam_file):
                 if f == "Homo_sapiens" or f == defaultReferenceFile or f == "refgenome":
                     refFlag = True
                     break
-
+        
         ref_file = defaultReferenceFile
-
+        #if file download wasn't successful
         if refFlag == False and downloadedFlag != True:
             print("ref file test failed****")
             raise FileNotFoundError
