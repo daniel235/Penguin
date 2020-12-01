@@ -26,6 +26,7 @@ def nanopolish_run(fastDir, basecallDir):
     #create one fastq file
     merge_fastq(basecallDir)
     convertToFasta("Data/basecall/reads.fastq")
+    #todo check for single folder in fastdir directory
     index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fasta"
     #move into data folder to save files
 
@@ -58,6 +59,15 @@ def nanopolish_create_fasta(fastDir, basecallDir):
 
 def convertToFasta(fastq):
     os.system("cd Data/basecall/")
+
+    #check if file empty
+    if os.stat(fastq).st_size() == 0:
+        #check for scrappie fasta
+        if "scrappieReads.fa" in os.listdir(os.getcwd()):
+            print("scrappie provided fasta")
+            fname = "scrappieReads.fa"
+            return fname
+
     #name for final file
     fname = ""
     if fastq.endswith(".fq"):
@@ -72,6 +82,7 @@ def convertToFasta(fastq):
     os.system(convCmd)
     os.system("cd ..")
     os.system("cd ..")
+
     return fname
 
 
