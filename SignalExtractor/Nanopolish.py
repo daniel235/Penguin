@@ -23,6 +23,7 @@ def nanopolish_run(fastDir, basecallDir):
             myCmd = "mv " + basecallDir + file + " " + basecallDir + "reads.fastq"
             os.system(myCmd)
     '''
+    #create one fastq file
     merge_fastq(basecallDir)
     convertToFasta("Data/basecall/reads.fastq")
     index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fasta"

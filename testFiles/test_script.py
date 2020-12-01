@@ -161,9 +161,10 @@ def get_sam_file(fastfile, ref_file):
     else:
         sam_file = align.minimapAligner(fastfile, ref_file)
 
-
+#create event info file for machine learning models
 def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     #single file
+    '''
     if fpath == None:
         hdf = h5py.File(filename, 'r')
         #check if event file exists
@@ -173,30 +174,32 @@ def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     #multiple files
     else:
         hdf = h5py.File(fpath + filename, 'r')
-
+    
     fast_keys = hdf.keys()
     if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys and not NanopolishOnly:
         print("events test passed**** \n")
         show_penguin()
-        return None
-    #no events
-    else:
-        if ref != None:
-            #todo fix this bug
-            if event_align_check() == None:
-                print("Creating Event Align file****")
-                #create events(nanopolish code goes here)
-                event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
-                print("event file ", event_file)
-                show_penguin()
-                return event_file
-            else:
-                show_penguin()
-                return "Data/reads-ref.eventalign.txt"
+        return None'''
+    #check if event info already exists
+    if "reads-ref.eventalign.txt" in os.listdir("Data") and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
+            return "Data/reads-ref.eventalign.txt"
 
+    #no events
+    if ref != None:
+        #todo fix this bug
+        if event_align_check() == None:
+            print("Creating Event Align file****")
+            #create events(nanopolish code goes here)
+            event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
+            print("event file ", event_file)
+            show_penguin()
+            return event_file
         else:
-            print("reference file test failed")
-            raise FileNotFoundError
+            show_penguin()
+            return "Data/reads-ref.eventalign.txt"
+    else:
+        print("reference file test failed")
+        raise FileNotFoundError
 
 
 
@@ -228,6 +231,7 @@ def sequence_check():
 def event_align_check():
     for file in os.listdir("Data"):
         if file == "reads-ref.eventalign.txt" and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
+            print("Event Align Test Passed****")
             return "Data/reads-ref.eventalign.txt"
 
 
