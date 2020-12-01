@@ -16,7 +16,7 @@ def basecall_test(fastPath):
 
     print("missing basecall file****")
     print("creating basecall file****")
-    #create basecall file
+    #create basecall file 
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fasta"
     try:
         subprocess.run([bcCmd], check = True)
@@ -24,7 +24,8 @@ def basecall_test(fastPath):
     except subprocess.CalledProcessError:
         print("got error")
         #export scrappie cmd (might not be exported correctly)
-        export PATH=$PATH:scrappie/build
+        expCmd = "export PATH=$PATH:scrappie/build"
+        os.system(expCmd)
         #list fastpath and check if already converted to single fast5's
 
         #todo check if already in single directory
