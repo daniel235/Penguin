@@ -21,18 +21,22 @@ def basecall_test(fastPath):
     try:
         subprocess.run([bcCmd], check = True)
 
+    #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
         print("got error")
         #export scrappie cmd (might not be exported correctly)
         expCmd = "export PATH=$PATH:scrappie/build"
         os.system(expCmd)
-        #list fastpath and check if already converted to single fast5's
 
-        #todo check if already in single directory
-        if 'single' not in os.listdir(fastPath):
+        #checking if already in single directory
+        if 'single' in fastPath:
+            print("|||\/|| Already in single folder")
+
+        #convert multi fast5 to single fast5 and move files into single directory.  
+        elif 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
+            bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
 
-        bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
         os.system(bcCmd)
 
     except FileNotFoundError:
@@ -43,7 +47,13 @@ def basecall_test(fastPath):
         bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
         os.system(bcCmd)
         
-    print("created basecall file****")
+    #check if basecall created successfully
+    if os.stat("Data/basecall/scrappieReads.fa").st_size > 0:
+        print("created basecall file****")
+    else:
+        print("Couldn't create basecall file")
+
+    
 
 
 #test to check if required files are created
