@@ -59,27 +59,31 @@ def nanopolish_create_fasta(fastDir, basecallDir):
 
 def convertToFasta(fastq):
     os.system("cd Data/basecall/")
-
+    #name for final file
+    fname = ""
     #check if file empty
-    if os.stat(fastq).st_size() == 0:
+    if "reads.fastq" not in os.listdir(os.getcwd()):
+        print("no reads.fastq")
         #check for scrappie fasta
+        print("get ", os.getcwd())
         if "scrappieReads.fa" in os.listdir(os.getcwd()):
             print("scrappie provided fasta")
             fname = "scrappieReads.fa"
-            return fname
+            #change scrappiereads to reads.fasta
+            changeNameCmd = "mv scrappieReads.fa reads.fasta"
+            os.system(changeNameCmd)
 
-    #name for final file
-    fname = ""
-    if fastq.endswith(".fq"):
+    elif fastq.endswith(".fq"):
         convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr '\t' '\n' > " +  fastq[:-3] + ".fa"
         fname = fastq[:-3] + ".fasta"
+        os.system(convCmd)
 
     else:
         convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr '\t' '\n' > " +  fastq[:-6] + ".fasta"
         fname = fastq[:-6] + ".fasta"
+        os.system(convCmd)
 
     print("fname ", fname)
-    os.system(convCmd)
     os.system("cd ..")
     os.system("cd ..")
 
