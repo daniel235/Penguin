@@ -89,9 +89,20 @@ def convertToFasta(fastq):
 
 
 def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None):
+    print("in nanopolish events")
     nanopolish_run(fastDir, "Data/basecall/")
+    fasta = ""
     #create aligned sam file and convert to bam file
-    fasta = "Data/basecall/" + nanopolish_create_fasta(fastDir, basecallDir)
+    #check for fasta first in basecall directory
+    for files in os.listdir("Data/basecall"):
+        if files.endswith(".fa") or files.endswith(".fasta"):
+            fasta = "Data/basecall/" + files
+            print("found fasta already in directory")
+            break
+        
+    if fasta == "":
+        fasta = "Data/basecall/" + nanopolish_create_fasta(fastDir, basecallDir)
+
     fastqCount = 0
     '''
     #convert file
