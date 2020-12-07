@@ -32,6 +32,7 @@ def basecall_test(fastPath):
         if 'single' in fastPath:
             print("|||\/|| Already in single folder")
 
+        #todo insert flappie
         #convert multi fast5 to single fast5 and move files into single directory.  
         elif 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)

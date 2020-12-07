@@ -2,6 +2,7 @@ minimap2
 SquiggleKit
 nanopolish
 samtools
+flappie
 htslib
 Data
 Models/*.pyc
