@@ -25,9 +25,9 @@ def nanopolish_run(fastDir, basecallDir):
     '''
     #create one fastq file
     merge_fastq(basecallDir)
-    convertToFasta("Data/basecall/reads.fastq")
+    #convertToFasta("Data/basecall/reads.fastq")
     #todo check for single folder in fastdir directory
-    index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fasta"
+    index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fq"
     #move into data folder to save files
 
     os.system(index_cmd)
@@ -84,7 +84,6 @@ def convertToFasta(fastq):
 
     print("fname ", fname)
     
-
     return fname
 
 
@@ -99,7 +98,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
             fasta = "Data/basecall/" + files
             print("found fasta already in directory")
             break
-        
+
     if fasta == "":
         fasta = "Data/basecall/" + nanopolish_create_fasta(fastDir, basecallDir)
 

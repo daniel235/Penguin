@@ -18,6 +18,10 @@ sudo apt-get install libopenblas-base
 sudo apt-get install libopenblas-dev
 sudo apt-get install cmake
 
+#additional libraries(debugging)
+sudo apt-get install libncursesw5-dev
+sudo apt-get install 
+
 #install scrappy
 git clone https://github.com/nanoporetech/scrappie
 cd scrappie
@@ -83,10 +87,10 @@ cd ..
 
 #install samtools (bug requires permissions)
 sudo apt install samtools
-git clone https://github.com/samtools/samtools
+'''git clone https://github.com/samtools/samtools
 cd samtools
 autoconf -Wno-syntax
 ./configure --without-curses
 make
 make install
-cd ..
+cd ..'''

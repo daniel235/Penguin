@@ -10,7 +10,7 @@ import subprocess
 def basecall_test(fastPath):
     files = os.listdir("Data/basecall")
     for f in files:
-        if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq"):
+        if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq") or f.endswith(".fq"):
             if os.stat("Data/basecall/" + f).st_size > 1000:
                 return
 
@@ -18,8 +18,9 @@ def basecall_test(fastPath):
     print("creating basecall file****")
     #create basecall file 
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fasta"
+    flappieBcCmd = "flappie " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fq"
     try:
-        subprocess.run([bcCmd], check = True)
+        subprocess.run([flappieBcCmd], check = True)
 
     #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
@@ -37,8 +38,9 @@ def basecall_test(fastPath):
         elif 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
             bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+            flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
 
-        os.system(bcCmd)
+        os.system(flappieBcCmd)
 
     except FileNotFoundError:
         print("got error")
@@ -46,6 +48,7 @@ def basecall_test(fastPath):
             convert_fast5_type(fastPath)
 
         bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
+        flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
         os.system(bcCmd)
         
     #check if basecall created successfully
@@ -55,7 +58,6 @@ def basecall_test(fastPath):
         print("Couldn't create basecall file")
 
     
-
 
 #test to check if required files are created
 def file_test(bed_file, ref_file, sam_file):
