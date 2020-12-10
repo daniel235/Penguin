@@ -87,10 +87,10 @@ cd ..
 
 #install samtools (bug requires permissions)
 sudo apt install samtools
-'''git clone https://github.com/samtools/samtools
-cd samtools
-autoconf -Wno-syntax
-./configure --without-curses
-make
-make install
-cd ..'''
+#git clone https://github.com/samtools/samtools
+#cd samtools
+#autoconf -Wno-syntax
+#./configure --without-curses
+#make
+#make install
+#cd ..'''
