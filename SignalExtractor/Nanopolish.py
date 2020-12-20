@@ -27,7 +27,7 @@ def nanopolish_run(fastDir, basecallDir):
     merge_fastq(basecallDir)
     #convertToFasta("Data/basecall/reads.fastq")
     #todo check for single folder in fastdir directory
-    index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fq"
+    index_cmd = "nanopolish index -d " + fastDir + " " + basecallDir + "reads.fa"
     #move into data folder to save files
 
     os.system(index_cmd)
@@ -41,7 +41,6 @@ def nanopolish_create_ids(fastDir, basecallDir):
 
         if file == "reads.fasta.index.readdb":
             return "reads.fasta.index.readdb"
-
 
     nanopolish_run(fastDir, basecallDir)
     return "reads.fasta.index.readdb"
@@ -74,7 +73,7 @@ def convertToFasta(fastq):
 
     elif fastq.endswith(".fq"):
         convCmd = "paste - - - - < " + fastq + " | cut -f 1,2| sed 's/^@/>/' | tr '\t' '\n' > " +  fastq[:-3] + ".fa"
-        fname = fastq[:-3] + ".fasta"
+        fname = fastq[:-3] + ".fa"
         os.system(convCmd)
 
     else:

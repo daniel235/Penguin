@@ -44,6 +44,10 @@ export PATH=$PATH:~/Penguin/flappie
 #install ontfast5
 pip3 install ont-fast5-api
 
+#create basecall directory
+cd Data
+mkdir basecall 
+cd ..
 
 #install minimap2
 sudo apt install minimap2

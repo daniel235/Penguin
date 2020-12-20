@@ -3,12 +3,16 @@ from ont_fast5_api.conversion_tools import multi_to_single_fast5
 from ont_fast5_api import fast5_interface
 import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
+from testFiles.test_commands import scrappie_basecall
 import os
 import subprocess
+
+
 
 #todo get basecall data
 def basecall_test(fastPath):
     files = os.listdir("Data/basecall")
+    #check if basecall file already exists
     for f in files:
         if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq") or f.endswith(".fq"):
             if os.stat("Data/basecall/" + f).st_size > 1000:
@@ -17,18 +21,16 @@ def basecall_test(fastPath):
     print("missing basecall file****")
     print("creating basecall file****")
     #create basecall file 
-    bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fasta"
-    flappieBcCmd = "flappie " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fq"
+    
     try:
-        subprocess.run([flappieBcCmd], check = True)
+        #subprocess.run([bcCmd], check = True)
+        scrappie_basecall()
 
     #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
-        print("got error")
+        print("got error / process error")
         #export scrappie cmd (might not be exported correctly)
-        expCmd = "export PATH=$PATH:scrappie/build"
-        os.system(expCmd)
-
+        export_scrappie_path()
         #checking if already in single directory
         if 'single' in fastPath:
             print("|||\/|| Already in single folder")
@@ -37,22 +39,17 @@ def basecall_test(fastPath):
         #convert multi fast5 to single fast5 and move files into single directory.  
         elif 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
-            bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
-            flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
-
-        os.system(flappieBcCmd)
+            scrappie_basecall_single()
 
     except FileNotFoundError:
-        print("got error")
+        print("got error / no file found ")
         if 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
 
-        bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/scrappieReads.fa"
-        flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
-        os.system(bcCmd)
+        scrappie_basecall_single()
         
     #check if basecall created successfully
-    if os.stat("Data/basecall/scrappieReads.fa").st_size > 0:
+    if os.stat("Data/basecall/reads.fa").st_size > 0:
         print("created basecall file****")
     else:
         print("Couldn't create basecall file")
@@ -88,7 +85,8 @@ def file_test(bed_file, ref_file, sam_file):
         #use default ref files
         refFlag = False
         #defaultReferenceFile = "Homo_sapiens.GRCh38.dna.alt.fa"
-        defaultReferenceFile = "refgenome"
+        #defaultReferenceFile = "refgenome"
+        defaultReferenceFile = "coli-ref.fa"
         downloadedFlag = False
         #check if default reference file exists
         for f in os.listdir(os.getcwd()):
@@ -107,7 +105,6 @@ def file_test(bed_file, ref_file, sam_file):
             print("gunzipping reference genome****")
             #os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa.gz")
             for f in os.listdir(os.getcwd()):
-                print(f)
                 if f == "Homo_sapiens" or f == defaultReferenceFile or f == "refgenome":
                     refFlag = True
                     break
@@ -166,23 +163,6 @@ def get_sam_file(fastfile, ref_file):
 
 #create event info file for machine learning models
 def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
-    #single file
-    '''
-    if fpath == None:
-        hdf = h5py.File(filename, 'r')
-        #check if event file exists
-        if "reads-ref.eventalign.txt" in os.listdir("Data") and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
-            return "Data/reads-ref.eventalign.txt"
-
-    #multiple files
-    else:
-        hdf = h5py.File(fpath + filename, 'r')
-    
-    fast_keys = hdf.keys()
-    if "/Analyses/Basecall_1D_001/BaseCalled_template/Events/" in fast_keys and not NanopolishOnly:
-        print("events test passed**** \n")
-        show_penguin()
-        return None'''
     #check if event info already exists
     if "reads-ref.eventalign.txt" in os.listdir("Data") and os.stat("Data/reads-ref.eventalign.txt").st_size > 1000:
             return "Data/reads-ref.eventalign.txt"
@@ -193,7 +173,12 @@ def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
         if event_align_check() == None:
             print("Creating Event Align file****")
             #create events(nanopolish code goes here)
-            event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
+            #is it a single file or path
+            if fpath == None:
+                event_file = events.nanopolish_events(filename, "Data/basecall/", ref)
+            else:
+                event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
+                
             print("event file ", event_file)
             show_penguin()
             return event_file
