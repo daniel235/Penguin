@@ -3,8 +3,8 @@ from ont_fast5_api.conversion_tools import multi_to_single_fast5
 from ont_fast5_api import fast5_interface
 import SequenceGenerator.align as align
 import SignalExtractor.Nanopolish as events
-from testFiles.test_commands import scrappie_basecall
-import os
+from testFiles.test_commands import *
+import os, sys
 import subprocess
 
 
@@ -20,14 +20,15 @@ def basecall_test(fastPath):
 
     print("missing basecall file****")
     print("creating basecall file****")
+
     #create basecall file 
-    
     try:
         #subprocess.run([bcCmd], check = True)
-        scrappie_basecall()
+        scrappie_basecall(fastPath)
 
     #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
+        export_scrappie_path()
         print("got error / process error")
         #export scrappie cmd (might not be exported correctly)
         export_scrappie_path()
@@ -39,15 +40,21 @@ def basecall_test(fastPath):
         #convert multi fast5 to single fast5 and move files into single directory.  
         elif 'single' not in os.listdir(fastPath):
             convert_fast5_type(fastPath)
-            scrappie_basecall_single()
+            scrappie_basecall_single(fastPath)
 
+    #if path doesn't exist or no files
     except FileNotFoundError:
+        export_scrappie_path()
         print("got error / no file found ")
-        if 'single' not in os.listdir(fastPath):
-            convert_fast5_type(fastPath)
+        #scrappie_basecall_single(fastPath)
+        sys.exit()
 
-        scrappie_basecall_single()
-        
+
+    #any error (default error"export scrappie and try again")
+    except:
+        export_scrappie_path()
+        scrappie_basecall(fastPath)
+
     #check if basecall created successfully
     if os.stat("Data/basecall/reads.fa").st_size > 0:
         print("created basecall file****")
