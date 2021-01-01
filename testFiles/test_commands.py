@@ -28,3 +28,5 @@ def scrappie_basecall_single(fastPath):
 def flappie_basecall_single(fastPath):
 	flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
 	os.system(flappieBcCmd)
+
+	

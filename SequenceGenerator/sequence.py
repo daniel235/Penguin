@@ -83,9 +83,6 @@ def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=Non
                 newDirectory = os.getcwd() + "/Data/basecall/"
                 qa.convertFastq(newDirectory)
 
-        else:
-            print("Input Reference File")
-
     #get default bedfile if empty
     if bedfile == None:
         bedfile = "./Data/PseudoU_hg38_BED_6.bed"
