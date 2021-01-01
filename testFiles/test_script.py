@@ -44,7 +44,7 @@ def basecall_test(fastPath):
 
     #if path doesn't exist or no files
     except FileNotFoundError:
-        export_scrappie_path()
+        #export_scrappie_path()
         print("got error / no file found ")
         #scrappie_basecall_single(fastPath)
         sys.exit()
@@ -76,9 +76,10 @@ def file_test(bed_file, ref_file, sam_file):
         fastfile = os.getcwd() + "/Data/basecall/"
         for ffile in os.listdir(fastfile):
             if ffile.endswith(".fastq") or ffile.endswith(".fasta") or ffile.endswith(".fa"):
-                #check if fast files exist in directory
+                #check if fasta files exist in directory
                 fastfile = os.getcwd() + "/Data/basecall/" + ffile
 
+        #check if you found a fasta/fastq file in directory
         if fastfile.endswith(".fastq") != True and fastfile.endswith(".fasta") != True and fastfile.endswith(".fa") != True:
             print("basecall test failed****")
             raise FileNotFoundError
@@ -87,7 +88,7 @@ def file_test(bed_file, ref_file, sam_file):
         sam_file = get_sam_file(fastfile, ref_file)
             
 
-
+    #download reference file
     elif ref_file == None and sam_file == None:
         #use default ref files
         refFlag = False
@@ -129,7 +130,8 @@ def file_test(bed_file, ref_file, sam_file):
                 #check if fast files exist in directory
                 fastfile += ffile
                 break
-        
+
+        #if no fasta/fastq file found
         if fastfile == os.getcwd() + "/Data/basecall/":
             print("basecall file test failed****")
             raise FileNotFoundError

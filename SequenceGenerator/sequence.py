@@ -61,24 +61,14 @@ directory = results.path_input
 
 #prepare all files needed for signal extraction
 def prep_required_files(bedfile, fast5Path=None, referenceFile=None, samFile=None):
-    #basecall the fast5 files and return directory
-    prompt = input("basecall?(y/n)")
-    if prompt == "y":
-        bc.basecall_files(fast5Path)
-        print("after basecall")
-        #convert fastq to fasta
-        #newDirectory = fast5Path + "basecall/"
-        newDirectory = os.getcwd() + "/Data/basecall/"
-        qa.convertFastq(newDirectory)
-
     #align fastq and get sam file
     #bwa-mem
     if samFile == None:
         if referenceFile != None:
             #check if basecalled files exist
             bcFlag = False
-            for file in os.listdir("./Data"):
-                if file == "basecall":
+            for filen in os.listdir("./Data"):
+                if filen == "basecall":
                     newDirectory = os.getcwd() + "/Data/basecall/"
                     bcFlag = True
                     for filer in os.listdir(newDirectory):

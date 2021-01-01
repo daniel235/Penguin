@@ -4,12 +4,15 @@ import subprocess
 
 def scrappie_basecall(fastPath):
 	bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fa"
-	subprocess.run([bcCmd], check = True)
+	print(bcCmd)
+	#subprocess.run([bcCmd], check = True)
+	os.system(bcCmd)
 
 
 def flappie_basecall(fastPath):
 	flappieBcCmd = "flappie " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fq"
 	subprocess.run([flappieBcCmd], check = True)
+	#os.system(flappieBcCmd)
 
 
 def export_scrappie_path():
