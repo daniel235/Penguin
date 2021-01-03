@@ -17,9 +17,11 @@ SignalExtractor/*.pyc
 refgenome.tar.gz
 Homo_sapiens
 refgenome
+refgenome.fai
 scrappie
 notes.txt
 ncbi-ref.fa.gz
 hela.fast5
 coli-ref.fa.fai
+grch38.fna
 

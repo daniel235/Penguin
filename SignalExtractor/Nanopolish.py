@@ -109,11 +109,12 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
             fasta = convertToFasta(file)
             fastqCount += 1
     '''
-    #align to reference
-    ref_cmd = "minimap2 -ax map-ont -t 8 " + referenceFile + " " + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp"
+    #align to reference / send to bam file
+    ref_cmd = "minimap2 -ax map-ont -t 4 " + referenceFile + " " + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp"
     print("current command ", ref_cmd)
     os.system(ref_cmd)
 
+    #index a genome bam file to extract alignments overlapping particular genomic regions
     sam_cmd = "samtools index " + basecallDir + "reads-ref.sorted.bam"
     os.system(sam_cmd)
     

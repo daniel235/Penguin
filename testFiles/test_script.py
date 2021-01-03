@@ -94,7 +94,8 @@ def file_test(bed_file, ref_file, sam_file):
         refFlag = False
         #defaultReferenceFile = "Homo_sapiens.GRCh38.dna.alt.fa"
         #defaultReferenceFile = "refgenome"
-        defaultReferenceFile = "coli-ref.fa"
+        defaultReferenceFile = "grch38.fna"
+        #defaultReferenceFile = "coli-ref.fa"
         downloadedFlag = False
         #check if default reference file exists
         for f in os.listdir(os.getcwd()):
@@ -106,10 +107,12 @@ def file_test(bed_file, ref_file, sam_file):
             print("RECOMMENDED to download first")
             print("WARNING: default reference file is 18gb in size, ..downloading")
             #os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
-            os.system("wget -O refgenome.gz ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh37_latest/refseq_identifiers/GRCh37_latest_genomic.fna.gz")
+            #os.system("wget -O refgenome.gz ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh37_latest/refseq_identifiers/GRCh37_latest_genomic.fna.gz")
+            os.system("wget -O grch38.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/GCA_000001405.15_GRCh38_genomic.fna.gz")
             #os.system("wget -O ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
-            os.system("tar -xzf refgenome.tar.gz")
-            os.system("gunzip refgenome.gz")
+            #os.system("tar -xzf refgenome.tar.gz")
+            #os.system("gunzip refgenome.gz")
+            os.system("gzip -dk grch38.fna.gz")
             print("gunzipping reference genome****")
             #os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa.gz")
             for f in os.listdir(os.getcwd()):
@@ -170,6 +173,8 @@ def get_sam_file(fastfile, ref_file):
     else:
         sam_file = align.minimapAligner(fastfile, ref_file)
 
+    return sam_file
+
 #create event info file for machine learning models
 def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
     #check if event info already exists
@@ -184,9 +189,9 @@ def event_check(fpath=None, filename=None, ref=None, NanopolishOnly=True):
             #create events(nanopolish code goes here)
             #is it a single file or path
             if fpath == None:
-                event_file = events.nanopolish_events(filename, "Data/basecall/", ref)
+                event_file = events.nanopolish_events(filename, "Data/basecall/", referenceFile=ref)
             else:
-                event_file = events.nanopolish_events(fpath, "Data/basecall/", ref)
+                event_file = events.nanopolish_events(fpath, "Data/basecall/", referenceFile=ref)
                 
             print("event file ", event_file)
             show_penguin()
