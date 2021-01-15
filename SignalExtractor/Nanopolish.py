@@ -16,7 +16,6 @@ def merge_fastq(basecallDir):
 
 def nanopolish_run(fastDir, basecallDir):
     #call nanopolish command
-    print("basecall dir ", basecallDir)
     '''
     for file in os.listdir(basecallDir):
         if file.endswith(".fastq"):
@@ -81,7 +80,6 @@ def convertToFasta(fastq):
         fname = fastq[:-6] + ".fasta"
         os.system(convCmd)
 
-    print("fname ", fname)
     
     return fname
 
@@ -101,7 +99,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
     if fasta == "":
         fasta = "Data/basecall/" + nanopolish_create_fasta(fastDir, basecallDir)
 
-    fastqCount = 0
+    
     '''
     #convert file
     for file in os.listdir(basecallDir):

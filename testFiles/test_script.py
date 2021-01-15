@@ -18,13 +18,13 @@ def basecall_test(fastPath):
             if os.stat("Data/basecall/" + f).st_size > 1000:
                 return
 
-    print("missing basecall file****")
-    print("creating basecall file****")
+    print("missing basecall file****/creating basecall file")
 
+    bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fa"
     #create basecall file 
     try:
-        #subprocess.run([bcCmd], check = True)
-        scrappie_basecall(fastPath)
+        subprocess.run([bcCmd], check = True)
+        #scrappie_basecall(fastPath)
 
     #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
@@ -69,9 +69,8 @@ def file_test(bed_file, ref_file, sam_file):
         print("bed file test failed****")
         raise FileNotFoundError
     
-    
-    #create aligned sam
-    elif ref_file != None and sam_file == None:
+    #set ref file 
+    if ref_file != None:
         #fasta input
         fastfile = os.getcwd() + "/Data/basecall/"
         for ffile in os.listdir(fastfile):
@@ -84,12 +83,9 @@ def file_test(bed_file, ref_file, sam_file):
             print("basecall test failed****")
             raise FileNotFoundError
 
-        #check if sam file exists on our directory
-        sam_file = get_sam_file(fastfile, ref_file)
-            
 
     #download reference file
-    elif ref_file == None and sam_file == None:
+    else:
         #use default ref files
         refFlag = False
         #defaultReferenceFile = "Homo_sapiens.GRCh38.dna.alt.fa"
@@ -104,8 +100,6 @@ def file_test(bed_file, ref_file, sam_file):
                 downloadedFlag = True
         #download reference file
         if downloadedFlag != True:
-            print("RECOMMENDED to download first")
-            print("WARNING: default reference file is 18gb in size, ..downloading")
             #os.system("wget -O refgenome.tar.gz ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/Ensembl/GRCh37/Homo_sapiens_Ensembl_GRCh37.tar.gz")
             #os.system("wget -O refgenome.gz ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh37_latest/refseq_identifiers/GRCh37_latest_genomic.fna.gz")
             os.system("wget -O grch38.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/GCA_000001405.15_GRCh38_genomic.fna.gz")
@@ -138,7 +132,9 @@ def file_test(bed_file, ref_file, sam_file):
         if fastfile == os.getcwd() + "/Data/basecall/":
             print("basecall file test failed****")
             raise FileNotFoundError
-
+        
+        
+    if sam_file == None:
         #ref file exists so align here
         sam_file = get_sam_file(fastfile, ref_file)
 

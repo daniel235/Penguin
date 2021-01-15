@@ -11,6 +11,7 @@ import SignalExtractor.SignalPredictor as Predict
 #import Models.NeuralNet as model
 import Models.PrepareData as PD
 import Models.RunModels as RM
+from SequenceGenerator import input_object
 
 #check for all files
 parser = argparse.ArgumentParser(description="Start of Getting Nanopore Signals")
@@ -35,7 +36,9 @@ refFile = results.ref_input
 samFile = results.sam_input
 testingInput = results.test_input
 
-
+#create input object
+my_input_object = input_object.InputObject(directory)
+print("my ob path ", my_input_object.get_path())
 
 ############### Prepare all files needed ###################################
 #check if files are basecalled
