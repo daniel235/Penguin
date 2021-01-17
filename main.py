@@ -38,7 +38,6 @@ testingInput = results.test_input
 
 #create input object
 my_input_object = input_object.InputObject(directory)
-print("my ob path ", my_input_object.get_path())
 
 ############### Prepare all files needed ###################################
 #check if files are basecalled

@@ -27,16 +27,16 @@ class InputObject():
 
     #setters
     def set_path(self, directoryName):
-        pass 
+        this.fastPath = directoryName
 
 
     def set_sam(self, fileName):
-        pass
+        this.sam_file = fileName
 
 
     def set_basecall(self, fileName):
-        pass 
+        this.basecall_file = fileName
 
     
     def set_event(self, fileName):
-        pass
+        this.event_file = fileName

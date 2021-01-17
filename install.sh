@@ -56,7 +56,7 @@ cd minimap2 && make
 cd ../..
 
 #set scrappie to path
-export PATH=$PATH:~/Penguin/scrappie/build
+export PATH=$PATH:scrappie/build
 
 #install squiggleKit & scrappie
 #git clone https://github.com/Psy-Fer/SquiggleKit.git

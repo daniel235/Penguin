@@ -39,6 +39,7 @@ def basecall_test(fastPath):
         #todo insert flappie
         #convert multi fast5 to single fast5 and move files into single directory.  
         elif 'single' not in os.listdir(fastPath):
+            print("converting fast5 to single fast5")
             convert_fast5_type(fastPath)
             scrappie_basecall_single(fastPath)
 
