@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #build tools
 sudo apt-get install build-essential
 sudo apt-get install libz-dev
@@ -9,7 +10,6 @@ sudo apt-get install libcurl4-openssl-dev
 sudo apt-get install autoconf
 
 #build tools for scrappy
-
 sudo apt-get install libcunit1
 sudo apt-get install libcunit1-dev
 sudo apt-get install libhdf5
