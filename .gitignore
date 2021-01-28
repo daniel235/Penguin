@@ -19,9 +19,14 @@ Homo_sapiens
 refgenome
 refgenome.fai
 scrappie
+bwa
 notes.txt
 ncbi-ref.fa.gz
 hela.fast5
 coli-ref.fa.fai
 grch38.fna
-
+*.amb
+*.pac
+*.bwt
+*.ann
+*.sa

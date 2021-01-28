@@ -104,7 +104,7 @@ control = "./Data/control_signals.txt"
 
 #load model
 model = PD.prepareNNModel()
-fp = fastPath
+
 '''
 #already has event information
 if event_info == None:
@@ -116,6 +116,6 @@ if event_info == None:
 #model = PD.prepareSVMModel("Models/modelsvmHot.joblib")
 #model = PD.prepareSVMModel("Models/svm")
 model = PD.prepareNNModel()
-Predict.nanopolish_predict(model, event_info, fp, bedPath, samPath, Idfile, testing=False)
+Predict.nanopolish_predict(model, event_info, fastPath, bedPath, samPath, Idfile, testing=False)
 
 ################################################################################

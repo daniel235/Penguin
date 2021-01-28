@@ -107,7 +107,7 @@ def file_test(bed_file, ref_file, sam_file):
             #os.system("wget -O ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.alt.fa.gz")
             #os.system("tar -xzf refgenome.tar.gz")
             #os.system("gunzip refgenome.gz")
-            os.system("gzip -dk grch38.fna.gz")
+            os.system("gzip -d grch38.fna.gz")
             print("gunzipping reference genome****")
             #os.system("gunzip -v Homo_sapiens.GRCh38.dna.alt.fa.gz")
             for f in os.listdir(os.getcwd()):
