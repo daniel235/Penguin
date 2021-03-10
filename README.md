@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To use guppy basecaller you have to be a community member.  
+N/A
 
 ### Installing
 
