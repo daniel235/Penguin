@@ -41,6 +41,7 @@ python3 main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/be
 
 * [Tensorflow](https://www.tensorflow.org/) - Used to generate ml models
 * [Scrappie](https://github.com/nanoporetech/scrappie) - Used as default basecaller
+* [NanoPolish](https://github.com/jts/nanopolish) - Used to create kmers for machine learning models
 
 ## Contributing
 
