@@ -133,7 +133,7 @@ ssh-import-id==5.10
 systemd-python==234
 tensorboard==2.2.2
 tensorboard-plugin-wit==1.7.0
-tensorflow==2.2.0
+tensorflow==2.4.0
 tensorflow-estimator==2.2.0
 termcolor==1.1.0
 threadpoolctl==2.1.0
