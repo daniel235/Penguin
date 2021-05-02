@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#update first
+sudo apt update
+
 #build tools
 sudo apt-get install build-essential
 sudo apt-get install libz-dev
@@ -22,6 +25,12 @@ sudo apt-get install cmake
 sudo apt-get install libncursesw5-dev
 sudo apt-get install 
 
+#install pip 
+sudo apt install python3-pip
+
+#install git 
+sudo apt install git
+
 #install scrappy
 git clone https://github.com/nanoporetech/scrappie
 cd scrappie
@@ -33,6 +42,7 @@ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.s
 sudo apt-get install git-lfs
 git lfs install
 
+
 #install flappie
 git clone https://github.com/nanoporetech/flappie
 cd flappie
@@ -43,6 +53,9 @@ export PATH=$PATH:~/Penguin/flappie
 
 #install ontfast5
 pip3 install ont-fast5-api
+
+#install tensorflow
+
 
 #create basecall directory
 cd Data
@@ -62,8 +75,8 @@ export PATH=$PATH:scrappie/build
 #git clone https://github.com/Psy-Fer/SquiggleKit.git
 pip3 install numpy h5py sklearn matplotlib
 #pip install scrappie
-pip3 install tensorflow==2.1.0
-pip3 install keras
+pip3 install tensorflow
+pip3 install keras==2.3.0
 #create empty directory for data
 mkdir Data/basecall/
 

@@ -27,6 +27,14 @@ parser.add_argument('-s', action='store', dest='sam_input', help='Provide Sam Fi
 #testing
 parser.add_argument('-test', action='store', dest='test_input', help='Testing')
 
+#docker run
+#environment variables
+path_input = os.getenv("MY_FAST5_PATH")
+bed_input = os.getenv("MY_BED_FILE")
+ref_input = os.getenv("MY_REFERENCE_GENOME")
+sam_input = os.getenv("MY_SAM_FILE")
+test_input = os.getenv("IS_A_TEST")
+
 #get arguments
 results = parser.parse_args()
 #directory argument
