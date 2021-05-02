@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To use guppy basecaller you have to be a community member.  
+N/A
 
 ### Installing
 
@@ -24,8 +24,8 @@ First run the install.sh file to get all required files to run the program.
 ## Running the tool
 
 ```
--i fast5 path(required)
--s samfile
+-i fast5 path(** required **)
+-s samfile(Created if not included)
 -b bedfile(Default if not included)
 -ref reference Genome (Default if not included)
 ```
@@ -33,7 +33,7 @@ First run the install.sh file to get all required files to run the program.
 ## Example
 
 ```
-python main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed_directory/my_bed_file.bed
+python3 main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed_directory/my_bed_file.bed
 ```
 
 
@@ -41,6 +41,7 @@ python main.py -i ~/fast5_directory/ -s ~/sam_directory/my_sam_file.sam -b ~/bed
 
 * [Tensorflow](https://www.tensorflow.org/) - Used to generate ml models
 * [Scrappie](https://github.com/nanoporetech/scrappie) - Used as default basecaller
+* [NanoPolish](https://github.com/jts/nanopolish) - Used to create kmers for machine learning models
 
 ## Contributing
 
