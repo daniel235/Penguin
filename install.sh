@@ -41,20 +41,19 @@ cd ..
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 sudo apt-get install git-lfs
 git lfs install
-
+#sourceforge.net/projects/bowtie-bio/files/bowtie/1.3.0/bowtie-1.3.0-linux-x86_64.zip/download
 
 #install flappie
 git clone https://github.com/nanoporetech/flappie
 cd flappie
 make flappie
-
+#ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR142/057/SRR14263357/SRR14263357_1.fastq.gz
+#https://genome-idx.s3.amazonaws.com/bt/GRCh37.zip
 #set flappie to path
 export PATH=$PATH:~/Penguin/flappie
 
 #install ontfast5
 pip3 install ont-fast5-api
-
-#install tensorflow
 
 
 #create basecall directory
