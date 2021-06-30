@@ -9,6 +9,7 @@ import pickle
 from sklearn import svm
 from sklearn.preprocessing import MinMaxScaler #For feature normalization
 import numpy as np
+from itertools import product
 
 
 def createInstance(kmer, raw_signal, type=None):
@@ -117,4 +118,13 @@ def nano_to_onehot(dataset):
     Onehot=pd.get_dummies(dataset['reference_kmer'], prefix='reference_kmer')
     return Onehot
 
+
+def getAllPossible5Kmers():
+    #rna is A C G U
+    bases = ['A', 'C', 'G', 'U']
+    
+    kmerlist = [''.join(i) for i in product(bases, repeat = 5)]
+
+    return kmerlist
+    
     
