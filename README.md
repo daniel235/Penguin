@@ -24,8 +24,8 @@ First run the install.sh file to get all required files to run the program.
 Docker Installation - download docker - No need to clone repository - open command line and enter -> 
 
 ```
-docker pull danielacevedo01/penguin:1.1
-docker run -i -t danielacevedo01/penguin:1.1 /bin/bash/
+docker pull danielacevedo01/penguin:1.3
+docker run -i -t danielacevedo01/penguin:1.3 /bin/bash/
 cd home/danny/penguin
 git pull
 ```
