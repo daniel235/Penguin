@@ -26,6 +26,8 @@ Docker Installation - download docker - No need to clone repository - open comma
 ```
 docker pull danielacevedo01/penguin:1.1
 docker run -i -t danielacevedo01/penguin:1.1 /bin/bash/
+cd home/danny/penguin
+git pull
 ```
 
 ## Running the tool
