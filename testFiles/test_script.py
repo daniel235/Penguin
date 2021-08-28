@@ -23,15 +23,15 @@ def basecall_test(fastPath):
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fa"
     #create basecall file 
     try:
-        subprocess.run([bcCmd], check = True)
+        #todo 26ts
+        output = subprocess.run([bcCmd], check = True)
         #scrappie_basecall(fastPath)
 
     #checking if file not in right fast5 format(multi/single)
     except subprocess.CalledProcessError:
-        export_scrappie_path()
+        #export_scrappie_path()
         print("got error / process error")
-        #export scrappie cmd (might not be exported correctly)
-        export_scrappie_path()
+        
         #checking if already in single directory
         if 'single' in fastPath:
             print("|||\/|| Already in single folder")
