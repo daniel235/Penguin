@@ -22,7 +22,8 @@ def export_scrappie_path():
 
 def scrappie_basecall_single(fastPath):
 	bcCmd = "scrappie raw " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fa"
-	os.system(bcCmd)
+	return os.system(bcCmd)
+	
 
 
 def flappie_basecall_single(fastPath):

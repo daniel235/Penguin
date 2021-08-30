@@ -47,7 +47,12 @@ def basecall_test(fastPath):
     except FileNotFoundError:
         #export_scrappie_path()
         print("got error / no file found ")
-        scrappie_basecall_single(fastPath)
+        output = scrappie_basecall_single(fastPath)
+        if(output != 0):
+            convert_fast5_type(fastPath)
+            scrappie_basecall_single(fastPath)
+
+
         sys.exit()
     
 
