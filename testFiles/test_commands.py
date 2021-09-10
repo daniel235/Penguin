@@ -10,9 +10,9 @@ def scrappie_basecall(fastPath):
 
 
 def flappie_basecall(fastPath):
-	flappieBcCmd = "flappie " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fq"
+	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/ > /Data/basecall/flappie-basecalls.fq"
 	subprocess.run([flappieBcCmd], check = True)
-	#os.system(flappieBcCmd)
+	#os.system(flappieBcCmd)s
 
 
 def export_scrappie_path():
@@ -27,7 +27,7 @@ def scrappie_basecall_single(fastPath):
 
 
 def flappie_basecall_single(fastPath):
-	flappieBcCmd = "flappie " + fastPath + "single > " + os.getcwd() + "/Data/basecall/reads.fq"
-	os.system(flappieBcCmd)
+	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/ > /Data/basecall/flappie-basecalls.fq"
+	os.system(flCmd)
 
 	

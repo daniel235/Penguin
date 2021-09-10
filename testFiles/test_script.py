@@ -19,8 +19,11 @@ def basecall_test(fastPath):
                 return
 
     print("missing basecall file****/creating basecall file")
-
+    #scrappie cmd
     bcCmd = "scrappie raw " + fastPath + " > " + os.getcwd() + "/Data/basecall/reads.fa"
+
+    #flappie cmd 
+    flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/ > /Data/basecall/flappie-basecalls.fq"
     #create basecall file 
     try:
         #todo 26ts

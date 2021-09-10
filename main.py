@@ -57,9 +57,9 @@ bedPath, refPath, samPath = tscript.file_test(bedPath, refPath, samPath)
 
 ############################################################################
 
-print("bed path ", bedPath)
-print("reference path ", refPath)
-print("sam path ", samPath)
+print("---bed path ", bedPath)
+print("---reference path ", refPath)
+print("---sam path ", samPath)
 
 
 ############### Get directory or single file and check for events ##########
