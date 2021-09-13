@@ -259,6 +259,6 @@ def convert_fast5_type(directory):
                 fobj = fast5_interface.get_fast5_file(os.path.join(root, name))
                 if fast5_interface.check_file_type(fobj) == "multi-read":
                     #convert file to single fast5
-                    print("converting fast5 file****")
+                    print("converting fast5 " + name + " file****" )
                     multi_to_single_fast5.convert_multi_to_single(os.path.join(root, name), directory, "single")
  
