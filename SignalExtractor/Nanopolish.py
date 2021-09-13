@@ -108,7 +108,8 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
             fastqCount += 1
     '''
     #align to reference / send to bam file
-    ref_cmd = "minimap2 -ax map-ont -t 4 " + referenceFile + " " + fasta + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp"
+    #todo hardcode for now
+    ref_cmd = "minimap2 -ax map-ont " + referenceFile + " /Data/basecall/flappie-basecalls.fq" + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp"
     print("current command ", ref_cmd)
     os.system(ref_cmd)
 

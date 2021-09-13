@@ -54,20 +54,21 @@ def basecall_test(fastPath):
         print("got error / no file found ")
         #output = scrappie_basecall_single(fastPath)
         output = flappie_basecall_single(fastPath)
-        
-        convert_fast5_type(fastPath)
-        #scrappie_basecall_single(fastPath)
+        if 'single' not in os.listdir(fastPath):
+            convert_fast5_type(fastPath)
+            #scrappie_basecall_single(fastPath)
+
         flappie_basecall_single(fastPath)
 
 
         sys.exit()
     
-
+    '''
     #any error (default error"export scrappie and try again")
     except:
         export_scrappie_path()
         scrappie_basecall(fastPath)
-
+    '''
     #check if basecall created successfully
     if os.stat("Data/basecall/reads.fa").st_size > 0:
         print("created basecall file****")
