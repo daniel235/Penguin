@@ -27,7 +27,8 @@ def basecall_test(fastPath):
     #create basecall file 
     try:
         #todo 26ts
-        output = subprocess.run([bcCmd], check = True)
+        #output = subprocess.run([bcCmd], check = True)
+        output = subprocess.run([flCmd], check=True)
         #scrappie_basecall(fastPath)
 
     #checking if file not in right fast5 format(multi/single)
@@ -44,16 +45,19 @@ def basecall_test(fastPath):
         elif 'single' not in os.listdir(fastPath):
             print("converting fast5 to single fast5")
             convert_fast5_type(fastPath)
-            scrappie_basecall_single(fastPath)
+            #scrappie_basecall_single(fastPath)
+            flappie_basecall_single(fastPath)
 
     #if path doesn't exist or no files
     except FileNotFoundError:
         #export_scrappie_path()
         print("got error / no file found ")
-        output = scrappie_basecall_single(fastPath)
+        #output = scrappie_basecall_single(fastPath)
+        output = flappie_basecall_single(fastPath)
         
         convert_fast5_type(fastPath)
-        scrappie_basecall_single(fastPath)
+        #scrappie_basecall_single(fastPath)
+        flappie_basecall_single(fastPath)
 
 
         sys.exit()

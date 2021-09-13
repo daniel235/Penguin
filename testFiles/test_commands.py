@@ -27,7 +27,7 @@ def scrappie_basecall_single(fastPath):
 
 
 def flappie_basecall_single(fastPath):
-	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/ > /Data/basecall/flappie-basecalls.fq"
+	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/single/ > /Data/basecall/flappie-basecalls.fq"
 	os.system(flCmd)
 
 	
