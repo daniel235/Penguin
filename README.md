@@ -21,7 +21,9 @@ First run the install.sh file to get all required files to run the program.
 ./install.sh
 ```
 
-Docker Installation - download docker - No need to clone repository - open command line and enter -> 
+OR
+
+[HIGHLY RECOMMENDED!!] Docker Installation - download docker - No need to clone repository - open command line and enter -> 
 
 ```
 docker pull danielacevedo01/penguin:flappie
