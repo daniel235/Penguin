@@ -11,8 +11,9 @@ import subprocess
 
 #todo get basecall data
 def basecall_test(fastPath):
-    files = os.listdir("Data/basecall")
     #check if basecall file already exists
+    files = os.listdir("Data/basecall")
+    
     for f in files:
         if f.endswith(".fasta") or f.endswith(".fa") or f.endswith(".fastq") or f.endswith(".fq"):
             if os.stat("Data/basecall/" + f).st_size > 1000:
@@ -53,12 +54,14 @@ def basecall_test(fastPath):
         #export_scrappie_path()
         print("got error / no file found ")
         #output = scrappie_basecall_single(fastPath)
-        output = flappie_basecall_single(fastPath)
-        if 'single' not in os.listdir(fastPath):
-            convert_fast5_type(fastPath)
-            #scrappie_basecall_single(fastPath)
+        try:
+            output = flappie_basecall_single(fastPath)
+        except:
+            if 'single' not in os.listdir(fastPath):
+                convert_fast5_type(fastPath)
+                #scrappie_basecall_single(fastPath)
 
-        flappie_basecall_single(fastPath)
+            flappie_basecall_single(fastPath)
 
 
         sys.exit()
@@ -71,7 +74,9 @@ def basecall_test(fastPath):
     '''
     #check if basecall created successfully
     if os.stat("Data/basecall/reads.fa").st_size > 0:
-        print("created basecall file****")
+        print("created basecall file ****")
+    elif os.stat("Data/basecall/flappie-basecalls.fq").st_size > 0:
+        print("created fastq basecall ****")
     else:
         print("Couldn't create basecall file")
 

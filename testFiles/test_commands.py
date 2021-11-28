@@ -11,7 +11,7 @@ def scrappie_basecall(fastPath):
 
 def flappie_basecall(fastPath):
 	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/ > " + os.getcwd() + "/Data/basecall/flappie-basecalls.fq"
-	subprocess.run([flappieBcCmd], check = True)
+	subprocess.run([flCmd], check = True)
 	#os.system(flappieBcCmd)
 
 
@@ -27,6 +27,7 @@ def scrappie_basecall_single(fastPath):
 
 
 def flappie_basecall_single(fastPath):
+	print("**&**Single File call Flappie is converting to fastq in -> (Data/basecall/flappie-basecalls.fq)")
 	flCmd = "flappie --model r941_rna002 --reverse --delta 1.0 " + fastPath + "/single/ > " + os.getcwd() + "/Data/basecall/flappie-basecalls.fq"
 	os.system(flCmd)
 
