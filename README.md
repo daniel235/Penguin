@@ -26,8 +26,8 @@ OR
 [HIGHLY RECOMMENDED!!] Docker Installation - download docker - No need to clone repository - open command line and enter -> 
 
 ```
-docker pull danielacevedo01/penguin:flappie
-docker run -i -t danielacevedo01/penguin:flappie /bin/bash
+docker pull danielacevedo01/penguin:flappie-latest
+docker run -i -t danielacevedo01/penguin:flappie-latest /bin/bash
 cd home/danny/penguin
 git pull
 ```
