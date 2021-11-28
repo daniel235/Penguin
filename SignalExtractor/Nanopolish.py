@@ -109,7 +109,7 @@ def nanopolish_events(fastDir, basecallDir, referenceFile="Data/", fastFile=None
     '''
     #align to reference / send to bam file
     #todo hardcode for now
-    sam_cmd = "minimap2 -ax map-ont " + referenceFile + " /Data/basecall/flappie-basecalls.fq > Aln.sam"
+    sam_cmd = "minimap2 -ax map-ont --split-prefix " + referenceFile + " /Data/basecall/flappie-basecalls.fq > Aln.sam"
     os.system(sam_cmd)
     ref_cmd = "minimap2 -ax map-ont " + referenceFile + " /Data/basecall/flappie-basecalls.fq" + " | " + "samtools sort -o " + basecallDir + "reads-ref.sorted.bam -T " + basecallDir + "reads.tmp"
     print("current command ", ref_cmd)
